@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLS ver.00.0</title>
+    <link href="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css" rel="stylesheet"/>
+    <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="map"></div>
+    <div id="controls">
+        <!-- レイヤコントロール -->
+        <!-- レイヤ命名規則　　　最大：全角13文字　推奨：全角7文字　　　以内 -->
+        <button id="toggle-layers-btn">Layer On/Off</button>
+        <div id="layers-container" class="disp-layers" style="display: none;">
+            <label>
+                <input type="checkbox" id="osm-layer-chk" checked>
+                Open Street Map
+            </label>
+            <br>
+                <input type="checkbox" id="outline-layer-chk" checked>
+                行政界
+            </label>
+            <br>
+            <label>
+                <button id="sdg1121-toggle-btn" class="toggle-btn">▶</button>
+                <input type="checkbox" id="sdg1121-layer-chk" checked>
+                SDG11.2.1
+            </label>
+            <div id="sdg1121-layers" class="sub-layers" style="display: none;">
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="population-all-fill-layer-chk" checked>
+                人口（Year: <span id="year-value-pop">2020</span>）
+            </label>
+            <!-- 年代ごとの表示スライダーバー -->
+            <div id="slider-container-pop">
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="range" id="year-slider-pop" min="2000" max="2020" value="2020" step="1">
+            </div>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="popchange-all-fill-layer-chk" >
+                人口増減(<span id="year-value-popchange">2019</span>～2020)
+            </label>
+            <!-- 年代ごとの表示スライダーバー -->
+            <div id="slider-container-popchange">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="range" id="year-slider-popchange" min="2000" max="2019" value="2019" step="1">
+            </div>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PublicTransport-points-layer-chk" checked>
+                バス停・フェリー乗り場
+            </label>
+            <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="MicroletRoute-line-layer-chk" checked>
+                MicroletRoute
+            </label>
+        </div>
+            <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="LCRPGR-raster-layer-chk">
+                SDG11.3.1
+            <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCR-PGR(2000-2020)
+            </label>
+            <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PM25-all-fill-layer-chk">
+                SDG11.6.2
+            <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PM2.5
+            </label>
+        </div>
+
+        <!-- メモ機能 -->
+        <div id="note-form" style="display: none;">
+            <label for="note-text">メモ:</label>
+            <input type="text" id="note-text"/>
+            <button id="save-note-btn">保存</button>
+        </div>
+        <div id="note-display" style="display: none;">
+            <div id="note-content"></div>
+        </div>
+    </div>
+
+    <!-- 現在のズームレベル -->
+    <div id="zoom-level"></div>
+
+    <!-- 属性情報表示 -->
+    <div id="properties-display" style="display: none;"></div>
+
+
+    <!-- 凡例 -->
+    <div id="legend">
+        <img src="legend.png" alt="Legend" />
+    </div>
+    <div class="legend-toggle" id="legend-toggle">LCR-PGR凡例</div>
+
+
+    <!-- 既存のライブラリは以下に記述 -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf/turf.min.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pmtiles/dist/pmtiles.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js"></script>
+    <!-- オリジナルjsファイルは以下に記述 -->
+    <script src="main.js"></script>
+</body>
+</html>

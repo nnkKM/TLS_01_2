@@ -1,0 +1,270 @@
+{
+  "version": 8,
+  "name": "Simple OSM",
+  "sources": {
+    "osm-tiles": {
+      "type": "raster",
+      "tiles": [
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      ],
+      "minzoom": 1,
+      "maxzoom": 18,
+      "tileSize": 256,
+      "attribution": "© <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors"
+    },
+    "population-source": {
+      "type": "vector",
+      "tiles": [
+        "pmtiles://https://data.source.coop/smartmaps/h3ys-worldpop/tls.pmtiles/{z}/{x}/{y}"
+      ],
+      "minzoom": 4,
+      "maxzoom": 12
+    },
+    "PublicTransport-source": {
+      "type": "vector",
+      "tiles": [
+        "pmtiles://https://nnkhij.github.io/test6/data/PublicTransport.pmtiles/{z}/{x}/{y}"
+      ],
+      "minzoom": 4,
+      "maxzoom": 14,
+      "attribution": "<a href=\"https://dilimicroletroutes.github.io/\" target=\"_blank\">DiliMicroletRoutes</a> "
+    },
+    "pm25-source": {
+      "type": "vector",
+      "tiles": [
+        "pmtiles://https://nnkhij.github.io/test6/data/PM25.pmtiles/{z}/{x}/{y}"
+      ],
+      "minzoom": 4,
+      "maxzoom": 9,
+      "attribution": "<a href=\"https://inetl-ip.gov.tl/\" target=\"_blank\">Baliza data</a> "
+    },
+    "LCRPGR-source": {
+      "type": "raster",
+      "tiles": [
+      "pmtiles://https://nnkhij.github.io/test2/data/LCRPGR.pmtiles/{z}/{x}/{y}.png"
+       ],
+      "tileSize": 256,
+      "minzoom": 0,
+      "maxzoom": 19,
+      "attribution": "<a href=\"http://opengeohub.org/about/\" target=\"_blank\">OpenGeoHub</a> "
+    }
+  },
+  "layers": [
+    {
+      "id": "osm-layer",
+      "type": "raster",
+      "source": "osm-tiles",
+      "minzoom": 0,
+      "maxzoom": 19,
+      "paint": {
+        "raster-saturation": -0.5
+      }
+    },
+    {
+      "id": "population-fill-layer",
+      "type": "fill",
+      "source": "population-source",
+      "source-layer": "pop",
+      "paint": {
+        "fill-color": "#ffffff",
+        "fill-opacity": 0.5
+      }
+    },
+    {
+      "id": "population-outline-layer",
+      "type": "line",
+      "source": "population-source",
+      "source-layer": "pop",
+      "paint": {
+        "line-color": "#c0c0c0",
+        "line-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        4, 0.2,
+        14, 1
+      ]
+      }
+    },
+    {
+      "id": "popchange-fill-layer",
+      "type": "fill",
+      "source": "population-source",
+      "source-layer": "pop",
+      "paint": {
+        "fill-color": "#ffffff",
+        "fill-opacity": 0.5
+      }
+    },
+    {
+      "id": "popchange-outline-layer",
+      "type": "line",
+      "source": "population-source",
+      "source-layer": "pop",
+      "paint": {
+        "line-color": "#c0c0c0",
+        "line-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        4, 0.2,
+        14, 1
+      ]
+      }
+    },
+    {
+      "id": "MicroletRoute-line-layer",
+      "type": "line",
+      "source": "PublicTransport-source",
+      "source-layer": "MicroletRoute",
+      "paint": {
+        "line-color": "#000000",
+        "line-width":  [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        6, 0.2,
+        14, 1
+      ]
+      }
+    },
+    {
+      "id": "PublicTransport-points-layer",
+      "type": "circle",
+      "source": "PublicTransport-source",
+      "source-layer": "PublicTransport",
+      "paint": {
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        4, 1,
+        14, 6
+      ],
+        "circle-color": [
+          "match",
+          ["get", "amenity"],
+          "ferry_terminal", "#0000FF",
+          "bus_stop","#00FF00",
+          "bus_station","#00FF00",
+          "#ff8c00"
+        ],
+        "circle-stroke-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        4, 0.2,
+        14, 1
+      ],
+        "circle-stroke-color": "#000000"
+      }
+    },
+    {
+      "id": "LCRPGR-raster-layer",
+      "type": "raster",
+      "source": "LCRPGR-source",
+      "paint": {
+      "raster-opacity": 0.4
+      }
+     },
+    {
+      "id": "MUNICIPIO-fill-layer",
+      "type": "fill",
+      "source": "pm25-source",
+      "source-layer": "Municipio",
+      "paint": {
+        "fill-color": [
+          "case",
+          ["<=", ["get", "Pm25PopWam"], 10.0], "#ffffff",
+          ["<=", ["get", "Pm25PopWam"], 10.5], "#ffffcc",
+          ["<=", ["get", "Pm25PopWam"], 11.0], "#ffeb99",
+          ["<=", ["get", "Pm25PopWam"], 11.5], "#ffd966",
+          ["<=", ["get", "Pm25PopWam"], 12.0], "#ffcc33",
+          ["<=", ["get", "Pm25PopWam"], 12.5], "#ffbf00",
+          ["<=", ["get", "Pm25PopWam"], 13.0], "#e6ac00",
+          ["<=", ["get", "Pm25PopWam"], 13.5], "#cc9900",
+          ["<=", ["get", "Pm25PopWam"], 14.0], "#b38600",
+          "#996633"
+        ],
+        "fill-opacity": 0.6
+      },
+      "maxzoom": 7
+    },
+    {
+      "id": "PostuAdministrativo-fill-layer",
+      "type": "fill",
+      "source": "pm25-source",
+      "source-layer": "PostuAdministrativo",
+      "paint": {
+        "fill-color": [
+          "case",
+          ["<=", ["get", "Pm25PopWam"], 10.0], "#ffffff",
+          ["<=", ["get", "Pm25PopWam"], 10.5], "#ffffcc",
+          ["<=", ["get", "Pm25PopWam"], 11.0], "#ffeb99",
+          ["<=", ["get", "Pm25PopWam"], 11.5], "#ffd966",
+          ["<=", ["get", "Pm25PopWam"], 12.0], "#ffcc33",
+          ["<=", ["get", "Pm25PopWam"], 12.5], "#ffbf00",
+          ["<=", ["get", "Pm25PopWam"], 13.0], "#e6ac00",
+          ["<=", ["get", "Pm25PopWam"], 13.5], "#cc9900",
+          ["<=", ["get", "Pm25PopWam"], 14.0], "#b38600",
+          "#996633"
+        ],
+        "fill-opacity": 0.6
+      },
+      "minzoom": 7,
+      "maxzoom": 9
+    },
+    {
+      "id": "Suco-fill-layer",
+      "type": "fill",
+      "source": "pm25-source",
+      "source-layer": "Suco",
+      "paint": {
+        "fill-color": [
+          "case",
+          ["<=", ["get", "PM25"], 10.0], "#ffffff",
+          ["<=", ["get", "PM25"], 10.5], "#ffffcc",
+          ["<=", ["get", "PM25"], 11.0], "#ffeb99",
+          ["<=", ["get", "PM25"], 11.5], "#ffd966",
+          ["<=", ["get", "PM25"], 12.0], "#ffcc33",
+          ["<=", ["get", "PM25"], 12.5], "#ffbf00",
+          ["<=", ["get", "PM25"], 13.0], "#e6ac00",
+          ["<=", ["get", "PM25"], 13.5], "#cc9900",
+          ["<=", ["get", "PM25"], 14.0], "#b38600",
+          "#996633"
+        ],
+        "fill-opacity": 0.6
+      }
+     },
+    {
+      "id": "MUNICIPIO-outline-layer",
+      "type": "line",
+      "source": "pm25-source",
+      "source-layer": "Municipio",
+      "paint": {
+        "line-color": "#010066",
+        "line-width": 2
+      }
+    },
+    {
+      "id": "PostuAdministrativo-outline-layer",
+      "type": "line",
+      "source": "pm25-source",
+      "source-layer": "PostuAdministrativo",
+      "paint": {
+        "line-color": "#010066",
+        "line-width":  1
+      }
+    },
+    {
+      "id": "Suco-outline-layer",
+      "type": "line",
+      "source": "pm25-source",
+      "source-layer": "Suco",
+      "paint": {
+        "line-color": "#235BC8",
+        "line-width": 0.2
+      }
+    }
+  ]
+}
