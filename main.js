@@ -39,26 +39,42 @@ map.setLayoutProperty('LCRPGR-raster-layer', 'visibility', 'none');
 //////////////  タッチ操作  /////////////////
 
 let touchStartTime;
+let isTouchMove = false;
 const longPressDuration = 500; // 長押しと見なす時間（ミリ秒）
 
 map.on('touchstart', handleTouchStart);
+map.on('touchmove', handleTouchMove);
+map.on('touchend', handleTouchEnd);
+
 function handleTouchStart(e) {
     touchStartTime = Date.now();
+    isTouchMove = false; // タッチ開始時にフラグをリセット
 }
 
-map.on('touchend', (e) => {
-    const features = map.queryRenderedFeatures(e.point);
+function handleTouchMove(e) {
+    isTouchMove = true; // タッチが移動した場合にフラグをセット
+}
 
+function handleTouchEnd(e) {
     const touchDuration = Date.now() - touchStartTime;
+
+    if (isTouchMove) {
+        // タッチが移動した場合は何もしない
+        return;
+    }
+
     if (touchDuration >= longPressDuration) {
         hideFeatureProperties();
     } else {
+        const point = e.point || map.project([e.originalEvent.changedTouches[0].clientX, e.originalEvent.changedTouches[0].clientY]);
+        const features = map.queryRenderedFeatures(point);
+
         if (features.length) {
             const properties = features[0].properties;
-            displayFeatureProperties(properties, e.point);
+            displayFeatureProperties(properties, point);
         }
     }
-});
+}
 
 
 map.on('click', (e) => {
