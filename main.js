@@ -36,6 +36,31 @@ map.setLayoutProperty('LCRPGR-raster-layer', 'visibility', 'none');
  * 属性表示
  * *************************************************************** */
 
+//////////////  タッチ操作  /////////////////
+
+let touchStartTime;
+const longPressDuration = 500; // 長押しと見なす時間（ミリ秒）
+
+map.on('touchstart', handleTouchStart);
+function handleTouchStart(e) {
+    touchStartTime = Date.now();
+}
+
+map.on('touchend', (e) => {
+    const features = map.queryRenderedFeatures(e.point);
+
+    const touchDuration = Date.now() - touchStartTime;
+    if (touchDuration >= longPressDuration) {
+        hideFeatureProperties();
+    } else {
+        if (features.length) {
+            const properties = features[0].properties;
+            displayFeatureProperties(properties, e.point);
+        }
+    }
+});
+
+
 map.on('click', (e) => {
     const features = map.queryRenderedFeatures(e.point);
 
