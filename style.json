@@ -163,6 +163,9 @@
       "id": "LCRPGR-raster-layer",
       "type": "raster",
       "source": "LCRPGR-source",
+      "layout": {
+      "visibility": "none"
+      },
       "paint": {
       "raster-opacity": 0.4
       }
@@ -172,6 +175,9 @@
       "type": "fill",
       "source": "pm25-source",
       "source-layer": "Municipio",
+      "layout": {
+      "visibility": "none"
+      },
       "paint": {
         "fill-color": [
           "case",
@@ -195,6 +201,9 @@
       "type": "fill",
       "source": "pm25-source",
       "source-layer": "PostuAdministrativo",
+      "layout": {
+      "visibility": "none"
+      },
       "paint": {
         "fill-color": [
           "case",
@@ -219,6 +228,9 @@
       "type": "fill",
       "source": "pm25-source",
       "source-layer": "Suco",
+    　"layout": {
+      "visibility": "none"
+      },
       "paint": {
         "fill-color": [
           "case",
