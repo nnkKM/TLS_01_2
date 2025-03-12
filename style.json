@@ -123,8 +123,8 @@
         "interpolate",
         ["linear"],
         ["zoom"],
-        6, 0.2,
-        14, 1
+        8, 0.1,
+        12, 4
       ]
       }
     },
@@ -255,7 +255,13 @@
       "source-layer": "Municipio",
       "paint": {
         "line-color": "#010066",
-        "line-width": 2
+        "line-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        4, 0.1,
+        12, 2
+      ]
       }
     },
     {
@@ -265,7 +271,13 @@
       "source-layer": "PostuAdministrativo",
       "paint": {
         "line-color": "#010066",
-        "line-width":  1
+        "line-width":  [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8, 0.1,
+        12, 1
+      ]
       }
     },
     {
@@ -275,7 +287,13 @@
       "source-layer": "Suco",
       "paint": {
         "line-color": "#235BC8",
-        "line-width": 0.2
+        "line-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8, 0.05,
+        12, 0.5
+      ]
       }
     }
   ]
