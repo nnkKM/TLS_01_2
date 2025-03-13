@@ -203,7 +203,7 @@ const togglePopChangeLayer = (isChecked) => {
 
 // 行政界レイヤの表示/非表示を切り替える関数
 const toggleOutlineLayer = (isChecked) => {
-    const outlineLayerIds = ['MUNICIPIO-outline-layer', 'PostuAdministrativo-outline-layer', 'Suco-outline-layer'];
+    const outlineLayerIds = ["MUNICIPIO-label-layer","PostuAdministrativo-label-layer","Suco-label-layer",'MUNICIPIO-outline-layer', 'PostuAdministrativo-outline-layer', 'Suco-outline-layer'];
     outlineLayerIds.forEach(id => {
         if (isChecked) {
             map.setLayoutProperty(id, 'visibility', 'visible');
