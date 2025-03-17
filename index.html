@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TLS ver.00.0</title>
+    <title>TLS ver.00.1</title>
     <link href="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css" rel="stylesheet"/>
     <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
@@ -15,8 +15,13 @@
         <!-- レイヤ命名規則　　　最大：全角13文字　推奨：全角7文字　　　以内 -->
         <button id="toggle-layers-btn">Layer On/Off</button>
         <div id="layers-container" class="disp-layers" style="display: none;">
+            <input type="radio" id="style1" name="mapstyle" value="versatiles">
+            <label for="style1">VersaTiles color</label>
+            <input type="radio" id="style2" name="mapstyle" value="osmofficial" checked>
+            <label for="style2">OSM公式</label>
+            <br>
             <label>
-                <input type="checkbox" id="osm-layer-chk" checked>
+                <input type="checkbox" id="osm-layer-chk">
                 Open Street Map
             </label>
             <br>
