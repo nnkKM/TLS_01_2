@@ -6,7 +6,7 @@ maplibregl.addProtocol('pmtiles', protocol.tile);
 
 const map = new maplibregl.Map({
     container: 'map',
-    style: 'style.json',
+    style: 'https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json',
     center: [125.57, -8.56],
     zoom: 8
 });
@@ -14,19 +14,393 @@ map.addControl(new maplibregl.NavigationControl());
 
 // デフォルトの年数をセット
 map.on('load', () => {
+
+    const layers = map.getStyle().layers;
+    // Find the index of the first symbol layer in the map style
+    let firstSymbolId;
+    for (let i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol') {
+            firstSymbolId = layers[i].id;
+            break;
+        }
+    }
+
+/*******************************************************************
+ * レイヤ管理
+ * *************************************************************** */
+
+////////////////////ソース///////////////////
+
+
+
+    map.addSource('osm-tiles', {
+      'type': 'raster',
+      'tiles': [
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+      ],
+      'minzoom': 1,
+      'maxzoom': 18,
+      'tileSize': 256,
+      'attribution': '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+    });
+  
+    map.addSource('population-source', {
+      'type': 'vector',
+      'tiles': [
+        'pmtiles://https://data.source.coop/smartmaps/h3ys-worldpop/tls.pmtiles/{z}/{x}/{y}'
+      ],
+      'minzoom': 4,
+      'maxzoom': 12
+    });
+  
+    map.addSource('PublicTransport-source', {
+      'type': 'vector',
+      'tiles': [
+        'pmtiles://https://nnkhij.github.io/test6/data/PublicTransport.pmtiles/{z}/{x}/{y}'
+      ],
+      'minzoom': 4,
+      'maxzoom': 14,
+      'attribution': '<a href="https://dilimicroletroutes.github.io/" target="_blank">DiliMicroletRoutes</a>'
+    });
+  
+    map.addSource('pm25-source', {
+      'type': 'vector',
+      'tiles': [
+        'pmtiles://https://nnkhij.github.io/test5/data/PM25.pmtiles/{z}/{x}/{y}'
+      ],
+      'minzoom': 4,
+      'maxzoom': 9,
+      'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a>'
+    });
+  
+    map.addSource('LCRPGR-source', {
+      'type': 'raster',
+      'tiles': [
+        'pmtiles://https://nnkhij.github.io/test2/data/LCRPGR.pmtiles/{z}/{x}/{y}.png'
+      ],
+      'tileSize': 256,
+      'minzoom': 0,
+      'maxzoom': 19,
+      'attribution': '<a href="http://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
+    });
+
+    /////////////////      レイヤ      ////////////////////////////////
+    
+        
+    map.addLayer({
+      'id': 'osm-layer',
+      'type': 'raster',
+      'source': 'osm-tiles',
+      'minzoom': 0,
+      'maxzoom': 19,
+      'paint': {
+        'raster-saturation': -0.5
+      }
+    });
+  
+    map.addLayer({
+      'id': 'population-fill-layer',
+      'type': 'fill',
+      'source': 'population-source',
+      'source-layer': 'pop',
+      'paint': {
+        'fill-color': '#ffffff',
+        'fill-opacity': 0.5
+      }
+    },firstSymbolId );
+  
+    map.addLayer({
+      'id': 'population-outline-layer',
+      'type': 'line',
+      'source': 'population-source',
+      'source-layer': 'pop',
+      'paint': {
+        'line-color': '#c0c0c0',
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4, 0.2,
+          14, 1
+        ]
+      }
+    },firstSymbolId );
+  
+    map.addLayer({
+      'id': 'popchange-fill-layer',
+      'type': 'fill',
+      'source': 'population-source',
+      'source-layer': 'pop',
+      'paint': {
+        'fill-color': '#ffffff',
+        'fill-opacity': 0.5
+      }
+    },firstSymbolId );
+  
+    map.addLayer({
+      'id': 'popchange-outline-layer',
+      'type': 'line',
+      'source': 'population-source',
+      'source-layer': 'pop',
+      'paint':
+      {
+        'line-color': '#c0c0c0',
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4, 0.2,
+          14, 1
+        ]
+      }
+    },firstSymbolId );
+    
+    map.addLayer({
+      'id': 'MicroletRoute-line-layer',
+      'type': 'line',
+      'source': 'PublicTransport-source',
+      'source-layer': 'MicroletRoute',
+      'paint': {
+        'line-color': '#000000',
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          8, 0.1,
+          12, 4
+        ]
+      }
+    },firstSymbolId );
+    
+    map.addLayer({
+      'id': 'PublicTransport-points-layer',
+      'type': 'circle',
+      'source': 'PublicTransport-source',
+      'source-layer': 'PublicTransport',
+      'paint': {
+        'circle-radius': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4, 1,
+          14, 6
+        ],
+        'circle-color': [
+          'match',
+          ['get', 'amenity'],
+          'ferry_terminal', '#0000FF',
+          'bus_stop','#00FF00',
+          'bus_station','#00FF00',
+          '#ff8c00'
+        ],
+        'circle-stroke-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4, 0.2,
+          14, 1
+        ],
+        'circle-stroke-color': '#000000'
+      }
+    },firstSymbolId );
+    
+    map.addLayer({
+        'id': 'LCRPGR-raster-layer',
+        'type': 'raster',
+        'source': 'LCRPGR-source',
+        'layout': {
+            "visibility": "none"
+        },
+        'paint': {
+            'raster-opacity': 0.85
+        }
+    },firstSymbolId );
+    
+    map.addLayer({
+      'id': 'MUNICIPIO-fill-layer',
+      'type': 'fill',
+      'source': 'pm25-source',
+      'source-layer': 'Municipio',
+      'layout': {
+        'visibility': 'none'
+      },
+      'paint': {
+        'fill-color': [
+          'case',
+          ['<=', ['get', 'Pm25PopWam'], 10.0], '#ffffff',
+          ['<=', ['get', 'Pm25PopWam'], 10.5], '#ffffcc',
+          ['<=', ['get', 'Pm25PopWam'], 11.0], '#ffeb99',
+          ['<=', ['get', 'Pm25PopWam'], 11.5], '#ffd966',
+          ['<=', ['get', 'Pm25PopWam'], 12.0], '#ffcc33',
+          ['<=', ['get', 'Pm25PopWam'], 12.5], '#ffbf00',
+          ['<=', ['get', 'Pm25PopWam'], 13.0], '#e6ac00',
+          ['<=', ['get', 'Pm25PopWam'], 13.5], '#cc9900',
+          ['<=', ['get', 'Pm25PopWam'], 14.0], '#b38600',
+          '#996633'
+        ],
+        'fill-opacity': 0.6
+      },
+      'maxzoom': 7
+    },firstSymbolId );
+    
+    map.addLayer({
+      'id': 'PostuAdministrativo-fill-layer',
+      'type': 'fill',
+      'source': 'pm25-source',
+      'source-layer': 'PostuAdministrativo',
+      'layout': {
+        'visibility': 'none'
+      },
+      'paint': {
+        'fill-color': [
+          'case',
+          ['<=', ['get', 'Pm25PopWam'], 10.0], '#ffffff',
+          ['<=', ['get', 'Pm25PopWam'], 10.5], '#ffffcc',
+          ['<=', ['get', 'Pm25PopWam'], 11.0], '#ffeb99',
+          ['<=', ['get', 'Pm25PopWam'], 11.5], '#ffd966',
+          ['<=', ['get', 'Pm25PopWam'], 12.0], '#ffcc33',
+          ['<=', ['get', 'Pm25PopWam'], 12.5], '#ffbf00',
+          ['<=', ['get', 'Pm25PopWam'], 13.0], '#e6ac00',
+          ['<=', ['get', 'Pm25PopWam'], 13.5], '#cc9900',
+          ['<=', ['get', 'Pm25PopWam'], 14.0], '#b38600',
+          '#996633'
+        ],
+        'fill-opacity': 0.6
+      },
+      'minzoom': 7,
+      'maxzoom': 9
+    },firstSymbolId );
+    
+    map.addLayer({
+      'id': 'Suco-fill-layer',
+      'type': 'fill',
+      'source': 'pm25-source',
+      'source-layer': 'Suco',
+      'layout': {
+        'visibility': 'none'
+      },
+      'paint': {
+        'fill-color': [
+          'case',
+          ['<=', ['get', 'PM25'], 10.0], '#ffffff',
+          ['<=', ['get', 'PM25'], 10.5], '#ffffcc',
+          ['<=', ['get', 'PM25'], 11.0], '#ffeb99',
+          ['<=', ['get', 'PM25'], 11.5], '#ffd966',
+          ['<=', ['get', 'PM25'], 12.0], '#ffcc33',
+          ['<=', ['get', 'PM25'], 12.5], '#ffbf00',
+          ['<=', ['get', 'PM25'], 13.0], '#e6ac00',
+          ['<=', ['get', 'PM25'], 13.5], '#cc9900',
+          ['<=', ['get', 'PM25'], 14.0], '#b38600',
+          '#996633'
+        ],
+        'fill-opacity': 0.6
+      }
+    },firstSymbolId );
+    
+    map.addLayer({
+      'id': 'MUNICIPIO-outline-layer',
+      'type': 'line',
+      'source': 'pm25-source',
+      'source-layer': 'Municipio',
+      'paint': {
+        'line-color': '#010066',
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4, 0.1,
+          12, 2
+        ]
+      }
+    },firstSymbolId );
+    
+    map.addLayer({
+      'id': 'PostuAdministrativo-outline-layer',
+      'type': 'line',
+      'source': 'pm25-source',
+      'source-layer': 'PostuAdministrativo',
+      'paint': {
+        'line-color': '#010066',
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          8, 0.1,
+          12, 1
+        ]
+      }
+    },firstSymbolId );
+    
+    map.addLayer({
+      'id': 'Suco-outline-layer',
+      'type': 'line',
+      'source': 'pm25-source',
+      'source-layer': 'Suco',
+      'paint': {
+        'line-color': '#235BC8',
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          8, 0.05,
+          12, 0.5
+        ]
+      }
+    },firstSymbolId );
+    
+    // map.addLayer({
+    //   'id': 'MUNICIPIO-label-layer',
+    //   'type': 'symbol',
+    //   'source': 'pm25-source',
+    //   'source-layer': 'Municipio',
+    //   'layout': {
+    //     'text-field': ['get', 'MUNICIPIO'],
+    //     'text-size': 10,
+    //     'text-anchor': 'center'
+    //   },
+    //   'paint': {
+    //     'text-color': '#000000'
+    //   },
+    //   'maxzoom': 7
+    // });
+    
+    // map.addLayer({
+    //   'id': 'PostuAdministrativo-label-layer',
+    //   'type': 'symbol',
+    //   'source': 'pm25-source',
+    //   'source-layer': 'PostuAdministrativo',
+    //   'layout': {
+    //     'text-field': ['get', 'P_ADMIN'],
+    //     'text-size': 10,
+    //     'text-anchor': 'center'
+    //   },
+    //   'paint': {
+    //     'text-color': '#000000'
+    //   },
+    //   'maxzoom': 9
+    // });
+    
+    // map.addLayer({
+    //   'id': 'Suco-label-layer',
+    //   'type': 'symbol',
+    //   'source': 'pm25-source',
+    //   'source-layer': 'Suco',
+    //   'layout': {
+    //     'text-field': ['get', 'SUCO'],
+    //     'text-size': 10,
+    //     'text-anchor': 'center'
+    //   },
+    //   'paint': {
+    //     'text-color': '#000000'
+    //   }
+    // });
+
+
+    //////////////  人口データのスタイル調整    /////////////
     updateMapStyle_pop("2020");
     updateMapStyle_popchange("2019");
-
-// 初期状態で特定のレイヤーを非表示に設定
-map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
-map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
-
-map.setLayoutProperty('MUNICIPIO-fill-layer', 'visibility', 'none');
-map.setLayoutProperty('PostuAdministrativo-fill-layer', 'visibility', 'none');
-map.setLayoutProperty('Suco-fill-layer', 'visibility', 'none');
-map.setLayoutProperty('LCRPGR-raster-layer', 'visibility', 'none');
-
-
+    map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
+    map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
 
 
 });
@@ -76,7 +450,7 @@ function handleTouchEnd(e) {
     }
 }
 
-
+//////////////  クリック操作  /////////////////
 map.on('click', (e) => {
     const features = map.queryRenderedFeatures(e.point);
 
@@ -85,6 +459,12 @@ map.on('click', (e) => {
         displayFeatureProperties(properties, e.point);
     }
 });
+
+// 右クリックイベントを追加して属性情報を非表示にする
+map.on('contextmenu', (e) => {
+    hideFeatureProperties();
+});
+
 
 function displayFeatureProperties(properties, point) {
     const propertiesDisplay = document.getElementById('properties-display');
@@ -143,10 +523,6 @@ const propertiesDisplay = document.createElement('div');
 propertiesDisplay.id = 'properties-display';
 document.body.appendChild(propertiesDisplay);
 
-// 右クリックイベントを追加して属性情報を非表示にする
-map.on('contextmenu', (e) => {
-    hideFeatureProperties();
-});
 
 
 /*******************************************************************
@@ -451,12 +827,12 @@ function updateMapStyle_pop(year) {
     }
 }
 
-                   // 色を設定する関数、yearの値によって色が変わる
-                   function updateMapStyle_popchange(year) {
-                       if (map.getLayer('popchange-fill-layer')) {
-                           map.setPaintProperty('popchange-fill-layer', 'fill-color', color_popchange(year));  // 具体的な色の指定はcolor_popchangeでしている
-                       }
-                   }
+// 色を設定する関数、yearの値によって色が変わる
+function updateMapStyle_popchange(year) {
+    if (map.getLayer('popchange-fill-layer')) {
+        map.setPaintProperty('popchange-fill-layer', 'fill-color', color_popchange(year));  // 具体的な色の指定はcolor_popchangeでしている
+    }
+}
 //
 //
 //                  // ズーム係数を計算する関数
@@ -817,3 +1193,4 @@ function handleMapClick(e) {
         document.getElementById('note-display').style.display = 'none';
     }
 }
+
