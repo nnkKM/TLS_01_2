@@ -24,10 +24,6 @@ map.on('load', () => {
     updateMapStyle_popchange("2019");
     map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
     map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
-
-    firstSymbolId ="";
-    console.log("loaadしてええええええる");
-    console.log(firstSymbolId)
 });
 
 
@@ -38,65 +34,112 @@ const radioButtons = document.querySelectorAll('input[type=radio][name=mapstyle]
 radioButtons.forEach(radio => {
     radio.addEventListener('change', function() {
 
-        // // 現在のスタイルに定義されているすべてのレイヤーを取得
-        // const layers = map.getStyle().layers;
-        // if (layers) {
-        //     for (let i = layers.length - 1; i >= 0; i--) {
-        //         const layerId = layers[i].id;
-        //         if (map.getLayer(layerId)) {
-        //             map.removeLayer(layerId); // レイヤーを削除
-        //             console.log(`Removed layer: ${layerId}`);
-        //         }
-        //     }
+        // 現在のスタイルに定義されているすべてのソースを取得
+        const sources = Object.keys(map.getStyle().sources);
+        for (const sourceId of sources) {
+            if (map.getSource(sourceId)) {
+                map.removeSource(sourceId); // ソースを削除
+                // console.log(`Removed source: ${sourceId}`);
+            }
+        }
+        
+        // 現在のスタイルに定義されているすべてのレイヤーを取得
+        const layers = map.getStyle().layers;
+        if (layers) {
+            for (let i = layers.length - 1; i >= 0; i--) {
+                const layerId = layers[i].id;
+                if (map.getLayer(layerId)) {
+                    map.removeLayer(layerId); // レイヤーを削除
+                    // console.log(`Removed layer: ${layerId}`);
+                }
+            }
+        }
+
+        const setStyle = () => {
+            return new Promise((resolve) => {
+                map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
+
+                // マップが読み込まれた後にソース名を取得
+                map.on('load', () => {
+                    // 現在のスタイル情報を取得
+                    const style = map.getStyle();
+
+                    // スタイル内のソースオブジェクトを取得
+                    const sources = style.sources;
+
+                    // ソース名だけを配列として抽出
+                    const sourceNames = Object.keys(sources);
+
+                    // ソース名をコンソールに表示
+                    console.log('ソース名一覧:', sourceNames);
+                });
+            })
+        }
+         
+        const setLayout = () => {
+            firstSymbolId = getsymbolID();
+                   
+            addsourcelayers(firstSymbolId);
+               
+            //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
+            updateMapStyle_pop("2020");
+            updateMapStyle_popchange("2019");
+            map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none');
+            map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
+        }
+         
+        // const excute = async () => {
+        //     await setStyle();
+
+        //     setLayout();
         // }
 
-        // // 現在のスタイルに定義されているすべてのソースを取得
-        // const sources = Object.keys(map.getStyle().sources);
-        // for (const sourceId of sources) {
-        //     if (map.getSource(sourceId)) {
-        //         map.removeSource(sourceId); // ソースを削除
-        //         console.log(`Removed source: ${sourceId}`);
-        //     }
-        // }
+        const excute = () => {
+            map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
+            map.on('style.load', function() {
+                // console.log("onloadしてる？？？？？？");
+                setLayout();
+            });
+        }
 
 
         // ラジオボタンのvalueによってスタイルを変更
         switch(this.value) {
             case 'versatiles':
-
+                console.log("ラジオボタン押したあああああああああああああああああ");
                 map.setStyle('./east-timor-pmtiles/style.json');
 
                 map.on('style.load', function() {
-                    firstSymbolId = getsymbolID();
-                    console.log("ラジオボタン押したあああああああああああああああああ");
-    
-                    map.moveLayer('population-fill-layer', 'poi-highway');
-                    map.moveLayer('popchange-fill-layer', 'poi-highway');
-                    map.moveLayer('LCRPGR-raster-layer', 'poi-highway');
-    
-                        //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
-                    updateMapStyle_pop("2020");
-                    updateMapStyle_popchange("2019");
-                    map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
-                    map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
+                    
+                    console.log(firstSymbolId);
+
+
+                    map.on('sourcedata', function(event) {
+                        if (event.isSourceLoaded) {
+                            firstSymbolId = getsymbolID();
+            
+                            map.moveLayer('population-fill-layer', firstSymbolId);
+                            map.moveLayer('popchange-fill-layer', firstSymbolId);
+                            map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
+
+                            const currentStyle = map.getStyle();
+                            console.log('Loaded Style:', currentStyle);
+        
+            
+                            //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
+                            updateMapStyle_pop("2020");
+                            updateMapStyle_popchange("2019");
+                            map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
+                            map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
+                        }
+                    });
     
                 });
                 break;
             case 'osmofficial':
-                map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
+                console.log("ラジオボタン押したあああああああああああああああああ");
 
-                map.on('style.load', function() {
-                    firstSymbolId = getsymbolID();
-                    console.log("ラジオボタン押したあああああああああああああああああ");
-    
-                    addsourcelayers(firstSymbolId);
-    
-                    //////////////  人口データのスタイル調整    /////////////
-                    updateMapStyle_pop("2020");
-                    updateMapStyle_popchange("2019");
-                    map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
-                    map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
-                });
+                excute();
 
                 break;
             // その他のスタイルもここに追加可能
@@ -1288,11 +1331,11 @@ function getsymbolID() {
     }
     console.log("getsymbolID()の中");
 
-    map.on('style.load', function() {
-        const currentStyle = map.getStyle();
-        console.log('Loaded Style:', currentStyle);
-    });
-    console.log(firstSymbolId);
+    // map.on('style.load', function() {
+    //     const currentStyle = map.getStyle();
+    //     console.log('Loaded Style:', currentStyle);
+    // });
+    // console.log(firstSymbolId);
 
     return firstSymbolId;
 }
