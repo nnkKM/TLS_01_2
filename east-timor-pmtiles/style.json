@@ -2,7 +2,7 @@
 	"version": 8,
 	"name": "Simple OSM",
 	"glyphs": "https://tiles.versatiles.org/assets/glyphs/{fontstack}/{range}.pbf",
-	"sprite": "https://nnkKM.github.io/TLS_01_2//basics/sprites",
+	"sprite": "https://nnkKM.github.io/TLS_01_2/basics/sprites",
 	"sources": {
 	  "osm-tiles": {
 		"type": "raster",
@@ -17,7 +17,7 @@
 	  "versatiles-shortbread": {
 		"type": "vector",
 		"tiles": [
-		  "pmtiles://https://nnkKM.github.io/TLS_01_2//data/east-timor-shortbread.pmtiles/{z}/{x}/{y}"
+		  "pmtiles://https://nnkKM.github.io/TLS_01_2/data/east-timor-shortbread.pmtiles/{z}/{x}/{y}"
 		],
 		"minzoom": 1,
 		"maxzoom": 14
