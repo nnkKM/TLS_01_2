@@ -102,39 +102,75 @@ radioButtons.forEach(radio => {
             });
         }
 
+        const setLayout2 = () => {
+            firstSymbolId = getsymbolID();
+            
+            map.moveLayer('population-fill-layer', firstSymbolId);
+            map.moveLayer('popchange-fill-layer', firstSymbolId);
+            map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
+            map.moveLayer('MUNICIPIO-fill-layer', firstSymbolId);
+
+            const currentStyle = map.getStyle();
+            console.log('Loaded Style:', currentStyle);
+
+
+            //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
+            updateMapStyle_pop("2020");
+            updateMapStyle_popchange("2019");
+            map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
+            map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none'); 
+        }
+         
+        // const excute = async () => {
+        //     await setStyle();
+
+        //     setLayout();
+        // }
+
+        const excute2 = () => {
+            map.setStyle('./east-timor-pmtiles/style.json');
+            map.on('style.load', function() {
+                // console.log("onloadしてる？？？？？？");
+                setLayout2();
+            });
+        }
+
+
 
         // ラジオボタンのvalueによってスタイルを変更
         switch(this.value) {
             case 'versatiles':
                 console.log("ラジオボタン押したあああああああああああああああああ");
-                map.setStyle('./east-timor-pmtiles/style.json');
+                // map.setStyle('./east-timor-pmtiles/style.json');
 
-                map.on('style.load', function() {
+                // map.on('style.load', function() {
                     
-                    console.log(firstSymbolId);
+                //     console.log(firstSymbolId);
 
-
-                    map.on('sourcedata', function(event) {
-                        if (event.isSourceLoaded) {
-                            firstSymbolId = getsymbolID();
+                //     map.on('sourcedata', function(event) {
+                //         if (event.isSourceLoaded) {
+                //             firstSymbolId = getsymbolID();
             
-                            map.moveLayer('population-fill-layer', firstSymbolId);
-                            map.moveLayer('popchange-fill-layer', firstSymbolId);
-                            map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
-
-                            const currentStyle = map.getStyle();
-                            console.log('Loaded Style:', currentStyle);
+                //             map.moveLayer('population-fill-layer', firstSymbolId);
+                //             map.moveLayer('popchange-fill-layer', firstSymbolId);
+                //             map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
+                //             map.moveLayer('MUNICIPIO-fill-layer', firstSymbolId);
+    
+                //             const currentStyle = map.getStyle();
+                //             console.log('Loaded Style:', currentStyle);
         
             
-                            //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
-                            updateMapStyle_pop("2020");
-                            updateMapStyle_popchange("2019");
-                            map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
-                            map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
-                        }
-                    });
+                //             //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
+                //             updateMapStyle_pop("2020");
+                //             updateMapStyle_popchange("2019");
+                //             map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
+                //             map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
+                //         }    
+
+                //     });
     
-                });
+                // });
+                excute2();
                 break;
             case 'osmofficial':
                 console.log("ラジオボタン押したあああああああああああああああああ");
@@ -310,11 +346,42 @@ const togglePopulationLayer = (isChecked) => {
 
 const togglePopChangeLayer = (isChecked) => {
     const fillLayerIds = ['popchange-fill-layer', 'popchange-outline-layer'];
+
     fillLayerIds.forEach(id => {
         if (isChecked) {
-            map.setLayoutProperty(id, 'visibility', 'visible');
+            map.on('sourcedata', function(event) {
+                if (event.isSourceLoaded) {
+
+                    // // 現在のスタイルに定義されているすべてのレイヤーを取得
+                    // const layers = map.getStyle().layers;
+                    // if (layers) {
+                    //     for (let i = layers.length - 1; i >= 0; i--) {
+                    //         const layerId = layers[i].id;
+                    //         if (map.getLayer(layerId)) {
+                    //             map.setLayoutProperty(layerId, 'visibility', 'none');
+                    //             // console.log(`Removed layer: ${layerId}`);
+                    //         }
+                    //     }
+                    // }
+
+                    // map.setLayoutProperty('popchange-fill-layer', 'visibility', 'visible');
+                    // map.setLayoutProperty('popchange-outline-layer', 'visibility', 'visible');
+                    // const yearValuePop = document.getElementById('year-value-popchange');
+                    // const selectedYear = yearValuePop.textContent;
+                    // console.log(selectedYear);
+                    map.setLayoutProperty(id, 'visibility', 'visible');
+
+                    // updateMapStyle_popchange(selectedYear);
+                }
+            });
+
         } else {
-            map.setLayoutProperty(id, 'visibility', 'none');
+            map.on('sourcedata', function(event) {
+                if (event.isSourceLoaded) {
+
+                    map.setLayoutProperty(id, 'visibility', 'none');
+                }
+            });
         }
     });
 };
@@ -324,9 +391,18 @@ const toggleOutlineLayer = (isChecked) => {
     const outlineLayerIds = ["MUNICIPIO-label-layer","PostuAdministrativo-label-layer","Suco-label-layer",'MUNICIPIO-outline-layer', 'PostuAdministrativo-outline-layer', 'Suco-outline-layer'];
     outlineLayerIds.forEach(id => {
         if (isChecked) {
-            map.setLayoutProperty(id, 'visibility', 'visible');
+            map.on('sourcedata', function(event) {
+                if (event.isSourceLoaded) {
+
+                map.setLayoutProperty(id, 'visibility', 'visible');
+                }
+            });
         } else {
-            map.setLayoutProperty(id, 'visibility', 'none');
+            map.on('sourcedata', function(event) {
+                if (event.isSourceLoaded) {
+                    map.setLayoutProperty(id, 'visibility', 'none');
+                }
+            });
         }
     });
 };
@@ -1329,7 +1405,7 @@ function getsymbolID() {
             break;
         }
     }
-    console.log("getsymbolID()の中");
+    // console.log("getsymbolID()の中");
 
     // map.on('style.load', function() {
     //     const currentStyle = map.getStyle();
