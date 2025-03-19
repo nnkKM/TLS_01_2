@@ -393,8 +393,7 @@ const toggleOutlineLayer = (isChecked) => {
         if (isChecked) {
             map.on('sourcedata', function(event) {
                 if (event.isSourceLoaded) {
-
-                map.setLayoutProperty(id, 'visibility', 'visible');
+                    map.setLayoutProperty(id, 'visibility', 'visible');
                 }
             });
         } else {
@@ -412,9 +411,17 @@ const togglePM25Layer = (isChecked) => {
     const fillLayerIds = ['MUNICIPIO-fill-layer', 'PostuAdministrativo-fill-layer','Suco-fill-layer'];
     fillLayerIds.forEach(id => {
         if (isChecked) {
-            map.setLayoutProperty(id, 'visibility', 'visible');
+            map.on('sourcedata', function(event) {
+                if (event.isSourceLoaded) {
+                    map.setLayoutProperty(id, 'visibility', 'visible');
+                }
+            });
         } else {
-            map.setLayoutProperty(id, 'visibility', 'none');
+            map.on('sourcedata', function(event) {
+                if (event.isSourceLoaded) {
+                    map.setLayoutProperty(id, 'visibility', 'none');
+                }
+            });
         }
     });
 };
