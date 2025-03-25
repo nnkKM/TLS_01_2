@@ -4509,7 +4509,7 @@
 			  "filter": [ "==", "kind", "bus_stop" ],
 			  "layout": {
 				  "text-field": "{name}",
-				  "icon-size": { "stops": [ [ 5, 1 ], [ 14, 1 ] ] },
+				  "icon-size": { "stops": [ [ 5, 1.5 ], [ 14, 1.5 ] ] },
 				  "symbol-placement": "point",
 				  "icon-keep-upright": true,
 				  "text-font": [ "noto_sans_regular" ],
@@ -4536,7 +4536,7 @@
 			"filter": [ "==", "kind", "bus_station" ],
 			"layout": {
 				"text-field": "{name}",
-				"icon-size": { "stops": [ [ 5, 1 ], [ 14, 1 ] ] },
+				"icon-size": { "stops": [ [ 5, 1.5 ], [ 14, 1.5 ] ] },
 				"symbol-placement": "point",
 				"icon-keep-upright": true,
 				"text-font": [ "noto_sans_regular" ],
