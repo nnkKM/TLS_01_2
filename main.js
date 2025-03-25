@@ -109,6 +109,8 @@ radioButtons.forEach(radio => {
             map.moveLayer('popchange-fill-layer', firstSymbolId);
             map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
             map.moveLayer('MUNICIPIO-fill-layer', firstSymbolId);
+            map.moveLayer('PostuAdministrativo-fill-layer', firstSymbolId);
+            map.moveLayer('Suco-fill-layer', firstSymbolId);
 
             const currentStyle = map.getStyle();
             console.log('Loaded Style:', currentStyle);
