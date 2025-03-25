@@ -1,7 +1,7 @@
 {
 	"version": 8,
 	"name": "Simple OSM",
-	"glyphs": "https://tiles.versatiles.org/assets/glyphs/{fontstack}/{range}.pbf",
+	"glyphs": "http://nnkKM.github.io/TLS_01_2/east-timor-pmtiles/fonts/{fontstack}/{range}.pbf",
 	"sprite": "https://nnkKM.github.io/TLS_01_2/basics/sprites",
 	"sources": {
 	  "osm-tiles": {
