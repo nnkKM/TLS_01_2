@@ -14,9 +14,7 @@ map.addControl(new maplibregl.NavigationControl());
 
 // デフォルトの年数をセット
 map.on('load', () => {
-
     firstSymbolId = getsymbolID();
-
     addsourcelayers(firstSymbolId);
 
     //////////////  人口データのスタイル調整    /////////////
@@ -26,6 +24,257 @@ map.on('load', () => {
     map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
 });
 
+/*******************************************************************
+ * レイヤON/OFF
+ * *************************************************************** */
+// 人口データ以外のレイヤ設定はjsonのレイヤIDをここに加える
+const layerIds = [
+    'osm-layer',
+    'PublicTransport-points-layer',
+    'MicroletRoute-line-layer',
+    'LCRPGR-raster-layer'
+
+];
+
+// 一般レイヤの表示/非表示を切り替える関数
+const toggleLayer = (id) => {
+    const isChecked = document.getElementById(`${id}-chk`).checked;
+    if (isChecked) {
+        map.setLayoutProperty(id, 'visibility', 'visible');
+    } else {
+        map.setLayoutProperty(id, 'visibility', 'none');
+    }
+};
+
+// 一般レイヤのチェックボックスに変更イベントを追加
+layerIds.forEach(lyrId => {
+    document.querySelector(`#${lyrId}-chk`).addEventListener('change', () => {
+        toggleLayer(lyrId);
+    });
+});
+
+// 人口データの表示/非表示を切り替える関数
+const togglePopulationLayer = (isChecked) => {
+    const fillLayerIds = ['population-fill-layer', 'population-outline-layer'];
+    fillLayerIds.forEach(id => {
+        if (isChecked) {
+            map.setLayoutProperty(id, 'visibility', 'visible');
+        } else {
+            map.setLayoutProperty(id, 'visibility', 'none');
+        }
+    });
+};
+
+const togglePopChangeLayer = (isChecked) => {
+    const fillLayerIds = ['popchange-fill-layer', 'popchange-outline-layer'];
+
+    fillLayerIds.forEach(id => {
+        if (isChecked) {
+            map.setLayoutProperty(id, 'visibility', 'visible');
+        } else {
+
+            map.setLayoutProperty(id, 'visibility', 'none');
+        }
+    });
+};
+
+// 行政界レイヤの表示/非表示を切り替える関数
+const toggleOutlineLayer = (isChecked) => {
+    const outlineLayerIds = ["MUNICIPIO-label-layer","PostuAdministrativo-label-layer","Suco-label-layer",'MUNICIPIO-outline-layer', 'PostuAdministrativo-outline-layer', 'Suco-outline-layer'];
+    if(isChecked){
+        outlineLayerIds.forEach(id => {
+            map.setLayoutProperty(id, 'visibility', 'visible');
+        });
+    }else{
+        outlineLayerIds.forEach(id => {
+            map.setLayoutProperty(id, 'visibility', 'none');
+        });
+    }
+};
+
+// PM2.5データの表示/非表示を切り替える関数
+const togglePM25Layer = (isChecked) => {
+    const fillLayerIds = ['MUNICIPIO-fill-layer', 'PostuAdministrativo-fill-layer','Suco-fill-layer'];
+    fillLayerIds.forEach(id => {
+        if (isChecked) {
+            map.setLayoutProperty(id, 'visibility', 'visible');
+        } else {
+            map.setLayoutProperty(id, 'visibility', 'none');
+        }
+    });
+};
+
+// 凡例の表示/非表示を切り替える関数
+const toggleLegend = () => {
+    const legend = document.getElementById('legend');
+    if (legend.style.display === 'none') {
+        legend.style.display = 'block';
+    } else {
+        legend.style.display = 'none';
+    }
+};
+
+// 人口データのレイヤはここで切替
+document.querySelector('#population-all-fill-layer-chk').addEventListener('change', () => {
+    const isChecked = document.getElementById('population-all-fill-layer-chk').checked;
+    togglePopulationLayer(isChecked);
+});
+
+document.querySelector('#popchange-all-fill-layer-chk').addEventListener('change', () => {
+    const isChecked = document.getElementById('popchange-all-fill-layer-chk').checked;
+    togglePopChangeLayer(isChecked);
+});
+
+// 行政界レイヤのレイヤはここで切替
+document.querySelector('#outline-layer-chk').addEventListener('change', () => {
+    const isChecked = document.getElementById('outline-layer-chk').checked;
+    toggleOutlineLayer(isChecked);
+});
+
+// PM2.5データのレイヤはここで切替
+document.querySelector('#PM25-all-fill-layer-chk').addEventListener('change', () => {
+    const isChecked = document.getElementById('PM25-all-fill-layer-chk').checked;
+    togglePM25Layer(isChecked);
+});
+
+const setAllLayersAndValues = () => {
+    const elm = id => {
+        return document.getElementById(id);
+    }
+    togglePopulationLayer(elm('population-all-fill-layer-chk').checked);
+    togglePopChangeLayer(elm('popchange-all-fill-layer-chk').checked);
+    toggleOutlineLayer(elm('outline-layer-chk').checked);
+    togglePM25Layer(elm('PM25-all-fill-layer-chk').checked);
+    layerIds.forEach(lyrId => {
+        toggleLayer(lyrId);
+    });
+
+    updateMapStyle_pop(elm('year-slider-pop').value);
+    updateMapStyle_popchange(elm('year-slider-popchange').value);
+}
+
+// 凡例の表示・非表示を切り替えるイベントリスナーを追加
+document.getElementById('legend-toggle').addEventListener('click', () => {
+    toggleLegend();
+});
+
+
+document.querySelector('#toggle-layers-btn').addEventListener('click', () => {
+    const layersContainer = document.getElementById('layers-container');
+    if (layersContainer.style.display === 'none' || layersContainer.style.display === '') {
+        layersContainer.style.display = 'block';
+    } else {
+        layersContainer.style.display = 'none';
+    }
+});
+
+// レイヤ階層試作
+document.addEventListener('DOMContentLoaded', () => {
+    const sdg1121LayerChk = document.getElementById('sdg1121-layer-chk');
+    const sdg1121ToggleBtn = document.getElementById('sdg1121-toggle-btn');
+    const sdg1121Layers = document.getElementById('sdg1121-layers');
+
+    const childLayerChks = [
+        document.getElementById('population-all-fill-layer-chk'),
+        document.getElementById('popchange-all-fill-layer-chk'),
+        document.getElementById('PublicTransport-points-layer-chk'),
+        document.getElementById('MicroletRoute-line-layer-chk')
+    ];
+
+    // 子レイヤの表示/非表示を更新する関数
+const updateChildLayers = (isChecked) => {
+    childLayerChks.forEach(chk => {
+        if (chk.id !== 'popchange-all-fill-layer-chk') {
+            chk.checked = isChecked;
+            const layerId = chk.id.replace('-chk', '');
+            if (layerId === 'population-all-fill-layer') {
+                togglePopulationLayer(isChecked);
+            } else if (layerId === 'popchange-all-fill-layer') {
+                togglePopChangeLayer(isChecked);
+            } else {
+                toggleLayer(layerId);
+            }
+        }
+    });
+};
+
+    // 親レイヤのチェックボックスの動作
+    sdg1121LayerChk.addEventListener('change', () => {
+        const isChecked = sdg1121LayerChk.checked;
+        updateChildLayers(isChecked);
+    });
+
+    // トグルボタンの動作
+    sdg1121ToggleBtn.addEventListener('click', () => {
+        if (sdg1121Layers.style.display === 'none') {
+            sdg1121Layers.style.display = 'block';
+            sdg1121ToggleBtn.textContent = '▼';
+        } else {
+            sdg1121Layers.style.display = 'none';
+            sdg1121ToggleBtn.textContent = '▶';
+        }
+    });
+
+    // 子レイヤのチェックボックスが変更されたときの動作
+    childLayerChks.forEach(chk => {
+        chk.addEventListener('change', () => {
+            const layerId = chk.id.replace('-chk', '');
+            if (layerId === 'population-all-fill-layer') {
+                togglePopulationLayer(chk.checked);
+            } else if (layerId === 'popchange-all-fill-layer') {
+                togglePopChangeLayer(chk.checked);
+            } else {
+                toggleLayer(layerId);
+            }
+            // 小レイヤのチェック状態に応じて親レイヤのチェックボックスを更新
+            sdg1121LayerChk.checked = childLayerChks.some(layerChk => layerChk.checked);
+        });
+    });
+});
+
+
+const setOSMLayout = () => {
+    firstSymbolId = getsymbolID();
+    addsourcelayers(firstSymbolId);
+       
+    //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
+    updateMapStyle_pop("2020");
+    updateMapStyle_popchange("2019");
+    map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none');
+    map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
+}
+
+const setVersatileLayout = () => {
+    firstSymbolId = getsymbolID();
+    
+    map.moveLayer('population-fill-layer', firstSymbolId);
+    map.moveLayer('popchange-fill-layer', firstSymbolId);
+    map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
+    map.moveLayer('MUNICIPIO-fill-layer', firstSymbolId);
+    map.moveLayer('PostuAdministrativo-fill-layer', firstSymbolId);
+    map.moveLayer('Suco-fill-layer', firstSymbolId);
+
+    const currentStyle = map.getStyle();
+    console.log('Loaded Style:', currentStyle);
+
+
+    //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
+    updateMapStyle_pop("2020");
+    updateMapStyle_popchange("2019");
+    map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
+    map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none'); 
+}
+
+let tileType = ''; //ラジオボタンを切り替えたときにタイルのタイプを指定
+map.on('style.load', function() {
+    if(tileType === 'osmofficial'){
+        setOSMLayout();
+        setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+    }else if(tileType === 'versatiles'){
+        setVersatileLayout();
+        setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+    }
+});
 
 // ラジオボタンの要素を取得
 const radioButtons = document.querySelectorAll('input[type=radio][name=mapstyle]');
@@ -33,153 +282,18 @@ const radioButtons = document.querySelectorAll('input[type=radio][name=mapstyle]
 // 各ラジオボタンにイベントリスナーを設定
 radioButtons.forEach(radio => {
     radio.addEventListener('change', function() {
-
-        // 現在のスタイルに定義されているすべてのソースを取得
-        const sources = Object.keys(map.getStyle().sources);
-        for (const sourceId of sources) {
-            if (map.getSource(sourceId)) {
-                map.removeSource(sourceId); // ソースを削除
-                // console.log(`Removed source: ${sourceId}`);
-            }
-        }
-        
-        // 現在のスタイルに定義されているすべてのレイヤーを取得
-        const layers = map.getStyle().layers;
-        if (layers) {
-            for (let i = layers.length - 1; i >= 0; i--) {
-                const layerId = layers[i].id;
-                if (map.getLayer(layerId)) {
-                    map.removeLayer(layerId); // レイヤーを削除
-                    // console.log(`Removed layer: ${layerId}`);
-                }
-            }
-        }
-
-        const setStyle = () => {
-            return new Promise((resolve) => {
-                map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
-
-                // マップが読み込まれた後にソース名を取得
-                map.on('load', () => {
-                    // 現在のスタイル情報を取得
-                    const style = map.getStyle();
-
-                    // スタイル内のソースオブジェクトを取得
-                    const sources = style.sources;
-
-                    // ソース名だけを配列として抽出
-                    const sourceNames = Object.keys(sources);
-
-                    // ソース名をコンソールに表示
-                    console.log('ソース名一覧:', sourceNames);
-                });
-            })
-        }
-         
-        const setLayout = () => {
-            firstSymbolId = getsymbolID();
-                   
-            addsourcelayers(firstSymbolId);
-               
-            //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
-            updateMapStyle_pop("2020");
-            updateMapStyle_popchange("2019");
-            map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none');
-            map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
-        }
-         
-        // const excute = async () => {
-        //     await setStyle();
-
-        //     setLayout();
-        // }
-
-        const excute = () => {
-            map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
-            map.on('style.load', function() {
-                // console.log("onloadしてる？？？？？？");
-                setLayout();
-            });
-        }
-
-        const setLayout2 = () => {
-            firstSymbolId = getsymbolID();
-            
-            map.moveLayer('population-fill-layer', firstSymbolId);
-            map.moveLayer('popchange-fill-layer', firstSymbolId);
-            map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
-            map.moveLayer('MUNICIPIO-fill-layer', firstSymbolId);
-            map.moveLayer('PostuAdministrativo-fill-layer', firstSymbolId);
-            map.moveLayer('Suco-fill-layer', firstSymbolId);
-
-            const currentStyle = map.getStyle();
-            console.log('Loaded Style:', currentStyle);
-
-
-            //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
-            updateMapStyle_pop("2020");
-            updateMapStyle_popchange("2019");
-            map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
-            map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none'); 
-        }
-         
-        // const excute = async () => {
-        //     await setStyle();
-
-        //     setLayout();
-        // }
-
-        const excute2 = () => {
-            map.setStyle('./east-timor-pmtiles/style.json');
-            map.on('style.load', function() {
-                // console.log("onloadしてる？？？？？？");
-                setLayout2();
-            });
-        }
-
-
-
         // ラジオボタンのvalueによってスタイルを変更
         switch(this.value) {
             case 'versatiles':
                 console.log("ラジオボタン押したあああああああああああああああああ");
-                // map.setStyle('./east-timor-pmtiles/style.json');
-
-                // map.on('style.load', function() {
-                    
-                //     console.log(firstSymbolId);
-
-                //     map.on('sourcedata', function(event) {
-                //         if (event.isSourceLoaded) {
-                //             firstSymbolId = getsymbolID();
-            
-                //             map.moveLayer('population-fill-layer', firstSymbolId);
-                //             map.moveLayer('popchange-fill-layer', firstSymbolId);
-                //             map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
-                //             map.moveLayer('MUNICIPIO-fill-layer', firstSymbolId);
-    
-                //             const currentStyle = map.getStyle();
-                //             console.log('Loaded Style:', currentStyle);
-        
-            
-                //             //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
-                //             updateMapStyle_pop("2020");
-                //             updateMapStyle_popchange("2019");
-                //             map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
-                //             map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
-                //         }    
-
-                //     });
-    
-                // });
-                excute2();
-                break;
+                map.setStyle('./east-timor-pmtiles/style.json');
+                tileType = 'versatiles';
+                break; //この後、上のmap.on('style.load'～が実行される
             case 'osmofficial':
                 console.log("ラジオボタン押したあああああああああああああああああ");
-
-                excute();
-
-                break;
+                map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
+                tileType = 'osmofficial';
+                break; //この後、上のmap.on('style.load'～が実行される
             // その他のスタイルもここに追加可能
         }
     });
@@ -302,246 +416,6 @@ document.head.appendChild(style);
 const propertiesDisplay = document.createElement('div');
 propertiesDisplay.id = 'properties-display';
 document.body.appendChild(propertiesDisplay);
-
-
-
-/*******************************************************************
- * レイヤON/OFF
- * *************************************************************** */
-// 人口データ以外のレイヤ設定はjsonのレイヤIDをここに加える
-const layerIds = [
-    'osm-layer',
-    'PublicTransport-points-layer',
-    'MicroletRoute-line-layer',
-    'LCRPGR-raster-layer'
-
-];
-
-// 一般レイヤの表示/非表示を切り替える関数
-const toggleLayer = (id) => {
-    const isChecked = document.getElementById(`${id}-chk`).checked;
-    if (isChecked) {
-        map.setLayoutProperty(id, 'visibility', 'visible');
-    } else {
-        map.setLayoutProperty(id, 'visibility', 'none');
-    }
-};
-
-// 一般レイヤのチェックボックスに変更イベントを追加
-layerIds.forEach(lyrId => {
-    document.querySelector(`#${lyrId}-chk`).addEventListener('change', () => {
-        toggleLayer(lyrId);
-    });
-});
-
-// 人口データの表示/非表示を切り替える関数
-const togglePopulationLayer = (isChecked) => {
-    const fillLayerIds = ['population-fill-layer', 'population-outline-layer'];
-    fillLayerIds.forEach(id => {
-        if (isChecked) {
-            map.setLayoutProperty(id, 'visibility', 'visible');
-        } else {
-            map.setLayoutProperty(id, 'visibility', 'none');
-        }
-    });
-};
-
-const togglePopChangeLayer = (isChecked) => {
-    const fillLayerIds = ['popchange-fill-layer', 'popchange-outline-layer'];
-
-    fillLayerIds.forEach(id => {
-        if (isChecked) {
-            map.on('sourcedata', function(event) {
-                if (event.isSourceLoaded) {
-
-                    // // 現在のスタイルに定義されているすべてのレイヤーを取得
-                    // const layers = map.getStyle().layers;
-                    // if (layers) {
-                    //     for (let i = layers.length - 1; i >= 0; i--) {
-                    //         const layerId = layers[i].id;
-                    //         if (map.getLayer(layerId)) {
-                    //             map.setLayoutProperty(layerId, 'visibility', 'none');
-                    //             // console.log(`Removed layer: ${layerId}`);
-                    //         }
-                    //     }
-                    // }
-
-                    // map.setLayoutProperty('popchange-fill-layer', 'visibility', 'visible');
-                    // map.setLayoutProperty('popchange-outline-layer', 'visibility', 'visible');
-                    // const yearValuePop = document.getElementById('year-value-popchange');
-                    // const selectedYear = yearValuePop.textContent;
-                    // console.log(selectedYear);
-                    map.setLayoutProperty(id, 'visibility', 'visible');
-
-                    // updateMapStyle_popchange(selectedYear);
-                }
-            });
-
-        } else {
-            map.on('sourcedata', function(event) {
-                if (event.isSourceLoaded) {
-
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
-        }
-    });
-};
-
-// 行政界レイヤの表示/非表示を切り替える関数
-const toggleOutlineLayer = (isChecked) => {
-    const outlineLayerIds = ["MUNICIPIO-label-layer","PostuAdministrativo-label-layer","Suco-label-layer",'MUNICIPIO-outline-layer', 'PostuAdministrativo-outline-layer', 'Suco-outline-layer'];
-    outlineLayerIds.forEach(id => {
-        if (isChecked) {
-            map.on('sourcedata', function(event) {
-                if (event.isSourceLoaded) {
-                    map.setLayoutProperty(id, 'visibility', 'visible');
-                }
-            });
-        } else {
-            map.on('sourcedata', function(event) {
-                if (event.isSourceLoaded) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
-        }
-    });
-};
-
-// PM2.5データの表示/非表示を切り替える関数
-const togglePM25Layer = (isChecked) => {
-    const fillLayerIds = ['MUNICIPIO-fill-layer', 'PostuAdministrativo-fill-layer','Suco-fill-layer'];
-    fillLayerIds.forEach(id => {
-        if (isChecked) {
-            map.on('sourcedata', function(event) {
-                if (event.isSourceLoaded) {
-                    map.setLayoutProperty(id, 'visibility', 'visible');
-                }
-            });
-        } else {
-            map.on('sourcedata', function(event) {
-                if (event.isSourceLoaded) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
-        }
-    });
-};
-
-// 凡例の表示/非表示を切り替える関数
-const toggleLegend = () => {
-    const legend = document.getElementById('legend');
-    if (legend.style.display === 'none') {
-        legend.style.display = 'block';
-    } else {
-        legend.style.display = 'none';
-    }
-};
-
-
-
-// 人口データのレイヤはここで切替
-document.querySelector('#population-all-fill-layer-chk').addEventListener('change', () => {
-    const isChecked = document.getElementById('population-all-fill-layer-chk').checked;
-    togglePopulationLayer(isChecked);
-});
-
-document.querySelector('#popchange-all-fill-layer-chk').addEventListener('change', () => {
-    const isChecked = document.getElementById('popchange-all-fill-layer-chk').checked;
-    togglePopChangeLayer(isChecked);
-});
-
-// 行政界レイヤのレイヤはここで切替
-document.querySelector('#outline-layer-chk').addEventListener('change', () => {
-    const isChecked = document.getElementById('outline-layer-chk').checked;
-    toggleOutlineLayer(isChecked);
-});
-
-
-// PM2.5データのレイヤはここで切替
-document.querySelector('#PM25-all-fill-layer-chk').addEventListener('change', () => {
-    const isChecked = document.getElementById('PM25-all-fill-layer-chk').checked;
-    togglePM25Layer(isChecked);
-});
-
-// 凡例の表示・非表示を切り替えるイベントリスナーを追加
-document.getElementById('legend-toggle').addEventListener('click', () => {
-    toggleLegend();
-});
-
-
-document.querySelector('#toggle-layers-btn').addEventListener('click', () => {
-    const layersContainer = document.getElementById('layers-container');
-    if (layersContainer.style.display === 'none' || layersContainer.style.display === '') {
-        layersContainer.style.display = 'block';
-    } else {
-        layersContainer.style.display = 'none';
-    }
-});
-
-// レイヤ階層試作
-document.addEventListener('DOMContentLoaded', () => {
-    const sdg1121LayerChk = document.getElementById('sdg1121-layer-chk');
-    const sdg1121ToggleBtn = document.getElementById('sdg1121-toggle-btn');
-    const sdg1121Layers = document.getElementById('sdg1121-layers');
-
-    const childLayerChks = [
-        document.getElementById('population-all-fill-layer-chk'),
-        document.getElementById('popchange-all-fill-layer-chk'),
-        document.getElementById('PublicTransport-points-layer-chk'),
-        document.getElementById('MicroletRoute-line-layer-chk')
-    ];
-
-    // 子レイヤの表示/非表示を更新する関数
-const updateChildLayers = (isChecked) => {
-    childLayerChks.forEach(chk => {
-        if (chk.id !== 'popchange-all-fill-layer-chk') {
-            chk.checked = isChecked;
-            const layerId = chk.id.replace('-chk', '');
-            if (layerId === 'population-all-fill-layer') {
-                togglePopulationLayer(isChecked);
-            } else if (layerId === 'popchange-all-fill-layer') {
-                togglePopChangeLayer(isChecked);
-            } else {
-                toggleLayer(layerId);
-            }
-        }
-    });
-};
-
-    // 親レイヤのチェックボックスの動作
-    sdg1121LayerChk.addEventListener('change', () => {
-        const isChecked = sdg1121LayerChk.checked;
-        updateChildLayers(isChecked);
-    });
-
-    // トグルボタンの動作
-    sdg1121ToggleBtn.addEventListener('click', () => {
-        if (sdg1121Layers.style.display === 'none') {
-            sdg1121Layers.style.display = 'block';
-            sdg1121ToggleBtn.textContent = '▼';
-        } else {
-            sdg1121Layers.style.display = 'none';
-            sdg1121ToggleBtn.textContent = '▶';
-        }
-    });
-
-    // 子レイヤのチェックボックスが変更されたときの動作
-    childLayerChks.forEach(chk => {
-        chk.addEventListener('change', () => {
-            const layerId = chk.id.replace('-chk', '');
-            if (layerId === 'population-all-fill-layer') {
-                togglePopulationLayer(chk.checked);
-            } else if (layerId === 'popchange-all-fill-layer') {
-                togglePopChangeLayer(chk.checked);
-            } else {
-                toggleLayer(layerId);
-            }
-            // 小レイヤのチェック状態に応じて親レイヤのチェックボックスを更新
-            sdg1121LayerChk.checked = childLayerChks.some(layerChk => layerChk.checked);
-        });
-    });
-});
 
 
 /*******************************************************************
@@ -1355,52 +1229,52 @@ function addsourcelayers(firstSymbolId) {
         }
     },firstSymbolId );
     
-    // map.addLayer({
-    //   'id': 'MUNICIPIO-label-layer',
-    //   'type': 'symbol',
-    //   'source': 'pm25-source',
-    //   'source-layer': 'Municipio',
-    //   'layout': {
-    //     'text-field': ['get', 'MUNICIPIO'],
-    //     'text-size': 10,
-    //     'text-anchor': 'center'
-    //   },
-    //   'paint': {
-    //     'text-color': '#000000'
-    //   },
-    //   'maxzoom': 7
-    // });
+    map.addLayer({
+       'id': 'MUNICIPIO-label-layer',
+       'type': 'symbol',
+       'source': 'pm25-source',
+       'source-layer': 'Municipio',
+       'layout': {
+         'text-field': ['get', 'MUNICIPIO'],
+         'text-size': 10,
+         'text-anchor': 'center'
+       },
+       'paint': {
+         'text-color': '#000000'
+       },
+       'maxzoom': 7
+     });
     
-    // map.addLayer({
-    //   'id': 'PostuAdministrativo-label-layer',
-    //   'type': 'symbol',
-    //   'source': 'pm25-source',
-    //   'source-layer': 'PostuAdministrativo',
-    //   'layout': {
-    //     'text-field': ['get', 'P_ADMIN'],
-    //     'text-size': 10,
-    //     'text-anchor': 'center'
-    //   },
-    //   'paint': {
-    //     'text-color': '#000000'
-    //   },
-    //   'maxzoom': 9
-    // });
+     map.addLayer({
+       'id': 'PostuAdministrativo-label-layer',
+       'type': 'symbol',
+       'source': 'pm25-source',
+       'source-layer': 'PostuAdministrativo',
+       'layout': {
+         'text-field': ['get', 'P_ADMIN'],
+         'text-size': 10,
+         'text-anchor': 'center'
+       },
+       'paint': {
+         'text-color': '#000000'
+       },
+       'maxzoom': 9
+     });
     
-    // map.addLayer({
-    //   'id': 'Suco-label-layer',
-    //   'type': 'symbol',
-    //   'source': 'pm25-source',
-    //   'source-layer': 'Suco',
-    //   'layout': {
-    //     'text-field': ['get', 'SUCO'],
-    //     'text-size': 10,
-    //     'text-anchor': 'center'
-    //   },
-    //   'paint': {
-    //     'text-color': '#000000'
-    //   }
-    // });
+     map.addLayer({
+       'id': 'Suco-label-layer',
+       'type': 'symbol',
+       'source': 'pm25-source',
+       'source-layer': 'Suco',
+       'layout': {
+         'text-field': ['get', 'SUCO'],
+         'text-size': 10,
+         'text-anchor': 'center'
+       },
+       'paint': {
+         'text-color': '#000000'
+       }
+     });
 }
 
 
