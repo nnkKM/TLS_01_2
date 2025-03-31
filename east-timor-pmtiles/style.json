@@ -60,16 +60,6 @@
 	  }
 	},
 	"layers": [
-	  {
-		"id": "osm-layer",
-		"type": "raster",
-		"source": "osm-tiles",
-		"minzoom": 0,
-		"maxzoom": 19,
-		"paint": {
-		  "raster-saturation": -0.5
-		}
-	  },
 		  {
 			  "id": "background",
 			  "type": "background",
@@ -264,7 +254,7 @@
 			  "source-layer": "water_lines",
 			  "filter": [ "all", [ "in", "kind", "river" ], [ "!=", "tunnel", true ], [ "!=", "bridge", true ] ],
 			  "paint": {
-				  "line-color": "rgb(190,221,243)",
+				  "line-color": "rgb(190, 243, 225)",
 				  "line-width": { "stops": [ [ 9, 0 ], [ 10, 3 ], [ 15, 5 ], [ 17, 9 ], [ 18, 20 ], [ 20, 60 ] ] }
 			  },
 			  "layout": {
@@ -279,7 +269,7 @@
 			  "source-layer": "water_lines",
 			  "filter": [ "all", [ "in", "kind", "canal" ], [ "!=", "tunnel", true ], [ "!=", "bridge", true ] ],
 			  "paint": {
-				  "line-color": "rgb(190,221,243)",
+				  "line-color": "rgb(190, 243, 225)",
 				  "line-width": { "stops": [ [ 9, 0 ], [ 10, 2 ], [ 15, 4 ], [ 17, 8 ], [ 18, 17 ], [ 20, 50 ] ] }
 			  },
 			  "layout": {
@@ -294,7 +284,7 @@
 			  "source-layer": "water_lines",
 			  "filter": [ "all", [ "in", "kind", "stream" ], [ "!=", "tunnel", true ], [ "!=", "bridge", true ] ],
 			  "paint": {
-				  "line-color": "rgb(190,221,243)",
+				  "line-color": "rgb(190, 243, 225)",
 				  "line-width": { "stops": [ [ 13, 0 ], [ 14, 1 ], [ 15, 2 ], [ 17, 6 ], [ 18, 12 ], [ 20, 30 ] ] }
 			  },
 			  "layout": {
@@ -309,7 +299,7 @@
 			  "source-layer": "water_lines",
 			  "filter": [ "all", [ "in", "kind", "ditch" ], [ "!=", "tunnel", true ], [ "!=", "bridge", true ] ],
 			  "paint": {
-				  "line-color": "rgb(190,221,243)",
+				  "line-color": "rgb(190, 243, 225)",
 				  "line-width": { "stops": [ [ 14, 0 ], [ 15, 1 ], [ 17, 4 ], [ 18, 8 ], [ 20, 20 ] ] }
 			  },
 			  "layout": {
@@ -324,7 +314,7 @@
 			  "source-layer": "water_polygons",
 			  "filter": [ "==", "kind", "water" ],
 			  "paint": {
-				  "fill-color": "rgb(190,221,243)",
+				  "fill-color": "rgb(190, 243, 225)",
 				  "fill-opacity": { "stops": [ [ 4, 0 ], [ 6, 1 ] ] }
 			  }
 		  },
@@ -335,7 +325,7 @@
 			  "source-layer": "water_polygons",
 			  "filter": [ "==", "kind", "river" ],
 			  "paint": {
-				  "fill-color": "rgb(190,221,243)",
+				  "fill-color": "rgb(190, 243, 225)",
 				  "fill-opacity": { "stops": [ [ 4, 0 ], [ 6, 1 ] ] }
 			  }
 		  },
@@ -346,7 +336,7 @@
 			  "source-layer": "water_polygons",
 			  "filter": [ "in", "kind", "reservoir", "basin", "dock" ],
 			  "paint": {
-				  "fill-color": "rgb(190,221,243)",
+				  "fill-color": "rgb(190, 243, 225)",
 				  "fill-opacity": { "stops": [ [ 4, 0 ], [ 6, 1 ] ] }
 			  }
 		  },
@@ -4716,6 +4706,19 @@
 				  "text-halo-blur": 1
 			  },
 			  "minzoom": 12
+		  },
+		  {
+			"id": "osm-layer",
+			"type": "raster",
+			"source": "osm-tiles",
+			"layout": {
+				"visibility": "none"
+			},
+			"minzoom": 0,
+			"maxzoom": 19,
+			"paint": {
+			  "raster-saturation": -0.5
+			}
 		  },
 	  {
 		"id": "population-fill-layer",
