@@ -168,7 +168,7 @@ document.querySelector('#toggle-layers-btn').addEventListener('click', () => {
     }
 });
 
-// レイヤ階層試作
+// レイヤ階層
 document.addEventListener('DOMContentLoaded', () => {
     const sdg1121LayerChk = document.getElementById('sdg1121-layer-chk');
     const sdg1121ToggleBtn = document.getElementById('sdg1121-toggle-btn');
@@ -182,21 +182,21 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // 子レイヤの表示/非表示を更新する関数
-const updateChildLayers = (isChecked) => {
-    childLayerChks.forEach(chk => {
-        if (chk.id !== 'popchange-all-fill-layer-chk') {
-            chk.checked = isChecked;
-            const layerId = chk.id.replace('-chk', '');
-            if (layerId === 'population-all-fill-layer') {
-                togglePopulationLayer(isChecked);
-            } else if (layerId === 'popchange-all-fill-layer') {
-                togglePopChangeLayer(isChecked);
-            } else {
-                toggleLayer(layerId);
+    const updateChildLayers = (isChecked) => {
+        childLayerChks.forEach(chk => {
+            if (chk.id !== 'popchange-all-fill-layer-chk') {
+                chk.checked = isChecked;
+                const layerId = chk.id.replace('-chk', '');
+                if (layerId === 'population-all-fill-layer') {
+                    togglePopulationLayer(isChecked);
+                } else if (layerId === 'popchange-all-fill-layer') {
+                    togglePopChangeLayer(isChecked);
+                } else {
+                    toggleLayer(layerId);
+                }
             }
-        }
-    });
-};
+        });
+    };
 
     // 親レイヤのチェックボックスの動作
     sdg1121LayerChk.addEventListener('change', () => {
@@ -233,6 +233,8 @@ const updateChildLayers = (isChecked) => {
 });
 
 
+// ラジオボタンによる背景地図ON/OFF
+// style.jsonがロードされたら行われるレイヤの設定（TileServer GL）
 const setOSMLayout = () => {
     firstSymbolId = getsymbolID();
     addsourcelayers(firstSymbolId);
@@ -244,9 +246,11 @@ const setOSMLayout = () => {
     map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
 }
 
+// style.jsonがロードされたら行われるレイヤの設定（VersaTiles color）
 const setVersatileLayout = () => {
     firstSymbolId = getsymbolID();
-    
+
+    map.moveLayer('osm-layer', firstSymbolId);
     map.moveLayer('population-fill-layer', firstSymbolId);
     map.moveLayer('popchange-fill-layer', firstSymbolId);
     map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
@@ -266,7 +270,7 @@ const setVersatileLayout = () => {
 }
 
 let tileType = ''; //ラジオボタンを切り替えたときにタイルのタイプを指定
-map.on('style.load', function() {
+map.on('style.load', function() {   // style.jsonがロードされたときに発動するイベント
     if(tileType === 'osmofficial'){
         setOSMLayout();
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
@@ -285,12 +289,12 @@ radioButtons.forEach(radio => {
         // ラジオボタンのvalueによってスタイルを変更
         switch(this.value) {
             case 'versatiles':
-                console.log("ラジオボタン押したあああああああああああああああああ");
+                // console.log("ラジオボタン押したあああああああああああああああああ");
                 map.setStyle('./east-timor-pmtiles/style.json');
                 tileType = 'versatiles';
                 break; //この後、上のmap.on('style.load'～が実行される
             case 'osmofficial':
-                console.log("ラジオボタン押したあああああああああああああああああ");
+                // console.log("ラジオボタン押したあああああああああああああああああ");
                 map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
                 tileType = 'osmofficial';
                 break; //この後、上のmap.on('style.load'～が実行される
