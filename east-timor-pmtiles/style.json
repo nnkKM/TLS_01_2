@@ -42,10 +42,10 @@
 	  "pm25-source": {
 		"type": "vector",
 		"tiles": [
-		  "pmtiles://https://nnkhij.github.io/test5/data/PM25.pmtiles/{z}/{x}/{y}"
+		  "pmtiles://https://nnkhij.github.io/test5/data/output.pmtiles/{z}/{x}/{y}"
 		],
 		"minzoom": 4,
-		"maxzoom": 9,
+		"maxzoom": 14,
 		"attribution": "<a href=\"https://inetl-ip.gov.tl/\" target=\"_blank\">Baliza data</a> "
 	  },
 	  "LCRPGR-source": {
@@ -4830,178 +4830,187 @@
 		"raster-opacity": 0.4
 		}
 	   },
-	  {
-		"id": "MUNICIPIO-fill-layer",
-		"type": "fill",
-		"source": "pm25-source",
-		"source-layer": "Municipio",
-		"layout": {
-		"visibility": "none"
-		},
-		"paint": {
-		  "fill-color": [
-			"case",
-			["<=", ["get", "Pm25PopWam"], 10.0], "#ffffff",
-			["<=", ["get", "Pm25PopWam"], 10.5], "#ffffcc",
-			["<=", ["get", "Pm25PopWam"], 11.0], "#ffeb99",
-			["<=", ["get", "Pm25PopWam"], 11.5], "#ffd966",
-			["<=", ["get", "Pm25PopWam"], 12.0], "#ffcc33",
-			["<=", ["get", "Pm25PopWam"], 12.5], "#ffbf00",
-			["<=", ["get", "Pm25PopWam"], 13.0], "#e6ac00",
-			["<=", ["get", "Pm25PopWam"], 13.5], "#cc9900",
-			["<=", ["get", "Pm25PopWam"], 14.0], "#b38600",
-			"#996633"
-		  ],
-		  "fill-opacity": 0.6
-		},
-		"maxzoom": 7
-	  },
-	  {
-		"id": "PostuAdministrativo-fill-layer",
-		"type": "fill",
-		"source": "pm25-source",
-		"source-layer": "PostuAdministrativo",
-		"layout": {
-		"visibility": "none"
-		},
-		"paint": {
-		  "fill-color": [
-			"case",
-			["<=", ["get", "Pm25PopWam"], 10.0], "#ffffff",
-			["<=", ["get", "Pm25PopWam"], 10.5], "#ffffcc",
-			["<=", ["get", "Pm25PopWam"], 11.0], "#ffeb99",
-			["<=", ["get", "Pm25PopWam"], 11.5], "#ffd966",
-			["<=", ["get", "Pm25PopWam"], 12.0], "#ffcc33",
-			["<=", ["get", "Pm25PopWam"], 12.5], "#ffbf00",
-			["<=", ["get", "Pm25PopWam"], 13.0], "#e6ac00",
-			["<=", ["get", "Pm25PopWam"], 13.5], "#cc9900",
-			["<=", ["get", "Pm25PopWam"], 14.0], "#b38600",
-			"#996633"
-		  ],
-		  "fill-opacity": 0.6
-		},
-		"minzoom": 7,
-		"maxzoom": 9
-	  },
-	  {
-		"id": "Suco-fill-layer",
-		"type": "fill",
-		"source": "pm25-source",
-		"source-layer": "Suco",
-		"layout": {
-		"visibility": "none"
-		},
-		"paint": {
-		  "fill-color": [
-			"case",
-			["<=", ["get", "PM25"], 10.0], "#ffffff",
-			["<=", ["get", "PM25"], 10.5], "#ffffcc",
-			["<=", ["get", "PM25"], 11.0], "#ffeb99",
-			["<=", ["get", "PM25"], 11.5], "#ffd966",
-			["<=", ["get", "PM25"], 12.0], "#ffcc33",
-			["<=", ["get", "PM25"], 12.5], "#ffbf00",
-			["<=", ["get", "PM25"], 13.0], "#e6ac00",
-			["<=", ["get", "PM25"], 13.5], "#cc9900",
-			["<=", ["get", "PM25"], 14.0], "#b38600",
-			"#996633"
-		  ],
-		  "fill-opacity": 0.6
-		}
-	   },
-	  {
-		"id": "MUNICIPIO-outline-layer",
-		"type": "line",
-		"source": "pm25-source",
-		"source-layer": "Municipio",
-		"paint": {
-		  "line-color": "#010066",
-		  "line-width": [
-		  "interpolate",
-		  ["linear"],
-		  ["zoom"],
-		  4, 0.1,
-		  12, 2
-		]
-		}
-	  },
-	  {
-		"id": "PostuAdministrativo-outline-layer",
-		"type": "line",
-		"source": "pm25-source",
-		"source-layer": "PostuAdministrativo",
-		"paint": {
-		  "line-color": "#010066",
-		  "line-width":  [
-		  "interpolate",
-		  ["linear"],
-		  ["zoom"],
-		  8, 0.1,
-		  12, 1
-		]
-		}
-	  },
-	  {
-		"id": "Suco-outline-layer",
-		"type": "line",
-		"source": "pm25-source",
-		"source-layer": "Suco",
-		"paint": {
-		  "line-color": "#235BC8",
-		  "line-width": [
-		  "interpolate",
-		  ["linear"],
-		  ["zoom"],
-		  8, 0.05,
-		  12, 0.5
-		]
-		}
-	  },
-	  {
-		"id": "MUNICIPIO-label-layer",
-		"type": "symbol",
-		"source": "pm25-source",
-		"source-layer": "Municipio",
-		"layout": {
-		  "text-field": ["get", "MUNICIPIO"],
-		  "text-font": [ "noto_sans_regular" ],
-		  "text-size": 10,
-		  "text-anchor": "center"
-		},
-		"paint": {
-		  "text-color": "#000000"
-		},
-		 "maxzoom": 7
-	  },
-	  {
-		"id": "PostuAdministrativo-label-layer",
-		"type": "symbol",
-		"source": "pm25-source",
-		"source-layer": "PostuAdministrativo",
-		"layout": {
-		  "text-field": ["get", "P_ADMIN"],
-		  "text-font": [ "noto_sans_regular" ],
-		  "text-size": 10,
-		  "text-anchor": "center"
-		},
-		"paint": {
-		  "text-color": "#000000"
-		},
-		 "maxzoom": 9
-	  },
-	  {
-		"id": "Suco-label-layer",
-		"type": "symbol",
-		"source": "pm25-source",
-		"source-layer": "Suco",
-		"layout": {
-		  "text-field": ["get", "SUCO"],
-		  "text-font": [ "noto_sans_regular" ],
-		  "text-size": 10,
-		  "text-anchor": "center"
-		},
-		"paint": {
-		  "text-color": "#000000"
-		}
-	  }
-	]
-  }
+    {
+      "id": "MUNICIPIO-fill-layer",
+      "type": "fill",
+      "source": "pm25-source",
+      "source-layer": "Municipio",
+      "layout": {
+      "visibility": "none"
+      },
+      "paint": {
+        "fill-color": [
+          "case",
+          ["<=", ["get", "Pm25PopWam"], 10.0], "#ffffff",
+          ["<=", ["get", "Pm25PopWam"], 10.5], "#ffffcc",
+          ["<=", ["get", "Pm25PopWam"], 11.0], "#ffeb99",
+          ["<=", ["get", "Pm25PopWam"], 11.5], "#ffd966",
+          ["<=", ["get", "Pm25PopWam"], 12.0], "#ffcc33",
+          ["<=", ["get", "Pm25PopWam"], 12.5], "#ffbf00",
+          ["<=", ["get", "Pm25PopWam"], 13.0], "#e6ac00",
+          ["<=", ["get", "Pm25PopWam"], 13.5], "#cc9900",
+          ["<=", ["get", "Pm25PopWam"], 14.0], "#b38600",
+          "#996633"
+        ],
+        "fill-opacity": 0.6
+      },
+      "maxzoom": 8
+    },
+    {
+      "id": "PostuAdministrativo-fill-layer",
+      "type": "fill",
+      "source": "pm25-source",
+      "source-layer": "PostuAdministrativo",
+      "layout": {
+      "visibility": "none"
+      },
+      "paint": {
+        "fill-color": [
+          "case",
+          ["<=", ["get", "Pm25PopWam"], 10.0], "#ffffff",
+          ["<=", ["get", "Pm25PopWam"], 10.5], "#ffffcc",
+          ["<=", ["get", "Pm25PopWam"], 11.0], "#ffeb99",
+          ["<=", ["get", "Pm25PopWam"], 11.5], "#ffd966",
+          ["<=", ["get", "Pm25PopWam"], 12.0], "#ffcc33",
+          ["<=", ["get", "Pm25PopWam"], 12.5], "#ffbf00",
+          ["<=", ["get", "Pm25PopWam"], 13.0], "#e6ac00",
+          ["<=", ["get", "Pm25PopWam"], 13.5], "#cc9900",
+          ["<=", ["get", "Pm25PopWam"], 14.0], "#b38600",
+          "#996633"
+        ],
+        "fill-opacity": 0.6
+      },
+      "minzoom": 8,
+      "maxzoom": 10
+    },
+    {
+      "id": "Suco-fill-layer",
+      "type": "fill",
+      "source": "pm25-source",
+      "source-layer": "Suco",
+      "layout": {
+      "visibility": "none"
+      },
+      "paint": {
+        "fill-color": [
+          "case",
+          ["<=", ["get", "PM25"], 10.0], "#ffffff",
+          ["<=", ["get", "PM25"], 10.5], "#ffffcc",
+          ["<=", ["get", "PM25"], 11.0], "#ffeb99",
+          ["<=", ["get", "PM25"], 11.5], "#ffd966",
+          ["<=", ["get", "PM25"], 12.0], "#ffcc33",
+          ["<=", ["get", "PM25"], 12.5], "#ffbf00",
+          ["<=", ["get", "PM25"], 13.0], "#e6ac00",
+          ["<=", ["get", "PM25"], 13.5], "#cc9900",
+          ["<=", ["get", "PM25"], 14.0], "#b38600",
+          "#996633"
+        ],
+        "fill-opacity": 0.6
+      }
+     },
+    {
+      "id": "MUNICIPIO-outline-layer",
+      "type": "line",
+      "source": "pm25-source",
+      "source-layer": "boundaries",
+      "filter": [ "in", "admin_level", 4, "4" ],
+      "paint": {
+        "line-color": "#9E9CAB",
+        "line-dasharray": [6, 2, 2, 2],
+        "line-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8, 1.5,
+        12, 3
+      ]
+      }
+    },
+    {
+      "id": "PostuAdministrativo-outline-layer",
+      "type": "line",
+      "source": "pm25-source",
+      "source-layer": "boundaries",
+      "filter": [ "in", "admin_level", 5, "5" ],
+      "paint": {
+        "line-color": "#9E9CAB",
+        "line-dasharray": [3, 1, 1, 1],
+        "line-width":  [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        4, 0.2,
+        8, 1,
+        12, 2
+      ]
+      },
+       "minzoom": 8
+    },
+    {
+      "id": "Suco-outline-layer",
+      "type": "line",
+      "source": "pm25-source",
+      "source-layer": "boundaries",
+      "filter": [ "in", "admin_level", 6, "6" ],
+      "paint": {
+        "line-color": "#9E9CAB",
+        "line-dasharray": [3, 1, 1, 1],
+        "line-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8, 0.5,
+        12, 1
+      ]
+      },
+       "minzoom": 10
+    },
+    {
+      "id": "MUNICIPIO-label-layer",
+      "type": "symbol",
+      "source": "pm25-source",
+      "source-layer": "Municipio",
+      "layout": {
+        "text-field": ["get", "MUNICIPIO"],
+        "text-font": [ "noto_sans_bold" ],
+        "text-size": 10,
+        "text-anchor": "center"
+      },
+      "paint": {
+        "text-color": "#000000"
+      },
+       "maxzoom": 8
+    },
+    {
+      "id": "PostuAdministrativo-label-layer",
+      "type": "symbol",
+      "source": "pm25-source",
+      "source-layer": "PostuAdministrativo",
+      "layout": {
+        "text-field": ["get", "P_ADMIN"],
+        "text-font": [ "noto_sans_bold" ],
+        "text-size": 10,
+        "text-anchor": "center"
+      },
+      "paint": {
+        "text-color": "#000000"
+      },
+       "maxzoom": 10
+    },
+    {
+      "id": "Suco-label-layer",
+      "type": "symbol",
+      "source": "pm25-source",
+      "source-layer": "Suco",
+      "layout": {
+        "text-field": ["get", "SUCO"],
+        "text-font": [ "noto_sans_bold" ],
+        "text-size": 10,
+        "text-anchor": "center"
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    }
+  ]
+}
