@@ -11,7 +11,7 @@ const map = new maplibregl.Map({
     zoom: 8
 });
 map.addControl(new maplibregl.NavigationControl());
-あ
+
 // デフォルトの年数をセット
 map.on('load', () => {
     firstSymbolId = getsymbolID();
