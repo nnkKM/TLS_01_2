@@ -3693,17 +3693,17 @@
 			  "type": "symbol",
 			  "source-layer": "pois",
 			  "filter": [ "to-boolean", [ "get", "leisure" ] ],
-			  "minzoom": 16,
+			  "minzoom": 8,
 			  "layout": {
-				  "icon-size": { "stops": [ [ 16, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
+				  "icon-size": { "stops": [ [ 8, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
 				  "symbol-placement": "point",
 				  "icon-optional": true,
 				  "text-font": [ "noto_sans_regular" ],
 				  "icon-image": [ "match", [ "get", "leisure" ], "golf_course", "icon-golf", "ice_rink", "icon-icerink", "pitch", "icon-pitch", "stadium", "icon-stadium", "swimming_pool", "icon-swimming", "water_park", "icon-waterpark", "icon-sports" ]
 			  },
 			  "paint": {
-				  "icon-opacity": { "stops": [ [ 16, 0 ], [ 17, 0.4 ] ] },
-				  "text-opacity": { "stops": [ [ 16, 0 ], [ 17, 0.4 ] ] },
+				  "icon-opacity": { "stops": [ [ 8, 0 ], [ 17, 0.4 ] ] },
+				  "text-opacity": { "stops": [ [ 8, 0 ], [ 17, 0.4 ] ] },
 				  "icon-color": "rgb(85,85,85)",
 				  "text-color": "rgb(85,85,85)"
 			  }
@@ -3716,7 +3716,7 @@
 			  "filter": [ "to-boolean", [ "get", "tourism" ] ],
 			  "minzoom": 8,
 			  "layout": {
-				  "icon-size": { "stops": [ [ 16, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
+				  "icon-size": { "stops": [ [ 8, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
 				  "symbol-placement": "point",
 				  "icon-optional": true,
 				  "text-font": [ "noto_sans_regular" ],
@@ -3756,17 +3756,17 @@
 			  "type": "symbol",
 			  "source-layer": "pois",
 			  "filter": [ "to-boolean", [ "get", "man_made" ] ],
-			  "minzoom": 16,
+			  "minzoom": 8,
 			  "layout": {
-				  "icon-size": { "stops": [ [ 16, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
+				  "icon-size": { "stops": [ [ 8, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
 				  "symbol-placement": "point",
 				  "icon-optional": true,
 				  "text-font": [ "noto_sans_regular" ],
 				  "icon-image": [ "match", [ "get", "man_made" ], "lighthouse", "icon-lighthouse", "surveillance", "icon-surveillance", "tower", "icon-observation_tower", "watermill", "icon-watermill", "windmill", "icon-windmill", "" ]
 			  },
 			  "paint": {
-				  "icon-opacity": { "stops": [ [ 16, 0 ], [ 17, 0.4 ] ] },
-				  "text-opacity": { "stops": [ [ 16, 0 ], [ 17, 0.4 ] ] },
+				  "icon-opacity": { "stops": [ [ 8, 0 ], [ 17, 0.4 ] ] },
+				  "text-opacity": { "stops": [ [ 8, 0 ], [ 17, 0.4 ] ] },
 				  "icon-color": "rgb(85,85,85)",
 				  "text-color": "rgb(85,85,85)"
 			  }
@@ -3777,17 +3777,17 @@
 			  "type": "symbol",
 			  "source-layer": "pois",
 			  "filter": [ "to-boolean", [ "get", "historic" ] ],
-			  "minzoom": 16,
+			  "minzoom": 8,
 			  "layout": {
-				  "icon-size": { "stops": [ [ 16, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
+				  "icon-size": { "stops": [ [ 8, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
 				  "symbol-placement": "point",
 				  "icon-optional": true,
 				  "text-font": [ "noto_sans_regular" ],
 				  "icon-image": [ "match", [ "get", "historic" ], "artwork", "icon-artwork", "castle", "icon-castle", "monument", "icon-monument", "wayside_shrine", "icon-shrine", "icon-historic" ]
 			  },
 			  "paint": {
-				  "icon-opacity": { "stops": [ [ 16, 0 ], [ 17, 0.4 ] ] },
-				  "text-opacity": { "stops": [ [ 16, 0 ], [ 17, 0.4 ] ] },
+				  "icon-opacity": { "stops": [ [ 8, 0 ], [ 17, 0.4 ] ] },
+				  "text-opacity": { "stops": [ [ 8, 0 ], [ 17, 0.4 ] ] },
 				  "icon-color": "rgb(85,85,85)",
 				  "text-color": "rgb(85,85,85)"
 			  }
@@ -3798,17 +3798,17 @@
 			  "type": "symbol",
 			  "source-layer": "pois",
 			  "filter": [ "to-boolean", [ "get", "emergency" ] ],
-			  "minzoom": 16,
+			  "minzoom": 8,
 			  "layout": {
-				  "icon-size": { "stops": [ [ 16, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
+				  "icon-size": { "stops": [ [ 8, 0.5 ], [ 19, 0.5 ], [ 20, 1 ] ] },
 				  "symbol-placement": "point",
 				  "icon-optional": true,
 				  "text-font": [ "noto_sans_regular" ],
 				  "icon-image": [ "match", [ "get", "emergency" ], "defibrillator", "icon-defibrillator", "fire_hydrant", "icon-hydrant", "phone", "icon-emergency_phone", "" ]
 			  },
 			  "paint": {
-				  "icon-opacity": { "stops": [ [ 16, 0 ], [ 17, 0.4 ] ] },
-				  "text-opacity": { "stops": [ [ 16, 0 ], [ 17, 0.4 ] ] },
+				  "icon-opacity": { "stops": [ [ 8, 0 ], [ 17, 0.4 ] ] },
+				  "text-opacity": { "stops": [ [ 8, 0 ], [ 17, 0.4 ] ] },
 				  "icon-color": "rgb(85,85,85)",
 				  "text-color": "rgb(85,85,85)"
 			  }
