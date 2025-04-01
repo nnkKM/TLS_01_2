@@ -948,10 +948,10 @@ function addsourcelayers(firstSymbolId) {
     map.addSource('pm25-source', {
         'type': 'vector',
         'tiles': [
-        'pmtiles://https://nnkhij.github.io/test5/data/PM25.pmtiles/{z}/{x}/{y}'
+        'pmtiles://https://nnkhij.github.io/test5/data/output.pmtiles/{z}/{x}/{y}'
         ],
         'minzoom': 4,
-        'maxzoom': 9,
+        'maxzoom': 14,
         'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a>'
     });
 
@@ -1125,7 +1125,7 @@ function addsourcelayers(firstSymbolId) {
         ],
         'fill-opacity': 0.6
         },
-        'maxzoom': 7
+        'maxzoom': 8
     },firstSymbolId );
     
     map.addLayer({
@@ -1152,8 +1152,8 @@ function addsourcelayers(firstSymbolId) {
         ],
         'fill-opacity': 0.6
         },
-        'minzoom': 7,
-        'maxzoom': 9
+        'minzoom': 8,
+        'maxzoom': 10
     },firstSymbolId );
     
     map.addLayer({
@@ -1181,56 +1181,65 @@ function addsourcelayers(firstSymbolId) {
         'fill-opacity': 0.6
         }
     },firstSymbolId );
-    
+
     map.addLayer({
         'id': 'MUNICIPIO-outline-layer',
         'type': 'line',
         'source': 'pm25-source',
-        'source-layer': 'Municipio',
+        'source-layer': 'boundaries',
+        'filter': ['in', 'admin_level', 4, '4'],
         'paint': {
-        'line-color': '#010066',
-        'line-width': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            4, 0.1,
-            12, 2
-        ]
+            'line-color': '#9E9CAB',
+            'line-dasharray': [6, 2, 2, 2],
+            'line-width': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                4, 0.2,
+                8, 1.5,
+                12, 3
+            ]
         }
-    },firstSymbolId );
-    
+     },firstSymbolId );
+        
     map.addLayer({
         'id': 'PostuAdministrativo-outline-layer',
         'type': 'line',
         'source': 'pm25-source',
-        'source-layer': 'PostuAdministrativo',
+        'source-layer': 'boundaries',
+        'filter': ['in', 'admin_level', 5, '5'],
         'paint': {
-        'line-color': '#010066',
+        'line-color': '#9E9CAB',
+        'line-dasharray': [3, 1, 1, 1],
         'line-width': [
             'interpolate',
             ['linear'],
             ['zoom'],
-            8, 0.1,
-            12, 1
+            8, 1,
+            12, 2
         ]
-        }
+        },
+       'minzoom': 8
     },firstSymbolId );
     
     map.addLayer({
         'id': 'Suco-outline-layer',
         'type': 'line',
         'source': 'pm25-source',
-        'source-layer': 'Suco',
+        'source-layer': 'boundaries',
+        'filter': ['in', 'admin_level', 6, '6'],
         'paint': {
-        'line-color': '#235BC8',
+        'line-color': '#9E9CAB',
+        'line-dasharray': [3, 1, 1, 1],
         'line-width': [
             'interpolate',
             ['linear'],
             ['zoom'],
-            8, 0.05,
-            12, 0.5
+            8, 0.5,
+            12, 1
         ]
-        }
+        },
+       'minzoom': 10
     },firstSymbolId );
     
     map.addLayer({
@@ -1240,13 +1249,14 @@ function addsourcelayers(firstSymbolId) {
        'source-layer': 'Municipio',
        'layout': {
          'text-field': ['get', 'MUNICIPIO'],
+         'text-font': [ 'migu2m-bold' ],
          'text-size': 10,
          'text-anchor': 'center'
        },
        'paint': {
          'text-color': '#000000'
        },
-       'maxzoom': 7
+       'maxzoom': 8
      });
     
      map.addLayer({
@@ -1256,13 +1266,14 @@ function addsourcelayers(firstSymbolId) {
        'source-layer': 'PostuAdministrativo',
        'layout': {
          'text-field': ['get', 'P_ADMIN'],
+         'text-font': [ 'migu2m-bold' ],
          'text-size': 10,
          'text-anchor': 'center'
        },
        'paint': {
          'text-color': '#000000'
        },
-       'maxzoom': 9
+       'maxzoom': 10
      });
     
      map.addLayer({
@@ -1272,6 +1283,7 @@ function addsourcelayers(firstSymbolId) {
        'source-layer': 'Suco',
        'layout': {
          'text-field': ['get', 'SUCO'],
+         'text-font': [ 'migu2m-bold' ],
          'text-size': 10,
          'text-anchor': 'center'
        },
