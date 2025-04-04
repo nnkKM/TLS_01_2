@@ -15,7 +15,7 @@ map.addControl(new maplibregl.NavigationControl());
 // デフォルトの年数をセット
 map.on('load', () => {
     firstSymbolId = getsymbolID();
-    addsourcelayers(firstSymbolId);
+    addsourcelayers(firstSymbolId, 'migu2m-bold');
 
     //////////////  人口データのスタイル調整    /////////////
     updateMapStyle_pop("2020");
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // style.jsonがロードされたら行われるレイヤの設定（TileServer GL）
 const setOSMLayout = () => {
     firstSymbolId = getsymbolID();
-    addsourcelayers(firstSymbolId);
+    addsourcelayers(firstSymbolId, 'migu2m-bold');
        
     //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
     updateMapStyle_pop("2020");
@@ -275,6 +275,7 @@ map.on('style.load', function() {   // style.jsonがロードされたときに�
         setOSMLayout();
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'versatiles'){
+		addsourcelayers(getsymbolID(), 'noto_sans_regular');
         setVersatileLayout();
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }
@@ -290,7 +291,7 @@ radioButtons.forEach(radio => {
         switch(this.value) {
             case 'versatiles':
                 // console.log("ラジオボタン押したあああああああああああああああああ");
-                map.setStyle('./east-timor-pmtiles/style.json');
+				map.setStyle('./east-timor-pmtiles/style.json')
                 tileType = 'versatiles';
                 break; //この後、上のmap.on('style.load'～が実行される
             case 'osmofficial':
@@ -906,7 +907,7 @@ function handleMapClick(e) {
 //  * *************************************************************** */
 // 関数にチェックボタンON/OFFに関する引数を入れると、map上のレイヤON/OFFを反映して引き継げる（予定）
 
-function addsourcelayers(firstSymbolId) {
+function addsourcelayers(firstSymbolId, font) {
 
 
 // ////////////////////ソース///////////////////
@@ -1249,7 +1250,7 @@ function addsourcelayers(firstSymbolId) {
        'source-layer': 'Municipio',
        'layout': {
          'text-field': ['get', 'MUNICIPIO'],
-         'text-font': [ 'migu2m-bold' ],
+         'text-font': [ font ],
          'text-size': 10,
          'text-anchor': 'center'
        },
@@ -1266,7 +1267,7 @@ function addsourcelayers(firstSymbolId) {
        'source-layer': 'PostuAdministrativo',
        'layout': {
          'text-field': ['get', 'P_ADMIN'],
-         'text-font': [ 'migu2m-bold' ],
+         'text-font': [ font ],
          'text-size': 10,
          'text-anchor': 'center'
        },
@@ -1283,7 +1284,7 @@ function addsourcelayers(firstSymbolId) {
        'source-layer': 'Suco',
        'layout': {
          'text-field': ['get', 'SUCO'],
-         'text-font': [ 'migu2m-bold' ],
+         'text-font': [ font ],
          'text-size': 10,
          'text-anchor': 'center'
        },
@@ -1292,7 +1293,6 @@ function addsourcelayers(firstSymbolId) {
        }
      });
 }
-
 
 function getsymbolID() {
     const layers = map.getStyle().layers;
