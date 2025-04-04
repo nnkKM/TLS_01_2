@@ -110,5 +110,6 @@
   "pattern-striped": {"width":64,"height":64,"x":1280,"y":1124,"pixelRatio":4,"sdf":false},
   "pattern-warning": {"width":64,"height":64,"x":1344,"y":1124,"pixelRatio":4,"sdf":false},
   "transport-tram": {"width":128,"height":128,"x":1280,"y":768,"pixelRatio":4,"sdf":true},
-  "transport-information": {"width":128,"height":128,"x":1280,"y":896,"pixelRatio":4,"sdf":true}
+  "transport-information": {"width":128,"height":128,"x":1280,"y":896,"pixelRatio":4,"sdf":true},
+  "icon-ferry": {"width":128,"height":128,"x":0,"y":1279,"pixelRatio":4,"sdf":true}
 }
