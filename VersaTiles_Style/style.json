@@ -16379,6 +16379,50 @@
 				"text-size": 10,
 				"icon-anchor": "bottom",
 				"text-anchor": "top",
+				"icon-image": "icon-bus"
+			},
+			"paint": {
+				"icon-opacity": 0.9,
+				"icon-color": "rgb(102,98,106)",
+				"text-color": "rgb(102,98,106)",
+				"text-halo-color": "rgba(255,255,255,0.8)",
+				"text-halo-width": 2,
+				"text-halo-blur": 1
+			},
+			"minzoom": 5
+		},
+		{
+			"source": "versatiles-shortbread",
+			"id": "symbol-transit-ferry",
+			"type": "symbol",
+			"source-layer": "public_transport",
+			"filter": [
+				"==",
+				"kind",
+				"ferry_terminal"
+			],
+			"layout": {
+				"text-field": "{name}",
+				"icon-size": {
+					"stops": [
+						[
+							5,
+							1.5
+						],
+						[
+							14,
+							1.5
+						]
+					]
+				},
+				"symbol-placement": "point",
+				"icon-keep-upright": true,
+				"text-font": [
+					"noto_sans_regular"
+				],
+				"text-size": 10,
+				"icon-anchor": "bottom",
+				"text-anchor": "top",
 				"icon-image": "icon-ferry"
 			},
 			"paint": {
