@@ -278,7 +278,7 @@ radioButtons.forEach(radio => {
         switch(this.value) {
             case 'versatiles':
                 // console.log("ラジオボタン押したあああああああああああああああああ");
-				map.setStyle('./east-timor-pmtiles/style.json')
+				map.setStyle('./VersaTiles_Style/style.json')
                 tileType = 'versatiles';
                 break; //この後、上のmap.on('style.load'～が実行される
             case 'tileservergl':

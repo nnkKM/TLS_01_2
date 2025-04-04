@@ -1,8 +1,8 @@
 {
 	"version": 8,
 	"name": "Simple OSM",
-	"glyphs": "https://nnkKM.github.io/TLS_01_2/east-timor-pmtiles/fonts/{fontstack}/{range}.pbf",
-	"sprite": "https://nnkKM.github.io/TLS_01_2/basics/sprites",
+	"glyphs": "https://nnkKM.github.io/TLS_01_2/VersaTiles_Style/fonts/{fontstack}/{range}.pbf",
+	"sprite": "https://nnkKM.github.io/TLS_01_2/VersaTiles_Style/basics/sprites",
 	"sources": {
 	  "versatiles-shortbread": {
 		"type": "vector",
