@@ -12,12 +12,13 @@ const map = new maplibregl.Map({
 });
 map.addControl(new maplibregl.NavigationControl());
 
-// デフォルトの年数をセット
+// 最初に地図が読み込まれた時の処理
 map.on('load', () => {
+    // 主題図を読み込んでいる
     firstSymbolId = getsymbolID();
     addsourcelayers(firstSymbolId, 'migu2m-bold');
 
-    //////////////  人口データのスタイル調整    /////////////
+    // 人口データのスタイル調整
     updateMapStyle_pop("2020");
     updateMapStyle_popchange("2019");
     map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
@@ -27,7 +28,7 @@ map.on('load', () => {
 /*******************************************************************
  * レイヤON/OFF
  * *************************************************************** */
-// 人口データ以外のレイヤ設定はjsonのレイヤIDをここに加える
+// 人口データと行政界以外のレイヤ設定はjsonのレイヤIDをここに加える
 const layerIds = [
     'osm-layer',
     'PublicTransport-points-layer',
@@ -137,6 +138,7 @@ document.querySelector('#PM25-all-fill-layer-chk').addEventListener('change', ()
     togglePM25Layer(isChecked);
 });
 
+// レイヤのON/OFFイベントをここで一括管理
 const setAllLayersAndValues = () => {
     const elm = id => {
         return document.getElementById(id);
@@ -233,11 +235,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ラジオボタンによる背景地図ON/OFF
-// style.jsonがロードされたら行われるレイヤの設定（TileServer GL）
-const setOSMLayout = () => {
+///////////////// ラジオボタンによる背景地図ON/OFF /////////////////////////
+
+/* style.jsonがロードされたら発動するレイヤの設定の関数
+   style.jsonによって読み込めるfontが違うのでfontを引数にしている
+   fontを共通化できたら引数のfontいらない
+*/ 
+const setLayoutThematicMap = (font) => {
     firstSymbolId = getsymbolID();
-    addsourcelayers(firstSymbolId, 'migu2m-bold');
+    addsourcelayers(firstSymbolId, font);
+
+    // const currentStyle = map.getStyle();
+    // console.log('Loaded Style:', currentStyle);
        
     //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
     updateMapStyle_pop("2020");
@@ -246,39 +255,17 @@ const setOSMLayout = () => {
     map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
 }
 
-// style.jsonがロードされたら行われるレイヤの設定（VersaTiles color）
-const setVersatileLayout = () => {
-    firstSymbolId = getsymbolID();
-
-    map.moveLayer('osm-layer', firstSymbolId);
-    map.moveLayer('population-fill-layer', firstSymbolId);
-    map.moveLayer('popchange-fill-layer', firstSymbolId);
-    map.moveLayer('LCRPGR-raster-layer', firstSymbolId);
-    map.moveLayer('MUNICIPIO-fill-layer', firstSymbolId);
-    map.moveLayer('PostuAdministrativo-fill-layer', firstSymbolId);
-    map.moveLayer('Suco-fill-layer', firstSymbolId);
-
-    const currentStyle = map.getStyle();
-    console.log('Loaded Style:', currentStyle);
-
-
-    //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
-    updateMapStyle_pop("2020");
-    updateMapStyle_popchange("2019");
-    map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
-    map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none'); 
-}
-
 let tileType = ''; //ラジオボタンを切り替えたときにタイルのタイプを指定
-map.on('style.load', function() {   // style.jsonがロードされたときに発動するイベント
-    if(tileType === 'osmofficial'){
-        setOSMLayout();
+map.on('style.load', function() {   // style.jsonがロードされたとき(setStyle)に発動するイベント
+    if(tileType === 'tileservergl'){
+        setLayoutThematicMap('migu2m-bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'versatiles'){
-		addsourcelayers(getsymbolID(), 'noto_sans_regular');
-        setVersatileLayout();
+		setLayoutThematicMap('noto_sans_regular');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }
+    // 他のstyle.jsonを追加するときはここに記述
+
 });
 
 // ラジオボタンの要素を取得
@@ -294,12 +281,13 @@ radioButtons.forEach(radio => {
 				map.setStyle('./east-timor-pmtiles/style.json')
                 tileType = 'versatiles';
                 break; //この後、上のmap.on('style.load'～が実行される
-            case 'osmofficial':
+            case 'tileservergl':
                 // console.log("ラジオボタン押したあああああああああああああああああ");
                 map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
-                tileType = 'osmofficial';
+                tileType = 'tileservergl';
                 break; //この後、上のmap.on('style.load'～が実行される
-            // その他のスタイルもここに追加可能
+            // 他のstyle.jsonを追加するときはここに記述
+
         }
     });
 });
