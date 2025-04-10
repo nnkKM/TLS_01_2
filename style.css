@@ -66,3 +66,24 @@
     border-radius: 3px;
     cursor: pointer;
 }
+
+/* スマホ向けのスタイル */
+@media (max-width: 767px) {
+    #legend {
+        bottom: 30px;
+        right: 5px;
+        padding: 0.5px;
+        /* スマホで表示する際には他に適用したいスタイルをここに書きます */
+    }
+    .legend-toggle {
+        bottom: 30px;
+        right: 5px;
+        padding: 0.5px;
+        font-size: 0.8em;
+        /* スマホで表示する際には他に適用したいスタイルをここに書きます */
+    }
+    #legend img {
+        width: 120px; /* 必要に応じて適切なサイズに変更してください */
+        height: auto; /* 縦横比を保持 */
+    }
+}
