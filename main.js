@@ -1087,6 +1087,20 @@ function addsourcelayers(firstSymbolId, font) {
 //            'raster-opacity': 0.85
 //        }
 //    },firstSymbolId );
+
+    map.addLayer({
+        id: 'LCRPGR-fill-layer', // 新しいレイヤーのID
+        type: 'fill', // 塗りつぶしレイヤー
+        source: 'population-source', // データソースID
+        'source-layer': 'LCRPGR', // ベクトルタイルのレイヤー名
+        'layout': {
+            "visibility": "none"
+        },
+        paint: {
+            'fill-color': '#CCCCCC', // 初期色（デフォルト色）
+            'fill-opacity': 0.8 // 不透明度
+        }
+    },firstSymbolId);
     
     map.addLayer({
         'id': 'MUNICIPIO-fill-layer',
@@ -1244,7 +1258,7 @@ function addsourcelayers(firstSymbolId, font) {
          'text-color': '#000000'
        },
        'maxzoom': 8
-     });
+     },firstSymbolId);
     
      map.addLayer({
        'id': 'PostuAdministrativo-label-layer',
@@ -1261,7 +1275,7 @@ function addsourcelayers(firstSymbolId, font) {
          'text-color': '#000000'
        },
        'maxzoom': 10
-     });
+     },firstSymbolId);
     
      map.addLayer({
        'id': 'Suco-label-layer',
@@ -1279,84 +1293,70 @@ function addsourcelayers(firstSymbolId, font) {
        }
      });
 
-    map.addLayer({
-        id: 'LCRPGR-fill-layer', // 新しいレイヤーのID
-        type: 'fill', // 塗りつぶしレイヤー
-        source: 'population-source', // データソースID
-        'source-layer': 'LCRPGR', // ベクトルタイルのレイヤー名
-        'layout': {
-            "visibility": "none"
-        },
-        paint: {
-            'fill-color': '#CCCCCC', // 初期色（デフォルト色）
-            'fill-opacity': 0.8 // 不透明度
-        }
-    });
-
     // 色付けの設定
-map.setPaintProperty('LCRPGR-fill-layer', 'fill-color', [
-    "case",
-    // 条件 1: いずれかが 0 の場合、全部が小さい場合
-    // 条件 2: POP_2020 と POP_2000 が同じ場合
-    [
-        "any",
-        ["==", ["to-number", ["get", "POP_2020"]], 0],
-        ["==", ["to-number", ["get", "POP_2000"]], 0],
-        ["==", ["to-number", ["get", "LC_2020"]], 0],
-        ["==", ["to-number", ["get", "POP_2020"]], ["to-number", ["get", "POP_2000"]]],
-        ["<=", ["+", 
-            ["^", ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]], 2], 
-            ["^", ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]], 2]]
-        , 0.0091], 
-    ],
-    "transparent", // 色なし
-    // 条件 3: 計算結果が 0.25 ～ 4 の場合 
+    map.setPaintProperty('LCRPGR-fill-layer', 'fill-color', [
+        "case",
+        // 条件 1: いずれかが 0 の場合、全部が小さい場合
+        // 条件 2: POP_2020 と POP_2000 が同じ場合
+        [
+            "any",
+            ["==", ["to-number", ["get", "POP_2020"]], 0],
+            ["==", ["to-number", ["get", "POP_2000"]], 0],
+            ["==", ["to-number", ["get", "LC_2020"]], 0],
+            ["==", ["to-number", ["get", "POP_2020"]], ["to-number", ["get", "POP_2000"]]],
+            ["<=", ["+", 
+                ["^", ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]], 2], 
+                ["^", ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]], 2]]
+            , 0.0091], 
+        ],
+        "transparent", // 色なし
+        // 条件 3: 計算結果が 0.25 ～ 4 の場合 
+        [
+            "all",
+            [">=", [
+                "/",
+                ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+                ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+            ], 0.25],
+            ["<=", [
+                "/",
+                ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+                ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+            ], 4]
+        ],
+        "#ADFF2F", 
+        // 条件 4: 計算結果が -0.25 ～ -4 の場合
     [
         "all",
+        ["<=", [
+            "/",
+            ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+            ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+        ], -0.25],
         [">=", [
             "/",
             ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
             ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-        ], 0.25],
-        ["<=", [
+        ], -4]
+    ],
+        "#FF0000", 
+        [
+            "all",
+        [">=", [
             "/",
             ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
             ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-        ], 4]
-    ],
-    "#ADFF2F", 
-    // 条件 4: 計算結果が -0.25 ～ -4 の場合
-[
-    "all",
-    ["<=", [
-        "/",
-        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-    ], -0.25],
-    [">=", [
-        "/",
-        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-    ], -4]
-],
-    "#FF0000", 
-    [
-        "all",
-    [">=", [
-        "/",
-        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-    ], -0.25],
-        ["<=", [
-        "/",
-        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-    ], 0.25]
-    ],
-    "#87CEEB", 
-    // 条件 6: その他 
-    "#FFA500" 
-]);
+        ], -0.25],
+            ["<=", [
+            "/",
+            ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+            ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+        ], 0.25]
+        ],
+        "#87CEEB", 
+        // 条件 6: その他 
+        "#FFA500" 
+    ]);
 }
 
 function getsymbolID() {
