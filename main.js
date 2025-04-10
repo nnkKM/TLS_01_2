@@ -1326,19 +1326,19 @@ function addsourcelayers(firstSymbolId, font) {
         ],
         "#ADFF2F", 
         // 条件 4: 計算結果が -0.25 ～ -4 の場合
-    [
-        "all",
-        ["<=", [
-            "/",
-            ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-            ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-        ], -0.25],
-        [">=", [
-            "/",
-            ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-            ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-        ], -4]
-    ],
+        [
+            "all",
+            ["<=", [
+                "/",
+                ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+                ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+            ], -0.25],
+            [">=", [
+                "/",
+                ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+                ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+            ], -4]
+        ],
         "#FF0000", 
         [
             "all",
