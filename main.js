@@ -918,7 +918,7 @@ function addsourcelayers(firstSymbolId, font) {
     map.addSource('population-source', {
         'type': 'vector',
         'tiles': [
-        'pmtiles://http://127.0.0.1:8080/data/LCRPGR.pmtiles/{z}/{x}/{y}'
+        'pmtiles://https://nnkKM.github.io/TLS_01_2/data/LCRPGR.pmtiles/{z}/{x}/{y}'
         ],
         'minzoom': 0,
         'maxzoom': 11,
