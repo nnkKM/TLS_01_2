@@ -922,7 +922,7 @@ function addsourcelayers(firstSymbolId, font) {
         ],
         'minzoom': 0,
         'maxzoom': 11,
-        'attribution': '<a href="http://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
+        'attribution': '<a href="https://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
     });
 
     map.addSource('PublicTransport-source', {
@@ -953,7 +953,7 @@ function addsourcelayers(firstSymbolId, font) {
 //        'tileSize': 256,
 //        'minzoom': 0,
 //        'maxzoom': 19,
-//        'attribution': '<a href="http://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
+//        'attribution': '<a href="https://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
 //    });
 
     /////////////////      レイヤ      ////////////////////////////////
