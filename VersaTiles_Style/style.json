@@ -1,6 +1,6 @@
 {
 	"version": 8,
-	"name": "Simple OSM",
+	"name": "OSM pmtile",
 	"glyphs": "https://nnkKM.github.io/TLS_01_2/VersaTiles_Style/fonts/{fontstack}/{range}.pbf",
 	"sprite": "https://nnkKM.github.io/TLS_01_2/basics/sprites",
 	"sources": {
@@ -10,7 +10,8 @@
 		  "pmtiles://https://nnkKM.github.io/TLS_01_2/data/east-timor-shortbread.pmtiles/{z}/{x}/{y}"
 		],
 		"minzoom": 1,
-		"maxzoom": 14
+		"maxzoom": 14,
+                "attribution": "© <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors"
 	  }
 	},
 	"layers": [
