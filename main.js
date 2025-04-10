@@ -33,7 +33,7 @@ const layerIds = [
     'osm-layer',
     'PublicTransport-points-layer',
     'MicroletRoute-line-layer',
-    'LCRPGR-raster-layer'
+    'LCRPGR-fill-layer'
 
 ];
 
@@ -454,67 +454,67 @@ function updateMapStyle_pop(year) {
             ["zoom"],
             [
                 "case",
-                ["<=", ["get", year], aSmallpop[0]]     , "rgb(255, 255, 255)",
-                ["<=", ["get", year], aSmallpop[0]*n]   , "rgb(255, 227, 227)",
-                ["<=", ["get", year], aSmallpop[0]*n**2], "rgb(255, 198, 198)",
-                ["<=", ["get", year], aSmallpop[0]*n**3], "rgb(255, 170, 170)",
-                ["<=", ["get", year], aSmallpop[0]*n**4], "rgb(255, 142, 142)",
-                ["<=", ["get", year], aSmallpop[0]*n**5], "rgb(255, 113, 113)",
-                ["<=", ["get", year], aSmallpop[0]*n**6], "rgb(255, 85, 85)",
-                ["<=", ["get", year], aSmallpop[0]*n**7], "rgb(255, 57, 57)",
-                ["<=", ["get", year], aSmallpop[0]*n**8], "rgb(255, 28, 28)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]]     , "rgb(255, 255, 255)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]*n]   , "rgb(255, 227, 227)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]*n**2], "rgb(255, 198, 198)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]*n**3], "rgb(255, 170, 170)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]*n**4], "rgb(255, 142, 142)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]*n**5], "rgb(255, 113, 113)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]*n**6], "rgb(255, 85, 85)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]*n**7], "rgb(255, 57, 57)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[0]*n**8], "rgb(255, 28, 28)",
                 "rgb(255, 0, 0)"
             ],
-            5, [
+            6, [
                 "case",
-                ["<=", ["get", year], aSmallpop[1]]     , "rgb(255, 255, 255)",
-                ["<=", ["get", year], aSmallpop[1]*n]   , "rgb(255, 227, 227)",
-                ["<=", ["get", year], aSmallpop[1]*n**2], "rgb(255, 198, 198)",
-                ["<=", ["get", year], aSmallpop[1]*n**3], "rgb(255, 170, 170)",
-                ["<=", ["get", year], aSmallpop[1]*n**4], "rgb(255, 142, 142)",
-                ["<=", ["get", year], aSmallpop[1]*n**5], "rgb(255, 113, 113)",
-                ["<=", ["get", year], aSmallpop[1]*n**6], "rgb(255, 85, 85)",
-                ["<=", ["get", year], aSmallpop[1]*n**7], "rgb(255, 57, 57)",
-                ["<=", ["get", year], aSmallpop[1]*n**8], "rgb(255, 28, 28)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]]     , "rgb(255, 255, 255)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]*n]   , "rgb(255, 227, 227)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]*n**2], "rgb(255, 198, 198)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]*n**3], "rgb(255, 170, 170)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]*n**4], "rgb(255, 142, 142)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]*n**5], "rgb(255, 113, 113)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]*n**6], "rgb(255, 85, 85)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]*n**7], "rgb(255, 57, 57)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[1]*n**8], "rgb(255, 28, 28)",
                 "rgb(255, 0, 0)"
             ],
             8, [
                 "case",
-                ["<=", ["get", year], aSmallpop[2]]     , "rgb(255, 255, 255)",
-                ["<=", ["get", year], aSmallpop[2]*n]   , "rgb(255, 227, 227)",
-                ["<=", ["get", year], aSmallpop[2]*n**2], "rgb(255, 198, 198)",
-                ["<=", ["get", year], aSmallpop[2]*n**3], "rgb(255, 170, 170)",
-                ["<=", ["get", year], aSmallpop[2]*n**4], "rgb(255, 142, 142)",
-                ["<=", ["get", year], aSmallpop[2]*n**5], "rgb(255, 113, 113)",
-                ["<=", ["get", year], aSmallpop[2]*n**6], "rgb(255, 85, 85)",
-                ["<=", ["get", year], aSmallpop[2]*n**7], "rgb(255, 57, 57)",
-                ["<=", ["get", year], aSmallpop[2]*n**8], "rgb(255, 28, 28)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]]     , "rgb(255, 255, 255)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]*n]   , "rgb(255, 227, 227)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]*n**2], "rgb(255, 198, 198)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]*n**3], "rgb(255, 170, 170)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]*n**4], "rgb(255, 142, 142)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]*n**5], "rgb(255, 113, 113)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]*n**6], "rgb(255, 85, 85)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]*n**7], "rgb(255, 57, 57)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[2]*n**8], "rgb(255, 28, 28)",
                 "rgb(255, 0, 0)"
             ],
             10, [
                 "case",
-                ["<=", ["get", year], aSmallpop[3]]     , "rgb(255, 255, 255)",
-                ["<=", ["get", year], aSmallpop[3]*n]   , "rgb(255, 227, 227)",
-                ["<=", ["get", year], aSmallpop[3]*n**2], "rgb(255, 198, 198)",
-                ["<=", ["get", year], aSmallpop[3]*n**3], "rgb(255, 170, 170)",
-                ["<=", ["get", year], aSmallpop[3]*n**4], "rgb(255, 142, 142)",
-                ["<=", ["get", year], aSmallpop[3]*n**5], "rgb(255, 113, 113)",
-                ["<=", ["get", year], aSmallpop[3]*n**6], "rgb(255, 85, 85)",
-                ["<=", ["get", year], aSmallpop[3]*n**7], "rgb(255, 57, 57)",
-                ["<=", ["get", year], aSmallpop[3]*n**8], "rgb(255, 28, 28)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]]     , "rgb(255, 255, 255)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]*n]   , "rgb(255, 227, 227)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]*n**2], "rgb(255, 198, 198)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]*n**3], "rgb(255, 170, 170)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]*n**4], "rgb(255, 142, 142)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]*n**5], "rgb(255, 113, 113)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]*n**6], "rgb(255, 85, 85)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]*n**7], "rgb(255, 57, 57)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[3]*n**8], "rgb(255, 28, 28)",
                 "rgb(255, 0, 0)"
             ],
             12, [
                 "case",
-                ["<=", ["get", year], aSmallpop[4]]     , "rgb(255, 255, 255)",
-                ["<=", ["get", year], aSmallpop[4]*n]   , "rgb(255, 227, 227)",
-                ["<=", ["get", year], aSmallpop[4]*n**2], "rgb(255, 198, 198)",
-                ["<=", ["get", year], aSmallpop[4]*n**3], "rgb(255, 170, 170)",
-                ["<=", ["get", year], aSmallpop[4]*n**4], "rgb(255, 142, 142)",
-                ["<=", ["get", year], aSmallpop[4]*n**5], "rgb(255, 113, 113)",
-                ["<=", ["get", year], aSmallpop[4]*n**6], "rgb(255, 85, 85)",
-                ["<=", ["get", year], aSmallpop[4]*n**7], "rgb(255, 57, 57)",
-                ["<=", ["get", year], aSmallpop[4]*n**8], "rgb(255, 28, 28)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]]     , "rgb(255, 255, 255)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]*n]   , "rgb(255, 227, 227)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]*n**2], "rgb(255, 198, 198)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]*n**3], "rgb(255, 170, 170)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]*n**4], "rgb(255, 142, 142)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]*n**5], "rgb(255, 113, 113)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]*n**6], "rgb(255, 85, 85)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]*n**7], "rgb(255, 57, 57)",
+                ["<=", ["get", `POP_${year}`], aSmallpop[4]*n**8], "rgb(255, 28, 28)",
                 "rgb(255, 0, 0)"
             ]
         ]);
@@ -616,7 +616,7 @@ var bstep =  1;                     //　ベースステップ
            ["zoom"],
            [
                "step",
-               ["-", ["get", String(2020)], ["get", String(y)]],
+               ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
                      "rgb(0, 0, 255)", 
              -5* bstep * m[0],"rgb(51, 102, 255)", 
              -4* bstep * m[0],"rgb(102, 153, 255)",
@@ -629,9 +629,9 @@ var bstep =  1;                     //　ベースステップ
               4* bstep * m[0],"rgb(255, 51, 51)",
               5* bstep * m[0],"rgb(255, 0, 0)"
            ],
-           5,[
+           6,[
                "step",
-               ["-", ["get", String(2020)], ["get", String(y)]],
+            ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
                      "rgb(0, 0, 255)", 
              -5* bstep * m[1],"rgb(51, 102, 255)", 
              -4* bstep * m[1],"rgb(102, 153, 255)",
@@ -646,7 +646,7 @@ var bstep =  1;                     //　ベースステップ
            ],
            8,[
                "step",
-               ["-", ["get", String(2020)], ["get", String(y)]],
+            ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
                      "rgb(0, 0, 255)", 
              -5* bstep * m[2],"rgb(51, 102, 255)", 
              -4* bstep * m[2],"rgb(102, 153, 255)",
@@ -661,7 +661,7 @@ var bstep =  1;                     //　ベースステップ
            ],
            10, [
                "step",
-               ["-", ["get", String(2020)], ["get", String(y)]],
+            ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
                     "rgb(0, 0, 255)", 
              -5* bstep * m[3],"rgb(51, 102, 255)", 
              -4* bstep * m[3],"rgb(102, 153, 255)",
@@ -676,7 +676,7 @@ var bstep =  1;                     //　ベースステップ
            ],
            12, [
                "step",
-               ["-", ["get", String(2020)], ["get", String(y)]],
+            ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
                    "rgb(0, 0, 255)",
               -5* bstep * m[4],"rgb(51, 102, 255)",
               -4* bstep * m[4],"rgb(102, 153, 255)",
@@ -918,10 +918,11 @@ function addsourcelayers(firstSymbolId, font) {
     map.addSource('population-source', {
         'type': 'vector',
         'tiles': [
-        'pmtiles://https://data.source.coop/smartmaps/h3ys-worldpop/tls.pmtiles/{z}/{x}/{y}'
+        'pmtiles://http://127.0.0.1:8080/data/LCRPGR.pmtiles/{z}/{x}/{y}'
         ],
-        'minzoom': 4,
-        'maxzoom': 12
+        'minzoom': 0,
+        'maxzoom': 11,
+        'attribution': '<a href="http://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
     });
 
     map.addSource('PublicTransport-source', {
@@ -944,16 +945,16 @@ function addsourcelayers(firstSymbolId, font) {
         'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a>'
     });
 
-    map.addSource('LCRPGR-source', {
-        'type': 'raster',
-        'tiles': [
-        'pmtiles://https://nnkhij.github.io/test2/data/LCRPGR.pmtiles/{z}/{x}/{y}.png'
-        ],
-        'tileSize': 256,
-        'minzoom': 0,
-        'maxzoom': 19,
-        'attribution': '<a href="http://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
-    });
+//    map.addSource('LCRPGR-source', {
+//        'type': 'raster',
+//        'tiles': [
+//        'pmtiles://https://nnkhij.github.io/test2/data/LCRPGR.pmtiles/{z}/{x}/{y}.png'
+//        ],
+//        'tileSize': 256,
+//        'minzoom': 0,
+//        'maxzoom': 19,
+//        'attribution': '<a href="http://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
+//    });
 
     /////////////////      レイヤ      ////////////////////////////////
     
@@ -976,7 +977,7 @@ function addsourcelayers(firstSymbolId, font) {
         'id': 'population-fill-layer',
         'type': 'fill',
         'source': 'population-source',
-        'source-layer': 'pop',
+        'source-layer': 'LCRPGR',
         'paint': {
         'fill-color': '#ffffff',
         'fill-opacity': 0.5
@@ -987,7 +988,7 @@ function addsourcelayers(firstSymbolId, font) {
         'id': 'population-outline-layer',
         'type': 'line',
         'source': 'population-source',
-        'source-layer': 'pop',
+        'source-layer': 'LCRPGR',
         'paint': {
         'line-color': '#c0c0c0',
         'line-width': [
@@ -1004,7 +1005,7 @@ function addsourcelayers(firstSymbolId, font) {
         'id': 'popchange-fill-layer',
         'type': 'fill',
         'source': 'population-source',
-        'source-layer': 'pop',
+        'source-layer': 'LCRPGR',
         'paint': {
         'fill-color': '#ffffff',
         'fill-opacity': 0.5
@@ -1015,7 +1016,7 @@ function addsourcelayers(firstSymbolId, font) {
         'id': 'popchange-outline-layer',
         'type': 'line',
         'source': 'population-source',
-        'source-layer': 'pop',
+        'source-layer': 'LCRPGR',
         'paint':
         {
         'line-color': '#c0c0c0',
@@ -1078,17 +1079,14 @@ function addsourcelayers(firstSymbolId, font) {
         }
     },firstSymbolId );
     
-    map.addLayer({
-        'id': 'LCRPGR-raster-layer',
-        'type': 'raster',
-        'source': 'LCRPGR-source',
-        'layout': {
-            "visibility": "none"
-        },
-        'paint': {
-            'raster-opacity': 0.85
-        }
-    },firstSymbolId );
+//    map.addLayer({
+//        'id': 'LCRPGR-raster-layer',
+//        'type': 'raster',
+//        'source': 'LCRPGR-source',
+//        'paint': {
+//            'raster-opacity': 0.85
+//        }
+//    },firstSymbolId );
     
     map.addLayer({
         'id': 'MUNICIPIO-fill-layer',
@@ -1272,7 +1270,7 @@ function addsourcelayers(firstSymbolId, font) {
        'source-layer': 'Suco',
        'layout': {
          'text-field': ['get', 'SUCO'],
-         'text-font': [ font ],
+         'text-font': [ font],
          'text-size': 10,
          'text-anchor': 'center'
        },
@@ -1280,6 +1278,85 @@ function addsourcelayers(firstSymbolId, font) {
          'text-color': '#000000'
        }
      });
+
+    map.addLayer({
+        id: 'LCRPGR-fill-layer', // 新しいレイヤーのID
+        type: 'fill', // 塗りつぶしレイヤー
+        source: 'population-source', // データソースID
+        'source-layer': 'LCRPGR', // ベクトルタイルのレイヤー名
+        'layout': {
+            "visibility": "none"
+        },
+        paint: {
+            'fill-color': '#CCCCCC', // 初期色（デフォルト色）
+            'fill-opacity': 0.8 // 不透明度
+        }
+    });
+
+    // 色付けの設定
+map.setPaintProperty('LCRPGR-fill-layer', 'fill-color', [
+    "case",
+    // 条件 1: いずれかが 0 の場合、全部が小さい場合
+    // 条件 2: POP_2020 と POP_2000 が同じ場合
+    [
+        "any",
+        ["==", ["to-number", ["get", "POP_2020"]], 0],
+        ["==", ["to-number", ["get", "POP_2000"]], 0],
+        ["==", ["to-number", ["get", "LC_2020"]], 0],
+        ["==", ["to-number", ["get", "POP_2020"]], ["to-number", ["get", "POP_2000"]]],
+        ["<=", ["+", 
+            ["^", ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]], 2], 
+            ["^", ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]], 2]]
+        , 0.0091], 
+    ],
+    "transparent", // 色なし
+    // 条件 3: 計算結果が 0.25 ～ 4 の場合 
+    [
+        "all",
+        [">=", [
+            "/",
+            ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+            ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+        ], 0.25],
+        ["<=", [
+            "/",
+            ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+            ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+        ], 4]
+    ],
+    "#ADFF2F", 
+    // 条件 4: 計算結果が -0.25 ～ -4 の場合
+[
+    "all",
+    ["<=", [
+        "/",
+        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+    ], -0.25],
+    [">=", [
+        "/",
+        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+    ], -4]
+],
+    "#FF0000", 
+    [
+        "all",
+    [">=", [
+        "/",
+        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+    ], -0.25],
+        ["<=", [
+        "/",
+        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+    ], 0.25]
+    ],
+    "#87CEEB", 
+    // 条件 6: その他 
+    "#FFA500" 
+]);
 }
 
 function getsymbolID() {
