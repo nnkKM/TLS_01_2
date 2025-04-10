@@ -921,7 +921,7 @@ function addsourcelayers(firstSymbolId, font) {
         'pmtiles://https://nnkKM.github.io/TLS_01_2/data/LCRPGR.pmtiles/{z}/{x}/{y}'
         ],
         'minzoom': 0,
-        'maxzoom': 11,
+        'maxzoom': 12,
         'attribution': '<a href="https://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
     });
 
