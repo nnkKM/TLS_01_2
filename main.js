@@ -147,8 +147,9 @@ document.querySelector('#outline-layer-chk').addEventListener('change', () => {
 });
 
 // 'LCRPGR-fill-layer' のチェックボックスに変更イベントを追加
-document.querySelector(`#LCRPGR-fill-layer-chk`).addEventListener('change', (event) => {
-    toggleLCRPGRLayer(event.target.checked);
+document.querySelector(`#LCRPGR-fill-layer-chk`).addEventListener('change', () => {
+    const isChecked = document.getElementById('LCRPGR-fill-layer-chk').checked;
+    toggleLCRPGRLayer(isChecked);
 });
 
 
@@ -166,6 +167,7 @@ const setAllLayersAndValues = () => {
     togglePopulationLayer(elm('population-all-fill-layer-chk').checked);
     togglePopChangeLayer(elm('popchange-all-fill-layer-chk').checked);
     toggleOutlineLayer(elm('outline-layer-chk').checked);
+    toggleLCRPGRLayer(elm('LCRPGR-fill-layer-chk').checked);
     togglePM25Layer(elm('PM25-all-fill-layer-chk').checked);
     layerIds.forEach(lyrId => {
         toggleLayer(lyrId);
