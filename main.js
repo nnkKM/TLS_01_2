@@ -32,8 +32,8 @@ map.on('load', () => {
 const layerIds = [
     'osm-layer',
     'PublicTransport-points-layer',
-    'MicroletRoute-line-layer',
-    'LCRPGR-fill-layer'
+    'MicroletRoute-line-layer'
+
 
 ];
 
@@ -81,7 +81,7 @@ const togglePopChangeLayer = (isChecked) => {
 
 // 行政界レイヤの表示/非表示を切り替える関数
 const toggleOutlineLayer = (isChecked) => {
-    const outlineLayerIds = ["MUNICIPIO-label-layer","PostuAdministrativo-label-layer","Suco-label-layer",'MUNICIPIO-outline-layer', 'PostuAdministrativo-outline-layer', 'Suco-outline-layer'];
+    const outlineLayerIds = ["Suco-label-layer",'MUNICIPIO-outline-layer', 'PostuAdministrativo-outline-layer', 'Suco-outline-layer'];
     if(isChecked){
         outlineLayerIds.forEach(id => {
             map.setLayoutProperty(id, 'visibility', 'visible');
@@ -93,9 +93,23 @@ const toggleOutlineLayer = (isChecked) => {
     }
 };
 
+
+// 'LCRPGR-fill-layer' の表示/非表示を切り替える関数
+const toggleLCRPGRLayer = (isChecked) => {
+    const layerIds = ['LCRPGR-fill-layer', 'population-outline-layer'];
+    layerIds.forEach(id => {
+        if (isChecked) {
+            map.setLayoutProperty(id, 'visibility', 'visible');
+        } else {
+            map.setLayoutProperty(id, 'visibility', 'none');
+        }
+    });
+};
+
+
 // PM2.5データの表示/非表示を切り替える関数
 const togglePM25Layer = (isChecked) => {
-    const fillLayerIds = ['MUNICIPIO-fill-layer', 'PostuAdministrativo-fill-layer','Suco-fill-layer'];
+    const fillLayerIds = ['PM25-fill-layer'];
     fillLayerIds.forEach(id => {
         if (isChecked) {
             map.setLayoutProperty(id, 'visibility', 'visible');
@@ -131,6 +145,12 @@ document.querySelector('#outline-layer-chk').addEventListener('change', () => {
     const isChecked = document.getElementById('outline-layer-chk').checked;
     toggleOutlineLayer(isChecked);
 });
+
+// 'LCRPGR-fill-layer' のチェックボックスに変更イベントを追加
+document.querySelector(`#LCRPGR-fill-layer-chk`).addEventListener('change', (event) => {
+    toggleLCRPGRLayer(event.target.checked);
+});
+
 
 // PM2.5データのレイヤはここで切替
 document.querySelector('#PM25-all-fill-layer-chk').addEventListener('change', () => {
@@ -938,7 +958,7 @@ function addsourcelayers(firstSymbolId, font) {
     map.addSource('pm25-source', {
         'type': 'vector',
         'tiles': [
-        'pmtiles://https://nnkhij.github.io/test5/data/output.pmtiles/{z}/{x}/{y}'
+        'pmtiles://https://nnkKM.github.io/TLS_01_2/data/PM25.pmtiles/{z}/{x}/{y}'
         ],
         'minzoom': 4,
         'maxzoom': 14,
@@ -1102,81 +1122,81 @@ function addsourcelayers(firstSymbolId, font) {
         }
     },firstSymbolId);
     
-    map.addLayer({
-        'id': 'MUNICIPIO-fill-layer',
-        'type': 'fill',
-        'source': 'pm25-source',
-        'source-layer': 'Municipio',
-        'layout': {
-        'visibility': 'none'
-        },
-        'paint': {
-        'fill-color': [
-            'case',
-            ['<=', ['get', 'Pm25PopWam'], 10.0], '#ffffff',
-            ['<=', ['get', 'Pm25PopWam'], 10.5], '#ffffcc',
-            ['<=', ['get', 'Pm25PopWam'], 11.0], '#ffeb99',
-            ['<=', ['get', 'Pm25PopWam'], 11.5], '#ffd966',
-            ['<=', ['get', 'Pm25PopWam'], 12.0], '#ffcc33',
-            ['<=', ['get', 'Pm25PopWam'], 12.5], '#ffbf00',
-            ['<=', ['get', 'Pm25PopWam'], 13.0], '#e6ac00',
-            ['<=', ['get', 'Pm25PopWam'], 13.5], '#cc9900',
-            ['<=', ['get', 'Pm25PopWam'], 14.0], '#b38600',
-            '#996633'
-        ],
-        'fill-opacity': 0.6
-        },
-        'maxzoom': 8
-    },firstSymbolId );
+//    map.addLayer({
+//        'id': 'MUNICIPIO-fill-layer',
+//        'type': 'fill',
+//        'source': 'pm25-source',
+//        'source-layer': 'Municipio',
+//        'layout': {
+//        'visibility': 'none'
+//        },
+//        'paint': {
+//        'fill-color': [
+//            'case',
+//            ['<=', ['get', 'Pm25PopWam'], 10.0], '#ffffff',
+//            ['<=', ['get', 'Pm25PopWam'], 10.5], '#ffffcc',
+//            ['<=', ['get', 'Pm25PopWam'], 11.0], '#ffeb99',
+//            ['<=', ['get', 'Pm25PopWam'], 11.5], '#ffd966',
+//            ['<=', ['get', 'Pm25PopWam'], 12.0], '#ffcc33',
+//            ['<=', ['get', 'Pm25PopWam'], 12.5], '#ffbf00',
+//            ['<=', ['get', 'Pm25PopWam'], 13.0], '#e6ac00',
+//            ['<=', ['get', 'Pm25PopWam'], 13.5], '#cc9900',
+//            ['<=', ['get', 'Pm25PopWam'], 14.0], '#b38600',
+//            '#996633'
+//        ],
+//        'fill-opacity': 0.6
+//        },
+//        'maxzoom': 8
+//    },firstSymbolId );
+//    
+//    map.addLayer({
+//        'id': 'PostuAdministrativo-fill-layer',
+//        'type': 'fill',
+//        'source': 'pm25-source',
+//        'source-layer': 'PostuAdministrativo',
+//        'layout': {
+//        'visibility': 'none'
+//        },
+//        'paint': {
+//        'fill-color': [
+//            'case',
+//            ['<=', ['get', 'Pm25PopWam'], 10.0], '#ffffff',
+//            ['<=', ['get', 'Pm25PopWam'], 10.5], '#ffffcc',
+//            ['<=', ['get', 'Pm25PopWam'], 11.0], '#ffeb99',
+//            ['<=', ['get', 'Pm25PopWam'], 11.5], '#ffd966',
+//            ['<=', ['get', 'Pm25PopWam'], 12.0], '#ffcc33',
+//            ['<=', ['get', 'Pm25PopWam'], 12.5], '#ffbf00',
+//            ['<=', ['get', 'Pm25PopWam'], 13.0], '#e6ac00',
+//            ['<=', ['get', 'Pm25PopWam'], 13.5], '#cc9900',
+//            ['<=', ['get', 'Pm25PopWam'], 14.0], '#b38600',
+//            '#996633'
+//        ],
+//        'fill-opacity': 0.6
+//        },
+//        'minzoom': 8,
+//        'maxzoom': 10
+//    },firstSymbolId );
     
     map.addLayer({
-        'id': 'PostuAdministrativo-fill-layer',
+        'id': 'PM25-fill-layer',
         'type': 'fill',
         'source': 'pm25-source',
-        'source-layer': 'PostuAdministrativo',
+        'source-layer': 'PM2_5',
         'layout': {
         'visibility': 'none'
         },
         'paint': {
         'fill-color': [
             'case',
-            ['<=', ['get', 'Pm25PopWam'], 10.0], '#ffffff',
-            ['<=', ['get', 'Pm25PopWam'], 10.5], '#ffffcc',
-            ['<=', ['get', 'Pm25PopWam'], 11.0], '#ffeb99',
-            ['<=', ['get', 'Pm25PopWam'], 11.5], '#ffd966',
-            ['<=', ['get', 'Pm25PopWam'], 12.0], '#ffcc33',
-            ['<=', ['get', 'Pm25PopWam'], 12.5], '#ffbf00',
-            ['<=', ['get', 'Pm25PopWam'], 13.0], '#e6ac00',
-            ['<=', ['get', 'Pm25PopWam'], 13.5], '#cc9900',
-            ['<=', ['get', 'Pm25PopWam'], 14.0], '#b38600',
-            '#996633'
-        ],
-        'fill-opacity': 0.6
-        },
-        'minzoom': 8,
-        'maxzoom': 10
-    },firstSymbolId );
-    
-    map.addLayer({
-        'id': 'Suco-fill-layer',
-        'type': 'fill',
-        'source': 'pm25-source',
-        'source-layer': 'Suco',
-        'layout': {
-        'visibility': 'none'
-        },
-        'paint': {
-        'fill-color': [
-            'case',
-            ['<=', ['get', 'PM25'], 10.0], '#ffffff',
-            ['<=', ['get', 'PM25'], 10.5], '#ffffcc',
-            ['<=', ['get', 'PM25'], 11.0], '#ffeb99',
-            ['<=', ['get', 'PM25'], 11.5], '#ffd966',
-            ['<=', ['get', 'PM25'], 12.0], '#ffcc33',
-            ['<=', ['get', 'PM25'], 12.5], '#ffbf00',
-            ['<=', ['get', 'PM25'], 13.0], '#e6ac00',
-            ['<=', ['get', 'PM25'], 13.5], '#cc9900',
-            ['<=', ['get', 'PM25'], 14.0], '#b38600',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  10.0], '#ffffff',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  10.5], '#ffffcc',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  11.0], '#ffeb99',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  11.5], '#ffd966',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  12.0], '#ffcc33',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  12.5], '#ffbf00',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  13.0], '#e6ac00',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  13.5], '#cc9900',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  14.0], '#b38600',
             '#996633'
         ],
         'fill-opacity': 0.6
@@ -1243,49 +1263,62 @@ function addsourcelayers(firstSymbolId, font) {
        'minzoom': 10
     },firstSymbolId );
     
-    map.addLayer({
-       'id': 'MUNICIPIO-label-layer',
-       'type': 'symbol',
-       'source': 'pm25-source',
-       'source-layer': 'Municipio',
-       'layout': {
-         'text-field': ['get', 'MUNICIPIO'],
-         'text-font': [ font ],
-         'text-size': 10,
-         'text-anchor': 'center'
-       },
-       'paint': {
-         'text-color': '#000000'
-       },
-       'maxzoom': 8
-     },firstSymbolId);
-    
-     map.addLayer({
-       'id': 'PostuAdministrativo-label-layer',
-       'type': 'symbol',
-       'source': 'pm25-source',
-       'source-layer': 'PostuAdministrativo',
-       'layout': {
-         'text-field': ['get', 'P_ADMIN'],
-         'text-font': [ font ],
-         'text-size': 10,
-         'text-anchor': 'center'
-       },
-       'paint': {
-         'text-color': '#000000'
-       },
-       'maxzoom': 10
-     },firstSymbolId);
-    
+//    map.addLayer({
+//       'id': 'MUNICIPIO-label-layer',
+//       'type': 'symbol',
+//       'source': 'pm25-source',
+//       'source-layer': 'Municipio',
+//       'layout': {
+//         'text-field': ['get', 'MUNICIPIO'],
+//         'text-font': [ font ],
+//         'text-size': 10,
+//         'text-anchor': 'center'
+//       },
+//       'paint': {
+//         'text-color': '#000000'
+//       },
+//       'maxzoom': 8
+//     },firstSymbolId);
+//    
+//     map.addLayer({
+//       'id': 'PostuAdministrativo-label-layer',
+//       'type': 'symbol',
+//       'source': 'pm25-source',
+//       'source-layer': 'PostuAdministrativo',
+//       'layout': {
+//         'text-field': ['get', 'P_ADMIN'],
+//         'text-font': [ font ],
+//         'text-size': 10,
+//         'text-anchor': 'center'
+//       },
+//       'paint': {
+//         'text-color': '#000000'
+//       },
+//       'maxzoom': 10
+//     },firstSymbolId);
+//    
      map.addLayer({
        'id': 'Suco-label-layer',
        'type': 'symbol',
        'source': 'pm25-source',
-       'source-layer': 'Suco',
+       'source-layer': 'PM2_5',
        'layout': {
-         'text-field': ['get', 'SUCO'],
+        'text-field': [
+           'case',
+            ['has', 'SUCO'], ['get', 'SUCO'], 
+            ['has', 'P_ADMIN'], ['get', 'P_ADMIN'], 
+            ['has', 'MUNICIPIO'], ['get', 'MUNICIPIO'],
+            ''
+        ],
          'text-font': [ font],
-         'text-size': 10,
+        'text-size': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            5, 10,
+            10, 10,
+            15, 20 
+        ],
          'text-anchor': 'center'
        },
        'paint': {
@@ -1293,70 +1326,48 @@ function addsourcelayers(firstSymbolId, font) {
        }
      });
 
+    // LC (土地被覆) の変化率の計算
+    const lcChangeRate = [
+        "/",
+        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
+        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
+    ];
+    
+    // 小さな変化 (POP と LC がほとんど変わらないか、いずれかが 0 の場合)
+    const smallChangeCondition = [
+        "any",
+        ["==", ["to-number", ["get", "POP_2020"]], 0],
+        ["==", ["to-number", ["get", "POP_2000"]], 0],
+        ["==", ["to-number", ["get", "LC_2020"]], 0],
+        ["==", ["to-number", ["get", "POP_2020"]], ["to-number", ["get", "POP_2000"]]],
+        ["<=", ["+",
+            ["^", ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]], 2],
+            ["^", ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]], 2]
+        ], 0.0091]
+    ];
+    
     // 色付けの設定
     map.setPaintProperty('LCRPGR-fill-layer', 'fill-color', [
         "case",
-        // 条件 1: いずれかが 0 の場合、全部が小さい場合
-        // 条件 2: POP_2020 と POP_2000 が同じ場合
-        [
-            "any",
-            ["==", ["to-number", ["get", "POP_2020"]], 0],
-            ["==", ["to-number", ["get", "POP_2000"]], 0],
-            ["==", ["to-number", ["get", "LC_2020"]], 0],
-            ["==", ["to-number", ["get", "POP_2020"]], ["to-number", ["get", "POP_2000"]]],
-            ["<=", ["+", 
-                ["^", ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]], 2], 
-                ["^", ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]], 2]]
-            , 0.0091], 
-        ],
+        // 条件 1: 小さな変化 (いずれかが 0、または変化が非常に小さい場合)
+        smallChangeCondition,
         "transparent", // 色なし
-        // 条件 3: 計算結果が 0.25 ～ 4 の場合 
-        [
-            "all",
-            [">=", [
-                "/",
-                ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-                ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-            ], 0.25],
-            ["<=", [
-                "/",
-                ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-                ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-            ], 4]
-        ],
-        "#ADFF2F", 
-        // 条件 4: 計算結果が -0.25 ～ -4 の場合
-        [
-            "all",
-            ["<=", [
-                "/",
-                ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-                ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-            ], -0.25],
-            [">=", [
-                "/",
-                ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-                ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-            ], -4]
-        ],
-        "#FF0000", 
-        [
-            "all",
-        [">=", [
-            "/",
-            ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-            ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-        ], -0.25],
-            ["<=", [
-            "/",
-            ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-            ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-        ], 0.25]
-        ],
-        "#87CEEB", 
-        // 条件 6: その他 
-        "#FFA500" 
-    ]);
+    
+        // 条件 2: 計算結果が -4 ～ -0.25 の場合 (赤色)
+        ["all", [">=", lcChangeRate, -4], ["<=", lcChangeRate, -0.25]],
+        "#FF0000",
+    
+        // 条件 3: 計算結果が -0.25 ～ 0.25 の場合 (青色)
+        ["all", [">=", lcChangeRate, -0.25], ["<=", lcChangeRate, 0.25]],
+        "#87CEEB",
+    
+        // 条件 4: 計算結果が 0.25 ～ 4 の場合 (緑色)
+        ["all", [">=", lcChangeRate, 0.25], ["<=", lcChangeRate, 4]],
+        "#ADFF2F",
+    
+        // 条件 5: その他　計算結果が ～ -4，4 ～ の場合 (オレンジ色)
+        "#FFA500"
+  ]);
 }
 
 function getsymbolID() {
