@@ -32,10 +32,18 @@ map.on('load', () => {
 const layerIds = [
     'osm-layer',
     'PublicTransport-points-layer',
-    'MicroletRoute-line-layer'
-
-
 ];
+
+// population-outline-layer の表示/非表示を制御する関数
+const updatePopulationOutlineVisibility = () => {
+    // いずれかのレイヤが表示されている場合に population-outline-layer を表示
+    const isVisible = document.getElementById('population-all-fill-layer-chk').checked ||
+                      document.getElementById('popchange-all-fill-layer-chk').checked ||
+                      document.getElementById('LCRPGR-fill-layer-chk').checked;
+
+    map.setLayoutProperty('population-outline-layer', 'visibility', isVisible ? 'visible' : 'none');
+};
+
 
 // 一般レイヤの表示/非表示を切り替える関数
 const toggleLayer = (id) => {
@@ -56,27 +64,21 @@ layerIds.forEach(lyrId => {
 
 // 人口データの表示/非表示を切り替える関数
 const togglePopulationLayer = (isChecked) => {
-    const fillLayerIds = ['population-fill-layer', 'population-outline-layer'];
+    const fillLayerIds = ['population-fill-layer'];
     fillLayerIds.forEach(id => {
-        if (isChecked) {
-            map.setLayoutProperty(id, 'visibility', 'visible');
-        } else {
-            map.setLayoutProperty(id, 'visibility', 'none');
-        }
+        map.setLayoutProperty(id, 'visibility', isChecked ? 'visible' : 'none');
     });
+    // population-outline-layer の状態を更新
+    updatePopulationOutlineVisibility();
 };
 
 const togglePopChangeLayer = (isChecked) => {
-    const fillLayerIds = ['popchange-fill-layer', 'popchange-outline-layer'];
-
+    const fillLayerIds = ['popchange-fill-layer'];
     fillLayerIds.forEach(id => {
-        if (isChecked) {
-            map.setLayoutProperty(id, 'visibility', 'visible');
-        } else {
-
-            map.setLayoutProperty(id, 'visibility', 'none');
-        }
+        map.setLayoutProperty(id, 'visibility', isChecked ? 'visible' : 'none');
     });
+    // population-outline-layer の状態を更新
+    updatePopulationOutlineVisibility();
 };
 
 // 行政界レイヤの表示/非表示を切り替える関数
@@ -93,17 +95,22 @@ const toggleOutlineLayer = (isChecked) => {
     }
 };
 
+// MicroletRoute-line-layer の表示/非表示を切り替える関数
+const toggleMicroletRouteLayer = (isChecked) => {
+    const layerIds = ['MicroletRoute-line-layer', 'MicroletRoute-outline-layer'];
+    layerIds.forEach(layerId => {
+        map.setLayoutProperty(layerId, 'visibility', isChecked ? 'visible' : 'none');
+    });
+};
 
 // 'LCRPGR-fill-layer' の表示/非表示を切り替える関数
 const toggleLCRPGRLayer = (isChecked) => {
-    const layerIds = ['LCRPGR-fill-layer', 'population-outline-layer'];
+    const layerIds = ['LCRPGR-fill-layer'];
     layerIds.forEach(id => {
-        if (isChecked) {
-            map.setLayoutProperty(id, 'visibility', 'visible');
-        } else {
-            map.setLayoutProperty(id, 'visibility', 'none');
-        }
+        map.setLayoutProperty(id, 'visibility', isChecked ? 'visible' : 'none');
     });
+    // population-outline-layer の状態を更新
+    updatePopulationOutlineVisibility();
 };
 
 
@@ -146,6 +153,12 @@ document.querySelector('#outline-layer-chk').addEventListener('change', () => {
     toggleOutlineLayer(isChecked);
 });
 
+// MicroletRoute-line-layer のチェックボックスに変更イベントを追加
+document.querySelector('#MicroletRoute-line-layer-chk').addEventListener('change', () => {
+    const isChecked = document.getElementById('MicroletRoute-line-layer-chk').checked;
+    toggleMicroletRouteLayer(isChecked);
+});
+
 // 'LCRPGR-fill-layer' のチェックボックスに変更イベントを追加
 document.querySelector(`#LCRPGR-fill-layer-chk`).addEventListener('change', () => {
     const isChecked = document.getElementById('LCRPGR-fill-layer-chk').checked;
@@ -167,11 +180,15 @@ const setAllLayersAndValues = () => {
     togglePopulationLayer(elm('population-all-fill-layer-chk').checked);
     togglePopChangeLayer(elm('popchange-all-fill-layer-chk').checked);
     toggleOutlineLayer(elm('outline-layer-chk').checked);
+    toggleMicroletRouteLayer(elm('MicroletRoute-line-layer-chk').checked); // MicroletRoute の切り替えを追加
     toggleLCRPGRLayer(elm('LCRPGR-fill-layer-chk').checked);
     togglePM25Layer(elm('PM25-all-fill-layer-chk').checked);
     layerIds.forEach(lyrId => {
         toggleLayer(lyrId);
     });
+
+    // population-outline-layer の状態を更新
+    updatePopulationOutlineVisibility();
 
     updateMapStyle_pop(elm('year-slider-pop').value);
     updateMapStyle_popchange(elm('year-slider-popchange').value);
@@ -215,6 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     togglePopulationLayer(isChecked);
                 } else if (layerId === 'popchange-all-fill-layer') {
                     togglePopChangeLayer(isChecked);
+                } else if (layerId === 'MicroletRoute-line-layer') {
+                    toggleMicroletRouteLayer(isChecked); // MicroletRoute の切り替えを適用
                 } else {
                     toggleLayer(layerId);
                 }
@@ -247,6 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 togglePopulationLayer(chk.checked);
             } else if (layerId === 'popchange-all-fill-layer') {
                 togglePopChangeLayer(chk.checked);
+            } else if (layerId === 'MicroletRoute-line-layer') {
+                toggleMicroletRouteLayer(chk.checked); // MicroletRoute の切り替えを適用
             } else {
                 toggleLayer(layerId);
             }
@@ -1047,23 +1068,6 @@ function addsourcelayers(firstSymbolId, font) {
     },firstSymbolId );
 
     map.addLayer({
-        'id': 'population-outline-layer',
-        'type': 'line',
-        'source': 'population-source',
-        'source-layer': 'LCRPGR',
-        'paint': {
-        'line-color': '#c0c0c0',
-        'line-width': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            4, 0.2,
-            14, 1
-        ]
-        }
-    },firstSymbolId );
-
-    map.addLayer({
         'id': 'popchange-fill-layer',
         'type': 'fill',
         'source': 'population-source',
@@ -1075,7 +1079,7 @@ function addsourcelayers(firstSymbolId, font) {
     },firstSymbolId );
 
     map.addLayer({
-        'id': 'popchange-outline-layer',
+        'id': 'population-outline-layer',
         'type': 'line',
         'source': 'population-source',
         'source-layer': 'LCRPGR',
@@ -1093,7 +1097,7 @@ function addsourcelayers(firstSymbolId, font) {
     },firstSymbolId );
     
     map.addLayer({
-        'id': 'MicroletRoute-line-layer',
+        'id': 'MicroletRoute-outline-layer',
         'type': 'line',
         'source': 'PublicTransport-source',
         'source-layer': 'MicroletRoute',
@@ -1104,11 +1108,30 @@ function addsourcelayers(firstSymbolId, font) {
             ['linear'],
             ['zoom'],
             8, 0.1,
-            12, 4
+            12, 3.4
         ]
         }
     },firstSymbolId );
     
+    // 内側の線（本体部分）
+    map.addLayer({
+        'id': 'MicroletRoute-line-layer',
+        'type': 'line',
+        'source': 'PublicTransport-source',
+        'source-layer': 'MicroletRoute',
+        'paint': {
+            'line-color': '#00CC00', // 内側の色（緑）
+            'line-width': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                8, 0.05,  // 内側の幅
+                12, 1.7
+            ]
+        }
+    }, firstSymbolId);
+
+
     map.addLayer({
         'id': 'PublicTransport-points-layer',
         'type': 'circle',
