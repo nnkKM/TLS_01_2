@@ -991,7 +991,47 @@ function addsourcelayers(firstSymbolId, font) {
         'paint': {
         'raster-saturation': -0.5
         }
-    });
+    },firstSymbolId );
+    
+    map.addLayer({
+        'id': 'PM25-fill-layer',
+        'type': 'fill',
+        'source': 'pm25-source',
+        'source-layer': 'PM2_5',
+        'layout': {
+        'visibility': 'none'
+        },
+        'paint': {
+        'fill-color': [
+            'case',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  10.0], '#ffffff',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  10.5], '#ffffcc',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  11.0], '#ffeb99',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  11.5], '#ffd966',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  12.0], '#ffcc33',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  12.5], '#ffbf00',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  13.0], '#e6ac00',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  13.5], '#cc9900',
+            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  14.0], '#b38600',
+            '#996633'
+        ],
+        'fill-opacity': 0.6
+        }
+    },firstSymbolId );
+
+    map.addLayer({
+        id: 'LCRPGR-fill-layer', // 新しいレイヤーのID
+        type: 'fill', // 塗りつぶしレイヤー
+        source: 'population-source', // データソースID
+        'source-layer': 'LCRPGR', // ベクトルタイルのレイヤー名
+        'layout': {
+            "visibility": "none"
+        },
+        paint: {
+            'fill-color': '#CCCCCC', // 初期色（デフォルト色）
+            'fill-opacity': 0.8 // 不透明度
+        }
+    },firstSymbolId);
 
     map.addLayer({
         'id': 'population-fill-layer',
@@ -1108,19 +1148,7 @@ function addsourcelayers(firstSymbolId, font) {
 //        }
 //    },firstSymbolId );
 
-    map.addLayer({
-        id: 'LCRPGR-fill-layer', // 新しいレイヤーのID
-        type: 'fill', // 塗りつぶしレイヤー
-        source: 'population-source', // データソースID
-        'source-layer': 'LCRPGR', // ベクトルタイルのレイヤー名
-        'layout': {
-            "visibility": "none"
-        },
-        paint: {
-            'fill-color': '#CCCCCC', // 初期色（デフォルト色）
-            'fill-opacity': 0.8 // 不透明度
-        }
-    },firstSymbolId);
+
     
 //    map.addLayer({
 //        'id': 'MUNICIPIO-fill-layer',
@@ -1176,32 +1204,7 @@ function addsourcelayers(firstSymbolId, font) {
 //        'minzoom': 8,
 //        'maxzoom': 10
 //    },firstSymbolId );
-    
-    map.addLayer({
-        'id': 'PM25-fill-layer',
-        'type': 'fill',
-        'source': 'pm25-source',
-        'source-layer': 'PM2_5',
-        'layout': {
-        'visibility': 'none'
-        },
-        'paint': {
-        'fill-color': [
-            'case',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  10.0], '#ffffff',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  10.5], '#ffffcc',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  11.0], '#ffeb99',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  11.5], '#ffd966',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  12.0], '#ffcc33',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  12.5], '#ffbf00',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  13.0], '#e6ac00',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  13.5], '#cc9900',
-            ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  14.0], '#b38600',
-            '#996633'
-        ],
-        'fill-opacity': 0.6
-        }
-    },firstSymbolId );
+
 
     map.addLayer({
         'id': 'MUNICIPIO-outline-layer',
