@@ -20,7 +20,9 @@ map.on('load', () => {
 
     // 人口データのスタイル調整
     updateMapStyle_pop("2020");
-    updateMapStyle_popchange("2019");
+    updateMapStyle_popchange("2000");
+    updateMapStyle_LCChangeRate("2000");
+
     map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
     map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
 });
@@ -480,6 +482,7 @@ yearSliderpopchange.addEventListener('input', (event) => {
     const selectedYear = event.target.value;
     yearValuepopchange.textContent = selectedYear;
     updateMapStyle_popchange(selectedYear);
+    updateMapStyle_LCChangeRate(selectedYear);  // LC変化率のスタイルを更新
 });
 
 
@@ -570,82 +573,6 @@ function updateMapStyle_popchange(year) {
         map.setPaintProperty('popchange-fill-layer', 'fill-color', color_popchange(year));  // 具体的な色の指定はcolor_popchangeでしている
     }
 }
-//
-//
-//                  // ズーム係数を計算する関数
-//                   const calculateZoomCoefficient = () => {
-//                       var zoom = map.getZoom().toFixed(2);
-//                       var zoomcoef = 1;
-//                       if (zoom < 5) {
-//                           zoomcoef = zoomcoef * 7 ** 4;
-//                       } else if (zoom < 8) {
-//                           zoomcoef = zoomcoef * 7 ** 3;
-//                       } else if (zoom < 10) {
-//                           zoomcoef = zoomcoef * 7 ** 2;
-//                       } else if (zoom < 12) {
-//                           zoomcoef = zoomcoef * 7;
-//                       } else {
-//                           zoomcoef = zoomcoef * 1;
-//                       }
-//                       return zoomcoef;
-//                   }
-//                   
-//                   
-//                   // 色の指定をしている関数、上の関数でyにはyearの値を入れる
-//                   const color_popchange = (y) => {
-//                       var zoomcoef = calculateZoomCoefficient();
-//                       console.log('Zoom Coefficient in function:', zoomcoef);
-//                   
-//                        // 色のパターンを設定
-//                        return [
-//                            "step",
-//                            ["-", ["get", String(2020)], ["get", String(y)]], // 2020年との人口の値の差   
-//                                                "rgb(0, 0, 255)",
-//                                 -50 * zoomcoef,"rgb(51, 102, 255)",
-//                                 -40 * zoomcoef,"rgb(102, 153, 255)",
-//                                 -30 * zoomcoef,"rgb(153, 204, 255)",
-//                                 -20 * zoomcoef,"rgb(204, 229, 255)",
-//                                 -10 * zoomcoef,"rgb(255, 255, 255)",
-//                                  10 * zoomcoef,"rgb(255, 204, 204)",
-//                                  20 * zoomcoef,"rgb(255, 153, 153)",
-//                                  30 * zoomcoef,"rgb(255, 102, 102)",
-//                                  40 * zoomcoef,"rgb(255, 51, 51)",
-//                                  50 * zoomcoef,"rgb(255, 0, 0)" 
-//                        ];
-//                    }
-//                    
-//                 map.on('zoomend', function() {
-//                     const zoom = map.getZoom().toFixed(2);
-//                     console.log('Zoom Level after change:', zoom);
-//                     const zoomcoef = calculateZoomCoefficient();
-//                     console.log('Zoom Coefficient:', zoomcoef);
-//                     const selectedYear = document.getElementById('year-slider-popchange').value;
-//                     updateMapStyle_popchange(selectedYear);
-//                 });
-//                  
-//                  
-//    console.log(zoomcoef);
-//    // 色のパターンを設定
-//    return [
-//    　// 人口が1未満の時は灰色（消すとやっぱりなぜかエラー出る）
-//        "interpolate-hcl",  // グラデーションを自動で付けるものらしい
-//        ["linear"],  // グラデーションを自動で付けるものらしい
-//        ["-", ["get", String(2020)], ["get", String(y)]], // 2020年との人口の値の差   
-//        -10000000 / zoomcoef, "rgb(0, 0, 255)",
-//        -1000000 / zoomcoef, "rgb(60, 60, 255)",
-//        -100000 / zoomcoef, "rgb(120, 120, 255)",
-//        -10000 / zoomcoef,"rgb(180, 180, 255)",
-//        0, "rgb(255, 255, 255)",
-//        10000 / zoomcoef, "rgb(255, 180, 180)",
-//        100000 / zoomcoef, "rgb(255, 120, 120)",
-//        1000000 / zoomcoef, "rgb(255, 60, 60)",
-//        10000000 / zoomcoef, "rgb(255, 0, 0)",
-//        100000000 / zoomcoef, "rgb(200, 0, 80)"
-//    ]
-//  }
-
-
-
 
 
 /////////////////   色の設定　　//////////////////
@@ -734,35 +661,41 @@ var bstep =  1;                     //　ベースステップ
            ]
        ];
    }
-//
-//  
-// 参考：藤村さん作成色作成関数
-// const opacity = (y) => {
-//   return ["min", 1.0, ["/", ["log10", ["+", 1, ["get", String(y)]]], 5.0]]
-// }
-// const color_pgr = (y) => {
-//   return ["case",
-//     ["any", ["<", ["get", String(y)], 500], ["<", ["get", String(y - 1)], 500]],
-//     "#888888",
-//     [
-//       "interpolate-hcl",
-//       ["linear"],
-//       ["-", ["ln", ["get", String(y)]], ["ln", ["get", String(y - 1)]]],
-//       -0.2, "rgb(39,42,149)",
-//       -0.15, "rgb(39,42,197)",
-//       -0.1, "rgb(39,42,246)",
-//       -0.05,"rgb(141,144,249)",
-//       0, "rgb(243,246,255)",
-//       0.05, "rgb(243,246,117)",
-//       0.1, "rgb(230,151,92)",
-//       0.15, "rgb(226,83,79)",
-//       0.2, "rgb(226,83,153)",
-//       0.25, "rgb(226,83,249)"
-//     ]
-//   ]
-// }
 
 
+/////////////////   色の設定 (LC変化率)   //////////////////
+
+// LC (土地被覆) の変化率を更新する関数
+function updateMapStyle_LCChangeRate(populationYear) {
+    if (map.getLayer('LCRPGR-fill-layer')) {
+        const lcChangeRate = [
+            "/",
+            ["/", ["-", ["to-number", ["get", `LC_2020`]], ["to-number", ["get", `LC_${populationYear}`]]], ["to-number", ["get", `LC_2020`]]],
+            ["-", ["ln", ["to-number", ["get", `POP_2020`]]], ["ln", ["to-number", ["get", `POP_${populationYear}`]]]]
+        ];
+
+        const smallChangeCondition = [
+            "any",
+            ["==", ["to-number", ["get", `POP_2020`]], 0],
+            ["==", ["to-number", ["get", `POP_${populationYear}`]], 0],
+            ["==", ["to-number", ["get", `LC_2020`]], 0],
+            ["==", ["to-number", ["get", `POP_2020`]], ["to-number", ["get", `POP_${populationYear}`]]],
+            ["<=", ["+",
+                ["^", ["/", ["-", ["to-number", ["get", `LC_2020`]], ["to-number", ["get", `LC_${populationYear}`]]], ["to-number", ["get", `LC_2020`]]], 2],
+                ["^", ["-", ["ln", ["to-number", ["get", `POP_2020`]]], ["ln", ["to-number", ["get", `POP_${populationYear}`]]]], 2]
+            ], 0.0091]
+        ];
+
+        map.setPaintProperty('LCRPGR-fill-layer', 'fill-color', [
+            "case",
+            smallChangeCondition, "transparent", // 色なし
+            ["all", [">=", lcChangeRate, -4],    ["<=", lcChangeRate, -0.25]], "#FF0000",
+            ["all", [">=", lcChangeRate, -0.25], ["<=", lcChangeRate, 0.25]],  "#87CEEB",
+            ["all", [">=", lcChangeRate, 0.25],  ["<=", lcChangeRate, 4]],     "#ADFF2F",
+            "#FFA500"
+        ]);
+    }
+}
 
 /*******************************************************************
  * ズームレベル表示
@@ -988,16 +921,6 @@ function addsourcelayers(firstSymbolId, font) {
         'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a>'
     });
 
-//    map.addSource('LCRPGR-source', {
-//        'type': 'raster',
-//        'tiles': [
-//        'pmtiles://https://nnkhij.github.io/test2/data/LCRPGR.pmtiles/{z}/{x}/{y}.png'
-//        ],
-//        'tileSize': 256,
-//        'minzoom': 0,
-//        'maxzoom': 19,
-//        'attribution': '<a href="https://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
-//    });
 
     /////////////////      レイヤ      ////////////////////////////////
     
@@ -1164,71 +1087,6 @@ function addsourcelayers(firstSymbolId, font) {
         }
     },firstSymbolId );
     
-//    map.addLayer({
-//        'id': 'LCRPGR-raster-layer',
-//        'type': 'raster',
-//        'source': 'LCRPGR-source',
-//        'paint': {
-//            'raster-opacity': 0.85
-//        }
-//    },firstSymbolId );
-
-
-    
-//    map.addLayer({
-//        'id': 'MUNICIPIO-fill-layer',
-//        'type': 'fill',
-//        'source': 'pm25-source',
-//        'source-layer': 'Municipio',
-//        'layout': {
-//        'visibility': 'none'
-//        },
-//        'paint': {
-//        'fill-color': [
-//            'case',
-//            ['<=', ['get', 'Pm25PopWam'], 10.0], '#ffffff',
-//            ['<=', ['get', 'Pm25PopWam'], 10.5], '#ffffcc',
-//            ['<=', ['get', 'Pm25PopWam'], 11.0], '#ffeb99',
-//            ['<=', ['get', 'Pm25PopWam'], 11.5], '#ffd966',
-//            ['<=', ['get', 'Pm25PopWam'], 12.0], '#ffcc33',
-//            ['<=', ['get', 'Pm25PopWam'], 12.5], '#ffbf00',
-//            ['<=', ['get', 'Pm25PopWam'], 13.0], '#e6ac00',
-//            ['<=', ['get', 'Pm25PopWam'], 13.5], '#cc9900',
-//            ['<=', ['get', 'Pm25PopWam'], 14.0], '#b38600',
-//            '#996633'
-//        ],
-//        'fill-opacity': 0.6
-//        },
-//        'maxzoom': 8
-//    },firstSymbolId );
-//    
-//    map.addLayer({
-//        'id': 'PostuAdministrativo-fill-layer',
-//        'type': 'fill',
-//        'source': 'pm25-source',
-//        'source-layer': 'PostuAdministrativo',
-//        'layout': {
-//        'visibility': 'none'
-//        },
-//        'paint': {
-//        'fill-color': [
-//            'case',
-//            ['<=', ['get', 'Pm25PopWam'], 10.0], '#ffffff',
-//            ['<=', ['get', 'Pm25PopWam'], 10.5], '#ffffcc',
-//            ['<=', ['get', 'Pm25PopWam'], 11.0], '#ffeb99',
-//            ['<=', ['get', 'Pm25PopWam'], 11.5], '#ffd966',
-//            ['<=', ['get', 'Pm25PopWam'], 12.0], '#ffcc33',
-//            ['<=', ['get', 'Pm25PopWam'], 12.5], '#ffbf00',
-//            ['<=', ['get', 'Pm25PopWam'], 13.0], '#e6ac00',
-//            ['<=', ['get', 'Pm25PopWam'], 13.5], '#cc9900',
-//            ['<=', ['get', 'Pm25PopWam'], 14.0], '#b38600',
-//            '#996633'
-//        ],
-//        'fill-opacity': 0.6
-//        },
-//        'minzoom': 8,
-//        'maxzoom': 10
-//    },firstSymbolId );
 
 
     map.addLayer({
@@ -1291,40 +1149,7 @@ function addsourcelayers(firstSymbolId, font) {
        'minzoom': 10
     },firstSymbolId );
     
-//    map.addLayer({
-//       'id': 'MUNICIPIO-label-layer',
-//       'type': 'symbol',
-//       'source': 'pm25-source',
-//       'source-layer': 'Municipio',
-//       'layout': {
-//         'text-field': ['get', 'MUNICIPIO'],
-//         'text-font': [ font ],
-//         'text-size': 10,
-//         'text-anchor': 'center'
-//       },
-//       'paint': {
-//         'text-color': '#000000'
-//       },
-//       'maxzoom': 8
-//     },firstSymbolId);
-//    
-//     map.addLayer({
-//       'id': 'PostuAdministrativo-label-layer',
-//       'type': 'symbol',
-//       'source': 'pm25-source',
-//       'source-layer': 'PostuAdministrativo',
-//       'layout': {
-//         'text-field': ['get', 'P_ADMIN'],
-//         'text-font': [ font ],
-//         'text-size': 10,
-//         'text-anchor': 'center'
-//       },
-//       'paint': {
-//         'text-color': '#000000'
-//       },
-//       'maxzoom': 10
-//     },firstSymbolId);
-//    
+
      map.addLayer({
        'id': 'Suco-label-layer',
        'type': 'symbol',
@@ -1354,48 +1179,6 @@ function addsourcelayers(firstSymbolId, font) {
        }
      });
 
-    // LC (土地被覆) の変化率の計算
-    const lcChangeRate = [
-        "/",
-        ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]],
-        ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]]
-    ];
-    
-    // 小さな変化 (POP と LC がほとんど変わらないか、いずれかが 0 の場合)
-    const smallChangeCondition = [
-        "any",
-        ["==", ["to-number", ["get", "POP_2020"]], 0],
-        ["==", ["to-number", ["get", "POP_2000"]], 0],
-        ["==", ["to-number", ["get", "LC_2020"]], 0],
-        ["==", ["to-number", ["get", "POP_2020"]], ["to-number", ["get", "POP_2000"]]],
-        ["<=", ["+",
-            ["^", ["/", ["-", ["to-number", ["get", "LC_2020"]], ["to-number", ["get", "LC_2000"]]], ["to-number", ["get", "LC_2020"]]], 2],
-            ["^", ["-", ["ln", ["to-number", ["get", "POP_2020"]]], ["ln", ["to-number", ["get", "POP_2000"]]]], 2]
-        ], 0.0091]
-    ];
-    
-    // 色付けの設定
-    map.setPaintProperty('LCRPGR-fill-layer', 'fill-color', [
-        "case",
-        // 条件 1: 小さな変化 (いずれかが 0、または変化が非常に小さい場合)
-        smallChangeCondition,
-        "transparent", // 色なし
-    
-        // 条件 2: 計算結果が -4 ～ -0.25 の場合 (赤色)
-        ["all", [">=", lcChangeRate, -4], ["<=", lcChangeRate, -0.25]],
-        "#FF0000",
-    
-        // 条件 3: 計算結果が -0.25 ～ 0.25 の場合 (青色)
-        ["all", [">=", lcChangeRate, -0.25], ["<=", lcChangeRate, 0.25]],
-        "#87CEEB",
-    
-        // 条件 4: 計算結果が 0.25 ～ 4 の場合 (緑色)
-        ["all", [">=", lcChangeRate, 0.25], ["<=", lcChangeRate, 4]],
-        "#ADFF2F",
-    
-        // 条件 5: その他　計算結果が ～ -4，4 ～ の場合 (オレンジ色)
-        "#FFA500"
-  ]);
 }
 
 function getsymbolID() {
@@ -1408,13 +1191,6 @@ function getsymbolID() {
             break;
         }
     }
-    // console.log("getsymbolID()の中");
-
-    // map.on('style.load', function() {
-    //     const currentStyle = map.getStyle();
-    //     console.log('Loaded Style:', currentStyle);
-    // });
-    // console.log(firstSymbolId);
 
     return firstSymbolId;
 }
