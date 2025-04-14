@@ -469,20 +469,39 @@ const yearSliderPop = document.getElementById('year-slider-pop');
 const yearValuePop = document.getElementById('year-value-pop');
 const yearSliderpopchange = document.getElementById('year-slider-popchange');
 const yearValuepopchange = document.getElementById('year-value-popchange');
+const yearValueLCRPGR = document.getElementById('year-value-lcrpgr');
+const yearValuePopBase = document.getElementById('year-value-popbase'); // 人口ベース年表示
 
-
-// スライドバーが変更されたときのイベント
+// バー1 (yearSliderPop) の値が変更された場合
 yearSliderPop.addEventListener('input', (event) => {
-    const selectedYear = event.target.value;
-    yearValuePop.textContent = selectedYear;    // 今何年選んでいるかの表示
-    updateMapStyle_pop(selectedYear);           // 色の設定の関数を実行
+    const selectedYear = parseInt(event.target.value); // 現在の値を取得
+    const bar2Value = parseInt(yearSliderpopchange.value); // バー2の値を取得
+
+    // バー1がバー2の値を超えないように制約
+    if (selectedYear < bar2Value) {
+        yearSliderPop.value = bar2Value; // バー1の値をバー2の値に合わせる
+    }
+
+    yearValuePop.textContent = yearSliderPop.value; // 表示を更新
+    yearValuePopBase.textContent = yearSliderPop.value; // 名前修正
+    updateMapStyle_pop(yearSliderPop.value); // 関数を呼び出し
+    updateMapStyle_popchange(yearSliderpopchange.value); // バー2の関数も更新
 });
 
+// バー2 (yearSliderpopchange) の値が変更された場合
 yearSliderpopchange.addEventListener('input', (event) => {
-    const selectedYear = event.target.value;
-    yearValuepopchange.textContent = selectedYear;
-    updateMapStyle_popchange(selectedYear);
-    updateMapStyle_LCChangeRate(selectedYear);  // LC変化率のスタイルを更新
+    const selectedYear = parseInt(event.target.value); // 現在の値を取得
+    const bar1Value = parseInt(yearSliderPop.value); // バー1の値を取得
+
+    // バー2がバー1の値を下回らないように制約
+    if (selectedYear > bar1Value) {
+        yearSliderpopchange.value = bar1Value; // バー2の値をバー1の値に合わせる
+    }
+
+    yearValuepopchange.textContent = yearSliderpopchange.value; // 表示を更新
+    yearValueLCRPGR.textContent = yearSliderpopchange.value; // 他の表示も更新
+    updateMapStyle_popchange(yearSliderpopchange.value); // 関数を呼び出し
+    updateMapStyle_LCChangeRate(yearSliderpopchange.value); // 関数を呼び出し
 });
 
 
@@ -580,13 +599,15 @@ function updateMapStyle_popchange(year) {
 var m =  [7**5, 7**4, 7**3, 7**2, 7];         // 何をかけるか
 var bstep =  1;                     //　ベースステップ
 
-     const color_popchange = (y) => {
+const color_popchange = (compareYear) => {
+    // 基準年を動的に取得
+    const baseYear = yearSliderPop.value;
        return [
            "step",
            ["zoom"],
            [
                "step",
-               ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
+              ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
                      "rgb(0, 0, 255)", 
              -5* bstep * m[0],"rgb(51, 102, 255)", 
              -4* bstep * m[0],"rgb(102, 153, 255)",
@@ -601,7 +622,7 @@ var bstep =  1;                     //　ベースステップ
            ],
            6,[
                "step",
-            ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
+              ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
                      "rgb(0, 0, 255)", 
              -5* bstep * m[1],"rgb(51, 102, 255)", 
              -4* bstep * m[1],"rgb(102, 153, 255)",
@@ -616,7 +637,7 @@ var bstep =  1;                     //　ベースステップ
            ],
            8,[
                "step",
-            ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
+              ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
                      "rgb(0, 0, 255)", 
              -5* bstep * m[2],"rgb(51, 102, 255)", 
              -4* bstep * m[2],"rgb(102, 153, 255)",
@@ -631,7 +652,7 @@ var bstep =  1;                     //　ベースステップ
            ],
            10, [
                "step",
-            ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
+              ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
                     "rgb(0, 0, 255)", 
              -5* bstep * m[3],"rgb(51, 102, 255)", 
              -4* bstep * m[3],"rgb(102, 153, 255)",
@@ -646,7 +667,7 @@ var bstep =  1;                     //　ベースステップ
            ],
            12, [
                "step",
-            ["-", ["get", "POP_2020"], ["get", `POP_${y}`]],
+              ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
                    "rgb(0, 0, 255)",
               -5* bstep * m[4],"rgb(51, 102, 255)",
               -4* bstep * m[4],"rgb(102, 153, 255)",
