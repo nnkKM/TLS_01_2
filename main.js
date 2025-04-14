@@ -293,10 +293,7 @@ const setLayoutThematicMap = (font) => {
     // const currentStyle = map.getStyle();
     // console.log('Loaded Style:', currentStyle);
        
-    //////////////  人口データのスタイル調整    /////////////map.on("sourecrdata")
-    updateMapStyle_pop("2020");
-    updateMapStyle_popchange("2019");
-    map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none');
+
 
 }
 
