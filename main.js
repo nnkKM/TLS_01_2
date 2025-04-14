@@ -194,6 +194,7 @@ const setAllLayersAndValues = () => {
 
     updateMapStyle_pop(elm('year-slider-pop').value);
     updateMapStyle_popchange(elm('year-slider-popchange').value);
+    updateMapStyle_LCChangeRate(elm('year-slider-popchange').value);
 }
 
 // 凡例の表示・非表示を切り替えるイベントリスナーを追加
