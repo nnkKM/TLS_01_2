@@ -471,6 +471,7 @@ const yearSliderpopchange = document.getElementById('year-slider-popchange');
 const yearValuepopchange = document.getElementById('year-value-popchange');
 const yearValueLCRPGR = document.getElementById('year-value-lcrpgr');
 const yearValuePopBase = document.getElementById('year-value-popbase'); // 人口ベース年表示
+const yearValueLCRPGRBase = document.getElementById('year-value-lcrpgrbase');
 
 // バー1 (yearSliderPop) の値が変更された場合
 yearSliderPop.addEventListener('input', (event) => {
@@ -483,9 +484,11 @@ yearSliderPop.addEventListener('input', (event) => {
     }
 
     yearValuePop.textContent = yearSliderPop.value; // 表示を更新
-    yearValuePopBase.textContent = yearSliderPop.value; // 名前修正
+    yearValuePopBase.textContent = yearSliderPop.value;
+    yearValueLCRPGRBase.textContent = yearSliderPop.value;
     updateMapStyle_pop(yearSliderPop.value); // 関数を呼び出し
     updateMapStyle_popchange(yearSliderpopchange.value); // バー2の関数も更新
+    updateMapStyle_LCChangeRate(yearSliderpopchange.value); 
 });
 
 // バー2 (yearSliderpopchange) の値が変更された場合
@@ -689,21 +692,22 @@ const color_popchange = (compareYear) => {
 // LC (土地被覆) の変化率を更新する関数
 function updateMapStyle_LCChangeRate(populationYear) {
     if (map.getLayer('LCRPGR-fill-layer')) {
+        const baseYear = yearSliderPop.value; // スライドバー1の選択された年を取得
         const lcChangeRate = [
             "/",
-            ["/", ["-", ["to-number", ["get", `LC_2020`]], ["to-number", ["get", `LC_${populationYear}`]]], ["to-number", ["get", `LC_2020`]]],
-            ["-", ["ln", ["to-number", ["get", `POP_2020`]]], ["ln", ["to-number", ["get", `POP_${populationYear}`]]]]
+            ["/", ["-", ["to-number", ["get", `LC_${baseYear}`]], ["to-number", ["get", `LC_${populationYear}`]]], ["to-number", ["get", `LC_${baseYear}`]]],
+            ["-", ["ln", ["to-number", ["get", `POP_${baseYear}`]]], ["ln", ["to-number", ["get", `POP_${populationYear}`]]]]
         ];
 
         const smallChangeCondition = [
             "any",
-            ["==", ["to-number", ["get", `POP_2020`]], 0],
+            ["==", ["to-number", ["get", `POP_${baseYear}`]], 0],
             ["==", ["to-number", ["get", `POP_${populationYear}`]], 0],
-            ["==", ["to-number", ["get", `LC_2020`]], 0],
-            ["==", ["to-number", ["get", `POP_2020`]], ["to-number", ["get", `POP_${populationYear}`]]],
+            ["==", ["to-number", ["get", `LC_${baseYear}`]], 0],
+            ["==", ["to-number", ["get", `POP_${baseYear}`]], ["to-number", ["get", `POP_${populationYear}`]]],
             ["<=", ["+",
-                ["^", ["/", ["-", ["to-number", ["get", `LC_2020`]], ["to-number", ["get", `LC_${populationYear}`]]], ["to-number", ["get", `LC_2020`]]], 2],
-                ["^", ["-", ["ln", ["to-number", ["get", `POP_2020`]]], ["ln", ["to-number", ["get", `POP_${populationYear}`]]]], 2]
+                ["^", ["/", ["-", ["to-number", ["get", `LC_${baseYear}`]], ["to-number", ["get", `LC_${populationYear}`]]], ["to-number", ["get", `LC_${baseYear}`]]], 2],
+                ["^", ["-", ["ln", ["to-number", ["get", `POP_${baseYear}`]]], ["ln", ["to-number", ["get", `POP_${populationYear}`]]]], 2]
             ], 0.0091]
         ];
 
