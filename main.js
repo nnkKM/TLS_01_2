@@ -24,7 +24,7 @@ map.on('load', () => {
     updateMapStyle_LCChangeRate("2000");
 
     map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
-    map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
+
 });
 
 /*******************************************************************
@@ -297,7 +297,7 @@ const setLayoutThematicMap = (font) => {
     updateMapStyle_pop("2020");
     updateMapStyle_popchange("2019");
     map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none');
-    map.setLayoutProperty('popchange-outline-layer', 'visibility', 'none');
+
 }
 
 let tileType = ''; //ラジオボタンを切り替えたときにタイルのタイプを指定
