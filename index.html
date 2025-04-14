@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -17,6 +18,7 @@
         <div id="layers-container" class="disp-layers" style="display: none;">
             <input type="radio" id="style1" name="mapstyle" value="versatiles">
             <label for="style1">VersaTiles color</label>
+            <br>
             <input type="radio" id="style2" name="mapstyle" value="tileservergl" checked>
             <label for="style2">TileServer GL</label>
             <br>
@@ -39,18 +41,12 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="population-all-fill-layer-chk" checked>
                 人口（Year: <span id="year-value-pop">2020</span>）
             </label>
-            <!-- 年代ごとの表示スライダーバー -->
-            <div id="slider-container-pop">
-                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="range" id="year-slider-pop" min="2000" max="2020" value="2020" step="1">
-            </div>
+            <br>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="popchange-all-fill-layer-chk" >
-                人口増減(<span id="year-value-popchange">2000</span>～2020)
+                人口増減(<span id="year-value-popchange">2000</span>～<span id="year-value-popbase">2020</span>)
             </label>
-            <!-- 年代ごとの表示スライダーバー -->
-            <div id="slider-container-popchange">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="range" id="year-slider-popchange" min="2000" max="2019" value="2000" step="1">
-            </div>
+            <br>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PublicTransport-points-layer-chk" checked>
                 バス停・フェリー乗り場
@@ -63,20 +59,30 @@
         </div>
             <br>
             <label>
-                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="LCRPGR-fill-layer-chk">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="LCRPGR-fill-layer-chk">
                 SDG11.3.1
             <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCR-PGR(2000-2020)
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCR-PGR(<span id="year-value-lcrpgr">2000</span>～2020)
             </label>
             <br>
             <label>
-                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PM25-all-fill-layer-chk">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PM25-all-fill-layer-chk">
                 SDG11.6.2
             <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PM2.5
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PM2.5
             </label>
-        </div>
+            <!-- 年代ごとの表示スライダーバー -->
+            <div id="slider-container-pop">
+                Year1<input type="range" id="year-slider-pop" min="2000" max="2020" value="2020" step="1">
+            </div>
+            <!-- 年代ごとの表示スライダーバー -->
+            <div id="slider-container-popchange">
+                Year2<input type="range" id="year-slider-popchange" min="2000" max="2019" value="2000" step="1">
+            </div>
 
+
+
+        </div>
         <!-- メモ機能 -->
         <div id="note-form" style="display: none;">
             <label for="note-text">メモ:</label>
