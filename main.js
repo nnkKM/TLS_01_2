@@ -12,6 +12,7 @@ const map = new maplibregl.Map({
 });
 map.addControl(new maplibregl.NavigationControl());
 
+
 // 最初に地図が読み込まれた時の処理
 map.on('load', () => {
     // 主題図を読み込んでいる
@@ -32,7 +33,6 @@ map.on('load', () => {
  * *************************************************************** */
 // 人口データと行政界以外のレイヤ設定はjsonのレイヤIDをここに加える
 const layerIds = [
-    'osm-layer',
     'PublicTransport-points-layer',
 ];
 
@@ -306,6 +306,12 @@ map.on('style.load', function() {   // style.jsonがロードされたとき(set
     }else if(tileType === 'versatiles'){
 		setLayoutThematicMap('noto_sans_regular');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+    }else if(tileType === 'osm'){
+	setLayoutThematicMap('noto_sans_regular');
+        setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+    }else if(tileType === 'none'){
+	setLayoutThematicMap('noto_sans_regular');
+        setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }
     // 他のstyle.jsonを追加するときはここに記述
 
@@ -313,6 +319,7 @@ map.on('style.load', function() {   // style.jsonがロードされたとき(set
 
 // ラジオボタンの要素を取得
 const radioButtons = document.querySelectorAll('input[type=radio][name=mapstyle]');
+
 
 // 各ラジオボタンにイベントリスナーを設定
 radioButtons.forEach(radio => {
@@ -329,6 +336,14 @@ radioButtons.forEach(radio => {
                 map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
                 tileType = 'tileservergl';
                 break; //この後、上のmap.on('style.load'～が実行される
+            case 'osm':
+                map.setStyle('./VersaTiles_Style/OSM_style.json')
+                tileType = 'osm';
+                break;
+            case 'none': // 新しい「地図無し」の選択
+                map.setStyle('./VersaTiles_Style/empty-style.json')
+                tileType = 'none';
+                break;
             // 他のstyle.jsonを追加するときはここに記述
 
         }
@@ -900,20 +915,6 @@ function addsourcelayers(firstSymbolId, font) {
 // ////////////////////ソース///////////////////
 
 
-
-    map.addSource('osm-tiles', {
-        'type': 'raster',
-        'tiles': [
-        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-        ],
-        'minzoom': 1,
-        'maxzoom': 18,
-        'tileSize': 256,
-        'attribution': '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
-    });
-
-
-
     map.addSource('population-source', {
         'type': 'vector',
         'tiles': [
@@ -946,22 +947,6 @@ function addsourcelayers(firstSymbolId, font) {
 
 
     /////////////////      レイヤ      ////////////////////////////////
-    
-        
-    map.addLayer({
-        'id': 'osm-layer',
-        'type': 'raster',
-        'source': 'osm-tiles',
-        'layout': {
-            "visibility": "none"
-        },
-        'minzoom': 0,
-        'maxzoom': 19,
-        'paint': {
-        'raster-saturation': -0.5
-        }
-    },firstSymbolId );
-    
     map.addLayer({
         'id': 'PM25-fill-layer',
         'type': 'fill',
