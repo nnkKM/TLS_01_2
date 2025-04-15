@@ -21,8 +21,8 @@ map.on('load', () => {
 
     // 人口データのスタイル調整
     updateMapStyle_pop("2020");
-    updateMapStyle_popchange("2000");
-    updateMapStyle_LCChangeRate("2000");
+    updateMapStyle_popchange("2000", "2020");
+    updateMapStyle_LCChangeRate("2000", "2020");
 
     map.setLayoutProperty('popchange-fill-layer', 'visibility', 'none'); 
 
@@ -193,8 +193,8 @@ const setAllLayersAndValues = () => {
     updatePopulationOutlineVisibility();
 
     updateMapStyle_pop(elm('year-slider-pop').value);
-    updateMapStyle_popchange(elm('year-slider-popchange').value);
-    updateMapStyle_LCChangeRate(elm('year-slider-popchange').value);
+    updateMapStyle_popchange(minVal, maxVal);
+    updateMapStyle_LCChangeRate(minVal, maxVal);
 }
 
 // 凡例の表示・非表示を切り替えるイベントリスナーを追加
@@ -434,35 +434,6 @@ function hideFeatureProperties() {
 }
 
 
-// 属性情報表示用のスタイルを追加
-const style = document.createElement('style');
-style.innerHTML = `
-    #properties-display {
-        position: absolute;
-        background: white;
-        padding: 5px;
-        border: 1px solid black;
-        display: none;
-        z-index: 1000;
-        max-width: 200px;
-        max-height: 200px;
-        overflow-y: auto;
-        font-size: 10px;
-    }
-    #properties-display table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    #properties-display td {
-        padding: 2px 5px;
-        word-break: break-all;
-    }
-    #properties-display tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-`;
-document.head.appendChild(style);
-
 // 属性情報表示用の要素を追加
 const propertiesDisplay = document.createElement('div');
 propertiesDisplay.id = 'properties-display';
@@ -473,52 +444,135 @@ document.body.appendChild(propertiesDisplay);
  * 年度ごとの表示切替
  * *************************************************************** */
 
+const sliderContainer = document.querySelector('.slider-container');
+const sliderRange = document.getElementById('slider-range');
+const thumbMin = document.getElementById('thumb-min');
+const thumbMax = document.getElementById('thumb-max');
+const startValueDisplay = document.getElementById('year-value-popchange');
+const endValueDisplay = document.getElementById('end-value');
+
+const minValInitial = 2000;
+const maxValInitial = 2020;
+const step = 1;
+
+// 現在の値を設定します
+let minVal = minValInitial;
+let maxVal = maxValInitial;
+console.log(maxVal);
+
+const updateSlider = () => {
+    console.log(maxVal);
+    const containerWidth = sliderContainer.offsetWidth;
+    const minPos = ((minVal - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
+    const maxPos = ((maxVal - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
+
+    sliderRange.style.left = minPos + 'px';
+    sliderRange.style.width = (maxPos - minPos) + 'px';
+    thumbMin.style.left = minPos + 'px';
+    thumbMax.style.left = maxPos + 'px';
+    yearValuepopchange.textContent = minVal;
+    yearValuePopBase.textContent = maxVal;
+    yearValueLCRPGR.textContent = minVal;
+    yearValueLCRPGRBase.textContent = maxVal;
+
+    updateMapStyle_popchange(minVal, maxVal);
+    updateMapStyle_LCChangeRate(minVal, maxVal); 
+};
+
+const onMouseMove = (e, thumb) => {
+    const containerRect = sliderContainer.getBoundingClientRect();
+    const containerWidth = containerRect.width;
+    const offsetX = e.clientX - containerRect.left;
+    const value = Math.round(minValInitial + ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step) * step;
+
+    if (thumb === thumbMin) {
+        minVal = Math.min(Math.max(value, minValInitial), maxVal - step);
+    } else if (thumb === thumbMax) {
+        maxVal = Math.max(Math.min(value, maxValInitial), minVal + step);
+    }
+
+    updateSlider();
+};
+
+thumbMin.addEventListener('mousedown', () => {
+    const onMouseMoveMin = (e) => onMouseMove(e, thumbMin);
+    window.addEventListener('mousemove', onMouseMoveMin);
+    window.addEventListener('mouseup', () => {
+        window.removeEventListener('mousemove', onMouseMoveMin);
+    }, { once: true });
+});
+
+thumbMax.addEventListener('mousedown', () => {
+    const onMouseMoveMax = (e) => onMouseMove(e, thumbMax);
+    window.addEventListener('mousemove', onMouseMoveMax);
+    window.addEventListener('mouseup', () => {
+        window.removeEventListener('mousemove', onMouseMoveMax);
+    }, { once: true });
+});
+
+// window.addEventListener('load', updateSlider);
+
+
 /////////////////   スライダーバーの設定　　//////////////////
 // 現在の年を保存する変数
 let currentYear = 2001;
 
 // スライドバーの要素を取得
 const yearSliderPop = document.getElementById('year-slider-pop');
+// const yearSliderS = document.getElementById('year-slider-s');
 const yearValuePop = document.getElementById('year-value-pop');
-const yearSliderpopchange = document.getElementById('year-slider-popchange');
+// const yearSliderE = document.getElementById('year-slider-e');
 const yearValuepopchange = document.getElementById('year-value-popchange');
 const yearValueLCRPGR = document.getElementById('year-value-lcrpgr');
 const yearValuePopBase = document.getElementById('year-value-popbase'); // 人口ベース年表示
 const yearValueLCRPGRBase = document.getElementById('year-value-lcrpgrbase');
 
-// バー1 (yearSliderPop) の値が変更された場合
+
+// // 人口バー (yearSliderPop) の値が変更された場合
 yearSliderPop.addEventListener('input', (event) => {
     const selectedYear = parseInt(event.target.value); // 現在の値を取得
-    const bar2Value = parseInt(yearSliderpopchange.value); // バー2の値を取得
+    const barValue = parseInt(yearSliderPop.value); // バーの値を取得
 
     // バー1がバー2の値を超えないように制約
-    if (selectedYear < bar2Value) {
-        yearSliderPop.value = bar2Value; // バー1の値をバー2の値に合わせる
+    if (selectedYear < barValue) {
+        yearSliderS.value = barValue; // バー1の値をバー2の値に合わせる
     }
 
     yearValuePop.textContent = yearSliderPop.value; // 表示を更新
-    yearValuePopBase.textContent = yearSliderPop.value;
-    yearValueLCRPGRBase.textContent = yearSliderPop.value;
     updateMapStyle_pop(yearSliderPop.value); // 関数を呼び出し
-    updateMapStyle_popchange(yearSliderpopchange.value); // バー2の関数も更新
-    updateMapStyle_LCChangeRate(yearSliderpopchange.value); 
 });
 
-// バー2 (yearSliderpopchange) の値が変更された場合
-yearSliderpopchange.addEventListener('input', (event) => {
-    const selectedYear = parseInt(event.target.value); // 現在の値を取得
-    const bar1Value = parseInt(yearSliderPop.value); // バー1の値を取得
+// // バー1 (yearSliderS) の値が変更された場合
+// yearSliderS.addEventListener('input', (event) => {
+//     const selectedYear = parseInt(event.target.value); // 現在の値を取得
+//     const bar2Value = parseInt(yearSliderE.value); // バー2の値を取得
 
-    // バー2がバー1の値を下回らないように制約
-    if (selectedYear > bar1Value) {
-        yearSliderpopchange.value = bar1Value; // バー2の値をバー1の値に合わせる
-    }
+//     // バー2がバー1の値を下回らないように制約
+//     if (selectedYear > bar2Value) {
+//         yearSliderS.value = bar2Value; // バー1の値をバー2の値に合わせる
+//     }
 
-    yearValuepopchange.textContent = yearSliderpopchange.value; // 表示を更新
-    yearValueLCRPGR.textContent = yearSliderpopchange.value; // 他の表示も更新
-    updateMapStyle_popchange(yearSliderpopchange.value); // 関数を呼び出し
-    updateMapStyle_LCChangeRate(yearSliderpopchange.value); // 関数を呼び出し
-});
+//     yearValuepopchange.textContent = yearSliderS.value; // 表示を更新
+//     yearValueLCRPGR.textContent = yearSliderS.value; // 他の表示も更新
+//     updateMapStyle_popchange(yearSliderS.value, yearSliderE.value); // バー2の関数も更新
+//     updateMapStyle_LCChangeRate(yearSliderS.value, yearSliderE.value); 
+// });
+
+// // バー2 (yearSliderE) の値が変更された場合
+// yearSliderE.addEventListener('input', (event) => {
+//     const selectedYear = parseInt(event.target.value); // 現在の値を取得
+//     const bar1Value = parseInt(yearSliderS.value); // バー1の値を取得
+
+//     // バー1がバー2の値を超えないように制約
+//     if (selectedYear < bar1Value) {
+//         yearSliderE.value = bar1Value; // バー2の値をバー1の値に合わせる
+//     }
+
+//     yearValuePopBase.textContent = yearSliderE.value;
+//     yearValueLCRPGRBase.textContent = yearSliderE.value;
+//     updateMapStyle_popchange(yearSliderS.value, yearSliderE.value); // 関数を呼び出し
+//     updateMapStyle_LCChangeRate(yearSliderS.value, yearSliderE.value); // 関数を呼び出し
+// });
 
 
 
@@ -603,9 +657,9 @@ function updateMapStyle_pop(year) {
 }
 
 // 色を設定する関数、yearの値によって色が変わる
-function updateMapStyle_popchange(year) {
+function updateMapStyle_popchange(syear, eyear) {
     if (map.getLayer('popchange-fill-layer')) {
-        map.setPaintProperty('popchange-fill-layer', 'fill-color', color_popchange(year));  // 具体的な色の指定はcolor_popchangeでしている
+        map.setPaintProperty('popchange-fill-layer', 'fill-color', color_popchange(syear, eyear));  // 具体的な色の指定はcolor_popchangeでしている
     }
 }
 
@@ -615,42 +669,40 @@ function updateMapStyle_popchange(year) {
 var m =  [7**5, 7**4, 7**3, 7**2, 7];         // 何をかけるか
 var bstep =  1;                     //　ベースステップ
 
-const color_popchange = (compareYear) => {
-    // 基準年を動的に取得
-    const baseYear = yearSliderPop.value;
+const color_popchange = (compareYear, baseYear) => {
        return [
-           "step",
-           ["zoom"],
-           [
-               "step",
-              ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
-                     "rgb(0, 0, 255)", 
-             -5* bstep * m[0],"rgb(51, 102, 255)", 
-             -4* bstep * m[0],"rgb(102, 153, 255)",
-             -3* bstep * m[0],"rgb(153, 204, 255)",
-             -2* bstep * m[0],"rgb(204, 229, 255)",
-             -1* bstep * m[0],"rgb(255, 255, 255)",
-              1* bstep * m[0],"rgb(255, 204, 204)",
-              2* bstep * m[0],"rgb(255, 153, 153)",
-              3* bstep * m[0],"rgb(255, 102, 102)",
-              4* bstep * m[0],"rgb(255, 51, 51)",
-              5* bstep * m[0],"rgb(255, 0, 0)"
-           ],
-           6,[
-               "step",
-              ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
-                     "rgb(0, 0, 255)", 
-             -5* bstep * m[1],"rgb(51, 102, 255)", 
-             -4* bstep * m[1],"rgb(102, 153, 255)",
-             -3* bstep * m[1],"rgb(153, 204, 255)",
-             -2* bstep * m[1],"rgb(204, 229, 255)",
-             -1* bstep * m[1],"rgb(255, 255, 255)",
-              1* bstep * m[1],"rgb(255, 204, 204)",
-              2* bstep * m[1],"rgb(255, 153, 153)",
-              3* bstep * m[1],"rgb(255, 102, 102)",
-              4* bstep * m[1],"rgb(255, 51, 51)",
-              5* bstep * m[1],"rgb(255, 0, 0)"
-           ],
+            "step",
+            ["zoom"],
+            [
+                "step",
+                ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
+                "rgb(0, 0, 255)", 
+                -5* bstep * m[0],"rgb(51, 102, 255)", 
+                -4* bstep * m[0],"rgb(102, 153, 255)",
+                -3* bstep * m[0],"rgb(153, 204, 255)",
+                -2* bstep * m[0],"rgb(204, 229, 255)",
+                -1* bstep * m[0],"rgb(255, 255, 255)",
+                1* bstep * m[0],"rgb(255, 204, 204)",
+                2* bstep * m[0],"rgb(255, 153, 153)",
+                3* bstep * m[0],"rgb(255, 102, 102)",
+                4* bstep * m[0],"rgb(255, 51, 51)",
+                5* bstep * m[0],"rgb(255, 0, 0)"
+            ],
+            6,[
+                "step",
+                ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
+                "rgb(0, 0, 255)", 
+                -5* bstep * m[1],"rgb(51, 102, 255)", 
+                -4* bstep * m[1],"rgb(102, 153, 255)",
+                -3* bstep * m[1],"rgb(153, 204, 255)",
+                -2* bstep * m[1],"rgb(204, 229, 255)",
+                -1* bstep * m[1],"rgb(255, 255, 255)",
+                1* bstep * m[1],"rgb(255, 204, 204)",
+                2* bstep * m[1],"rgb(255, 153, 153)",
+                3* bstep * m[1],"rgb(255, 102, 102)",
+                4* bstep * m[1],"rgb(255, 51, 51)",
+                5* bstep * m[1],"rgb(255, 0, 0)"
+            ],
            8,[
                "step",
               ["-", ["get", `POP_${baseYear}`], ["get", `POP_${compareYear}`]],
@@ -703,9 +755,8 @@ const color_popchange = (compareYear) => {
 /////////////////   色の設定 (LC変化率)   //////////////////
 
 // LC (土地被覆) の変化率を更新する関数
-function updateMapStyle_LCChangeRate(populationYear) {
+function updateMapStyle_LCChangeRate(baseYear, populationYear) {
     if (map.getLayer('LCRPGR-fill-layer')) {
-        const baseYear = yearSliderPop.value; // スライドバー1の選択された年を取得
         const lcChangeRate = [
             "/",
             ["/", ["-", ["to-number", ["get", `LC_${baseYear}`]], ["to-number", ["get", `LC_${populationYear}`]]], ["to-number", ["get", `LC_${baseYear}`]]],

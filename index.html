@@ -43,7 +43,11 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="population-all-fill-layer-chk" checked>
                 人口（Year: <span id="year-value-pop">2020</span>）
             </label>
-            <br>
+            <!-- 年代ごとの表示スライダーバー -->
+            <div id="slider-container-pop">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="range" id="year-slider-pop" min="2000" max="2020" value="2020" step="1">
+            </div>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="popchange-all-fill-layer-chk" >
                 人口増減(<span id="year-value-popchange">2000</span>～<span id="year-value-popbase">2020</span>)
@@ -75,15 +79,23 @@
             </label>
             <br>
             <!-- 年代ごとの表示スライダーバー -->
-            <div id="slider-container-pop">
-                Year1<input type="range" id="year-slider-pop" min="2000" max="2020" value="2020" step="1">
-            </div>
+            <!-- <div id="slider-container-eyear">
+                Year1<input type="range" id="year-slider-e" min="2000" max="2020" value="2020" step="1">
+            </div> -->
             <!-- 年代ごとの表示スライダーバー -->
-            <div id="slider-container-popchange">
-                Year2<input type="range" id="year-slider-popchange" min="2000" max="2019" value="2000" step="1">
+            <!-- <div id="slider-container-syear">
+                Year2<input type="range" id="year-slider-s" min="2000" max="2019" value="2000" step="1">
+            </div> -->
+
+            <div id="newslider-wrapper">
+                <label for="newslider">Year&nbsp;&nbsp;</label>
+                <div id="newslider" class="slider-container">
+                    <div class="slider-track"></div>
+                    <div class="slider-range" id="slider-range" style="width: 100%;"></div>
+                    <div class="slider-thumb" id="thumb-min"></div>
+                    <div class="slider-thumb" id="thumb-max" style="left: 100%;"></div>
+                </div>
             </div>
-
-
 
         </div>
         <!-- メモ機能 -->
