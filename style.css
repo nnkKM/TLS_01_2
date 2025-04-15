@@ -123,7 +123,6 @@ html, body {
     #legend img {
         width: 120px; /* 必要に応じて適切なサイズに変更してください */
         height: auto; /* 縦横比を保持 */
-        bottom: 60px;
     }
     #note-display {
         font-size: 9px; /* スマホでフォントサイズを小さくする */
