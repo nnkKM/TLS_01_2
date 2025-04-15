@@ -458,10 +458,10 @@ const step = 1;
 // 現在の値を設定します
 let minVal = minValInitial;
 let maxVal = maxValInitial;
-console.log(maxVal);
+console.log(minVal, maxVal);
 
 const updateSlider = () => {
-    console.log(maxVal);
+    console.log(minVal, maxVal);
     const containerWidth = sliderContainer.offsetWidth;
     const minPos = ((minVal - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
     const maxPos = ((maxVal - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
@@ -755,7 +755,7 @@ const color_popchange = (compareYear, baseYear) => {
 /////////////////   色の設定 (LC変化率)   //////////////////
 
 // LC (土地被覆) の変化率を更新する関数
-function updateMapStyle_LCChangeRate(baseYear, populationYear) {
+function updateMapStyle_LCChangeRate(populationYear, baseYear) {
     if (map.getLayer('LCRPGR-fill-layer')) {
         const lcChangeRate = [
             "/",
