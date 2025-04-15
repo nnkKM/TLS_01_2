@@ -114,7 +114,7 @@ html, body {
         /* スマホで表示する際には他に適用したいスタイルをここに書きます */
     }
     .legend-toggle {
-        bottom: 50px;
+        bottom: 60px;
         right: 5px;
         padding: 0.5px;
         font-size: 0.8em;
