@@ -1,7 +1,7 @@
 {
   "version": 8,
   "name": "OSM Tiles",
-  "glyphs": "https://tile.openstreetmap.jp/fonts/{fontstack}/{range}.pbf",
+  "glyphs": "https://nnkKM.github.io/TLS_01_2/VersaTiles_Style/fonts/{fontstack}/{range}.pbf",
   "sources": {
     "osm-png-tiles": {
       "type": "raster",
