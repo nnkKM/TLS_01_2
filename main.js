@@ -1090,7 +1090,7 @@ function addsourcelayers(firstSymbolId, font) {
             ['linear'],
             ['zoom'],
             8, 0.1,
-            12, 3.4
+            12, 4
         ]
         }
     },firstSymbolId );
@@ -1102,13 +1102,30 @@ function addsourcelayers(firstSymbolId, font) {
         'source': 'PublicTransport-source',
         'source-layer': 'MicroletRoute',
         'paint': {
-            'line-color': '#00CC00', // 内側の色（緑）
+            'line-color':[
+            'match',
+            ['get', 'name'],
+            'Microlet 01',"rgb(227,26,28)",
+            'Microlet 02',"rgb(63,160,68)",
+            'Microlet 03',"rgb(3,251,8)",
+            'Microlet 04',"rgb(28,110,164)",
+            'Microlet 05',"rgb(251,177,177)",
+            'Microlet 06',"rgb(251,115,115)",
+            'Microlet 07',"rgb(251,100,153)",
+            'Microlet 08',"rgb(70,70,70)",
+            'Microlet 09',"rgb(138,138,138)",
+            'Microlet 10',"rgb(138,138,138)",
+            'Microlet 11',"rgb(44,122,158)",
+            'Microlet 12',"rgb(55,164,219)",
+            'Microlet 13',"rgb(250,201,36)" ,
+            '#000000'
+        ],
             'line-width': [
                 'interpolate',
                 ['linear'],
                 ['zoom'],
                 8, 0.05,  // 内側の幅
-                12, 1.7
+                12, 2
             ]
         }
     }, firstSymbolId);
