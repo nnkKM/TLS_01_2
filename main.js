@@ -193,8 +193,8 @@ const setAllLayersAndValues = () => {
     updatePopulationOutlineVisibility();
 
     updateMapStyle_pop(elm('year-slider-pop').value);
-    updateMapStyle_popchange(minVal, maxVal);
-    updateMapStyle_LCChangeRate(minVal, maxVal);
+    updateMapStyle_popchange(minVal_poch, maxVal_poch);
+    updateMapStyle_LCChangeRate(minVal_poch, maxVal_poch);
 }
 
 // 凡例の表示・非表示を切り替えるイベントリスナーを追加
@@ -444,64 +444,115 @@ document.body.appendChild(propertiesDisplay);
  * 年度ごとの表示切替
  * *************************************************************** */
 
+// 同じ値
 const sliderContainer = document.querySelector('.slider-container');
-const sliderRange = document.getElementById('slider-range');
-const thumbMin = document.getElementById('thumb-min');
-const thumbMax = document.getElementById('thumb-max');
-
 const minValInitial = 2000;
 const maxValInitial = 2020;
 const step = 1;
 
+const sliderRange_poch = document.getElementById('slider-range-poch');
+const thumbMin_poch = document.getElementById('thumb-min-poch');
+const thumbMax_poch = document.getElementById('thumb-max-poch');
+
 // 現在の値を設定します
-let minVal = minValInitial;
-let maxVal = maxValInitial;
-console.log(minVal, maxVal);
+let minVal_poch = minValInitial;
+let maxVal_poch = maxValInitial;
 
-const updateSlider = () => {
-    console.log(minVal, maxVal);
+const sliderRange_lcr = document.getElementById('slider-range-lcr');
+const thumbMin_lcr = document.getElementById('thumb-min-lcr');
+const thumbMax_lcr = document.getElementById('thumb-max-lcr');
+
+// 現在の値を設定します
+let minVal_lcr = minValInitial;
+let maxVal_lcr = maxValInitial;
+
+
+// console.log(minVal_poch, maxVal_poch);
+
+const updateSlider_poch = () => {
+    // console.log(minVal_poch, maxVal_poch);
     const containerWidth = sliderContainer.offsetWidth;
-    const minPos = ((minVal - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
-    const maxPos = ((maxVal - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
+    const minPos_poch = ((minVal_poch - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
+    const maxPos_poch = ((maxVal_poch - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
 
-    sliderRange.style.left = minPos + 'px';
-    sliderRange.style.width = (maxPos - minPos) + 'px';
-    thumbMin.style.left = minPos + 'px';
-    thumbMax.style.left = maxPos + 'px';
-    yearValuepopchange.textContent = minVal;
-    yearValuePopBase.textContent = maxVal;
-    yearValueLCRPGR.textContent = minVal;
-    yearValueLCRPGRBase.textContent = maxVal;
+    sliderRange_poch.style.left = minPos_poch + 'px';
+    sliderRange_poch.style.width = (maxPos_poch - minPos_poch) + 'px';
+    thumbMin_poch.style.left = minPos_poch + 'px';
+    thumbMax_poch.style.left = maxPos_poch + 'px';
+    yearValuepopchange.textContent = minVal_poch;
+    yearValuePopBase.textContent = maxVal_poch;
 
-    updateMapStyle_popchange(minVal, maxVal);
-    updateMapStyle_LCChangeRate(minVal, maxVal); 
+    updateMapStyle_popchange(minVal_poch, maxVal_poch);
 };
 
-const onMouseMove = (e, thumb) => {
+const updateSlider_lcr = () => {
+    // console.log(minVal_lcr, maxVal_lcr);
+    const containerWidth = sliderContainer.offsetWidth;
+    const minPos_lcr = ((minVal_lcr - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
+    const maxPos_lcr = ((maxVal_lcr - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
+
+    sliderRange_lcr.style.left = minPos_lcr + 'px';
+    sliderRange_lcr.style.width = (maxPos_lcr - minPos_lcr) + 'px';
+    thumbMin_lcr.style.left = minPos_lcr + 'px';
+    thumbMax_lcr.style.left = maxPos_lcr + 'px';
+    yearValueLCRPGR.textContent = minVal_lcr;
+    yearValueLCRPGRBase.textContent = maxVal_lcr;
+
+    updateMapStyle_LCChangeRate(minVal_lcr, maxVal_lcr); 
+};
+
+const onMouseMove = (e, thumb, slname) => {
     const containerRect = sliderContainer.getBoundingClientRect();
     const containerWidth = containerRect.width;
     const offsetX = e.clientX - containerRect.left;
     const value = Math.round(minValInitial + ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step) * step;
 
-    if (thumb === thumbMin) {
-        minVal = Math.min(Math.max(value, minValInitial), maxVal - step);
-    } else if (thumb === thumbMax) {
-        maxVal = Math.max(Math.min(value, maxValInitial), minVal + step);
+    if (slname === "poch") {
+        if (thumb === thumbMin_poch) {
+            minVal_poch = Math.min(Math.max(value, minValInitial), maxVal_poch - step);
+        } else if (thumb === thumbMax_poch && slname === "poch") {
+            maxVal_poch = Math.max(Math.min(value, maxValInitial), minVal_poch + step);
+        }
+        updateSlider_poch();
     }
 
-    updateSlider();
+    if (slname === "lcr") {
+        if (thumb === thumbMin_lcr) {
+            minVal_lcr = Math.min(Math.max(value, minValInitial), maxVal_lcr - step);
+        } else if (thumb === thumbMax_lcr && slname === "lcr") {
+            maxVal_lcr = Math.max(Math.min(value, maxValInitial), minVal_lcr + step);
+        }
+        updateSlider_lcr();
+    }
+
 };
 
-thumbMin.addEventListener('mousedown', () => {
-    const onMouseMoveMin = (e) => onMouseMove(e, thumbMin);
+thumbMin_poch.addEventListener('mousedown', () => {
+    const onMouseMoveMin = (e) => onMouseMove(e, thumbMin_poch, "poch");
     window.addEventListener('mousemove', onMouseMoveMin);
     window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', onMouseMoveMin);
     }, { once: true });
 });
 
-thumbMax.addEventListener('mousedown', () => {
-    const onMouseMoveMax = (e) => onMouseMove(e, thumbMax);
+thumbMax_poch.addEventListener('mousedown', () => {
+    const onMouseMoveMax = (e) => onMouseMove(e, thumbMax_poch, "poch");
+    window.addEventListener('mousemove', onMouseMoveMax);
+    window.addEventListener('mouseup', () => {
+        window.removeEventListener('mousemove', onMouseMoveMax);
+    }, { once: true });
+});
+
+thumbMin_lcr.addEventListener('mousedown', () => {
+    const onMouseMoveMin = (e) => onMouseMove(e, thumbMin_lcr, "lcr");
+    window.addEventListener('mousemove', onMouseMoveMin);
+    window.addEventListener('mouseup', () => {
+        window.removeEventListener('mousemove', onMouseMoveMin);
+    }, { once: true });
+});
+
+thumbMax_lcr.addEventListener('mousedown', () => {
+    const onMouseMoveMax = (e) => onMouseMove(e, thumbMax_lcr, "lcr");
     window.addEventListener('mousemove', onMouseMoveMax);
     window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', onMouseMoveMax);
@@ -522,9 +573,9 @@ const yearValueLCRPGRBase = document.getElementById('year-value-lcrpgrbase');
 
 
 // // 人口バー (yearSliderPop) の値が変更された場合
-yearSliderPop.addEventListener('input', (event) => {
-    event.target.textContent = event.target.value; // 表示を更新
-    updateMapStyle_pop(event.target.value); // 関数を呼び出し
+yearSliderPop.addEventListener('input', () => {
+    yearSliderPop.textContent = yearSliderPop.value; // 表示を更新
+    updateMapStyle_pop(yearSliderPop.value); // 関数を呼び出し
 });
 
 // // バー1 (yearSliderS) の値が変更された場合

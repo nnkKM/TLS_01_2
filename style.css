@@ -132,12 +132,12 @@ html, body {
 
 
 /* 両端が移動するスライダーバー */
-#newslider-wrapper {
+.slider-wrapper {
     display: flex;
     align-items: center;
 }
 
-#newslider-wrapper label {
+.slider-wrapper label {
     margin-right: 10px; /* スライダーラベルとスライダーの間のスペースを調整 */
 }
 

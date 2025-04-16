@@ -52,7 +52,15 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="popchange-all-fill-layer-chk" >
                 人口増減(<span id="year-value-popchange">2000</span>～<span id="year-value-popbase">2020</span>)
             </label>
-            <br>
+            <div class="slider-wrapper" id="newslider-wrapper-poch">
+                <label for="newslider">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div id="newslider-poch" class="slider-container">
+                    <div class="slider-track"></div>
+                    <div class="slider-range" id="slider-range-poch" style="width: 100%;"></div>
+                    <div class="slider-thumb" id="thumb-min-poch"></div>
+                    <div class="slider-thumb" id="thumb-max-poch" style="left: 100%;"></div>
+                </div>
+            </div>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PublicTransport-points-layer-chk" checked>
                 バス停・フェリー乗り場
@@ -68,9 +76,17 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="LCRPGR-fill-layer-chk">
                 SDG11.3.1
             <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCR-PGR(<span id="year-value-lcrpgr">2000</span>～<span id="year-value-lcrpgrbase">2020</span>)
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCR-PGR(<span id="year-value-lcrpgr">2000</span>～<span id="year-value-lcrpgrbase">2020</span>)
             </label>
-            <br>
+            <div class="slider-wrapper" id="newslider-wrapper-lcr">
+                <label for="newslider">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div id="newslider-lcr" class="slider-container">
+                    <div class="slider-track"></div>
+                    <div class="slider-range" id="slider-range-lcr" style="width: 100%;"></div>
+                    <div class="slider-thumb" id="thumb-min-lcr"></div>
+                    <div class="slider-thumb" id="thumb-max-lcr" style="left: 100%;"></div>
+                </div>
+            </div>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PM25-all-fill-layer-chk">
                 SDG11.6.2
@@ -78,15 +94,14 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PM2.5
             </label>
             <br>
-            <div id="newslider-wrapper">
-                <label for="newslider">Year&nbsp;&nbsp;</label>
-                <div id="newslider" class="slider-container">
-                    <div class="slider-track"></div>
-                    <div class="slider-range" id="slider-range" style="width: 100%;"></div>
-                    <div class="slider-thumb" id="thumb-min"></div>
-                    <div class="slider-thumb" id="thumb-max" style="left: 100%;"></div>
-                </div>
-            </div>
+            <!-- 年代ごとの表示スライダーバー -->
+            <!-- <div id="slider-container-eyear">
+                Year1<input type="range" id="year-slider-e" min="2000" max="2020" value="2020" step="1">
+            </div> -->
+            <!-- 年代ごとの表示スライダーバー -->
+            <!-- <div id="slider-container-syear">
+                Year2<input type="range" id="year-slider-s" min="2000" max="2019" value="2000" step="1">
+            </div> -->
 
         </div>
         <!-- メモ機能 -->
