@@ -304,13 +304,13 @@ map.on('style.load', function() {   // style.jsonがロードされたとき(set
         setLayoutThematicMap('migu2m-bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'versatiles'){
-		setLayoutThematicMap('noto_sans_regular');
+		setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'osm'){
 	setLayoutThematicMap('migu2m-bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'none'){
-	setLayoutThematicMap('noto_sans_regular');
+	setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }
     // 他のstyle.jsonを追加するときはここに記述
