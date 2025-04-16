@@ -448,8 +448,6 @@ const sliderContainer = document.querySelector('.slider-container');
 const sliderRange = document.getElementById('slider-range');
 const thumbMin = document.getElementById('thumb-min');
 const thumbMax = document.getElementById('thumb-max');
-const startValueDisplay = document.getElementById('year-value-popchange');
-const endValueDisplay = document.getElementById('end-value');
 
 const minValInitial = 2000;
 const maxValInitial = 2020;
@@ -510,18 +508,13 @@ thumbMax.addEventListener('mousedown', () => {
     }, { once: true });
 });
 
-// window.addEventListener('load', updateSlider);
 
 
 /////////////////   スライダーバーの設定　　//////////////////
-// 現在の年を保存する変数
-let currentYear = 2001;
 
 // スライドバーの要素を取得
 const yearSliderPop = document.getElementById('year-slider-pop');
-// const yearSliderS = document.getElementById('year-slider-s');
-const yearValuePop = document.getElementById('year-value-pop');
-// const yearSliderE = document.getElementById('year-slider-e');
+
 const yearValuepopchange = document.getElementById('year-value-popchange');
 const yearValueLCRPGR = document.getElementById('year-value-lcrpgr');
 const yearValuePopBase = document.getElementById('year-value-popbase'); // 人口ベース年表示
@@ -530,16 +523,8 @@ const yearValueLCRPGRBase = document.getElementById('year-value-lcrpgrbase');
 
 // // 人口バー (yearSliderPop) の値が変更された場合
 yearSliderPop.addEventListener('input', (event) => {
-    const selectedYear = parseInt(event.target.value); // 現在の値を取得
-    const barValue = parseInt(yearSliderPop.value); // バーの値を取得
-
-    // バー1がバー2の値を超えないように制約
-    if (selectedYear < barValue) {
-        yearSliderS.value = barValue; // バー1の値をバー2の値に合わせる
-    }
-
-    yearValuePop.textContent = yearSliderPop.value; // 表示を更新
-    updateMapStyle_pop(yearSliderPop.value); // 関数を呼び出し
+    event.target.textContent = event.target.value; // 表示を更新
+    updateMapStyle_pop(event.target.value); // 関数を呼び出し
 });
 
 // // バー1 (yearSliderS) の値が変更された場合
