@@ -578,37 +578,7 @@ yearSliderPop.addEventListener('input', () => {
     updateMapStyle_pop(yearSliderPop.value); // 関数を呼び出し
 });
 
-// // バー1 (yearSliderS) の値が変更された場合
-// yearSliderS.addEventListener('input', (event) => {
-//     const selectedYear = parseInt(event.target.value); // 現在の値を取得
-//     const bar2Value = parseInt(yearSliderE.value); // バー2の値を取得
-
-//     // バー2がバー1の値を下回らないように制約
-//     if (selectedYear > bar2Value) {
-//         yearSliderS.value = bar2Value; // バー1の値をバー2の値に合わせる
-//     }
-
-//     yearValuepopchange.textContent = yearSliderS.value; // 表示を更新
-//     yearValueLCRPGR.textContent = yearSliderS.value; // 他の表示も更新
-//     updateMapStyle_popchange(yearSliderS.value, yearSliderE.value); // バー2の関数も更新
-//     updateMapStyle_LCChangeRate(yearSliderS.value, yearSliderE.value); 
-// });
-
-// // バー2 (yearSliderE) の値が変更された場合
-// yearSliderE.addEventListener('input', (event) => {
-//     const selectedYear = parseInt(event.target.value); // 現在の値を取得
-//     const bar1Value = parseInt(yearSliderS.value); // バー1の値を取得
-
-//     // バー1がバー2の値を超えないように制約
-//     if (selectedYear < bar1Value) {
-//         yearSliderE.value = bar1Value; // バー2の値をバー1の値に合わせる
-//     }
-
-//     yearValuePopBase.textContent = yearSliderE.value;
-//     yearValueLCRPGRBase.textContent = yearSliderE.value;
-//     updateMapStyle_popchange(yearSliderS.value, yearSliderE.value); // 関数を呼び出し
-//     updateMapStyle_LCChangeRate(yearSliderS.value, yearSliderE.value); // 関数を呼び出し
-// });
+// 昔のスライダーバーはHistoryから
 
 
 
