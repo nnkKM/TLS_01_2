@@ -307,7 +307,7 @@ map.on('style.load', function() {   // style.jsonがロードされたとき(set
 		setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'osm'){
-	setLayoutThematicMap('migu2m-bold');
+	setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'none'){
 	setLayoutThematicMap('noto_sans_bold');
