@@ -328,20 +328,20 @@ radioButtons.forEach(radio => {
         switch(this.value) {
             case 'versatiles':
                 // console.log("ラジオボタン押したあああああああああああああああああ");
-				map.setStyle('./VersaTiles_Style/style.json')
+				map.setStyle('./VersaTiles_Style/style.json', { diff: false })
                 tileType = 'versatiles';
                 break; //この後、上のmap.on('style.load'～が実行される
             case 'tileservergl':
                 // console.log("ラジオボタン押したあああああああああああああああああ");
-                map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json');
+                map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json', { diff: false });
                 tileType = 'tileservergl';
                 break; //この後、上のmap.on('style.load'～が実行される
             case 'osm':
-                map.setStyle('./VersaTiles_Style/OSM_style.json')
+                map.setStyle('./VersaTiles_Style/OSM_style.json', { diff: false })
                 tileType = 'osm';
                 break;
             case 'none': // 新しい「地図無し」の選択
-                map.setStyle('./VersaTiles_Style/empty-style.json')
+                map.setStyle('./VersaTiles_Style/empty-style.json', { diff: false })
                 tileType = 'none';
                 break;
             // 他のstyle.jsonを追加するときはここに記述
