@@ -504,13 +504,23 @@ const updateSlider_lcr = () => {
 const onMouseMove = (e, thumb, slname) => {
     const containerRect = sliderContainer.getBoundingClientRect();
     const containerWidth = containerRect.width;
-    const offsetX = e.clientX - containerRect.left;
-    const value = Math.round(minValInitial + ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step) * step;
+
+    // マウスかタッチかを判別し、クライアントX座標を取得
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+
+    // スライダーの左端からのオフセットを計算
+    const offsetX = clientX - containerRect.left;
+
+    // 値を計算（スライダー範囲内に収める）
+    const value = Math.round(
+        minValInitial +
+        ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step
+    ) * step;
 
     if (slname === "poch") {
         if (thumb === thumbMin_poch) {
             minVal_poch = Math.min(Math.max(value, minValInitial), maxVal_poch - step);
-        } else if (thumb === thumbMax_poch && slname === "poch") {
+        } else if (thumb === thumbMax_poch) {
             maxVal_poch = Math.max(Math.min(value, maxValInitial), minVal_poch + step);
         }
         updateSlider_poch();
@@ -519,13 +529,13 @@ const onMouseMove = (e, thumb, slname) => {
     if (slname === "lcr") {
         if (thumb === thumbMin_lcr) {
             minVal_lcr = Math.min(Math.max(value, minValInitial), maxVal_lcr - step);
-        } else if (thumb === thumbMax_lcr && slname === "lcr") {
+        } else if (thumb === thumbMax_lcr) {
             maxVal_lcr = Math.max(Math.min(value, maxValInitial), minVal_lcr + step);
         }
         updateSlider_lcr();
     }
-
 };
+
 
 thumbMin_poch.addEventListener('mousedown', () => {
     const onMouseMoveMin = (e) => onMouseMove(e, thumbMin_poch, "poch");
