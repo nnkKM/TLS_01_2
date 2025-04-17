@@ -535,11 +535,33 @@ thumbMin_poch.addEventListener('mousedown', () => {
     }, { once: true });
 });
 
+// タッチイベント対応
+thumbMin_poch.addEventListener('touchstart', () => {
+    const onTouchMoveMin = (e) => {
+        onMouseMove(e.touches[0], thumbMin_poch, "poch"); // touches[0]で最初のタッチ情報を取得
+    };
+    window.addEventListener('touchmove', onTouchMoveMin);
+    window.addEventListener('touchend', () => {
+        window.removeEventListener('touchmove', onTouchMoveMin);
+    }, { once: true });
+});
+
 thumbMax_poch.addEventListener('mousedown', () => {
     const onMouseMoveMax = (e) => onMouseMove(e, thumbMax_poch, "poch");
     window.addEventListener('mousemove', onMouseMoveMax);
     window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', onMouseMoveMax);
+    }, { once: true });
+});
+
+// タッチイベント対応
+thumbMax_poch.addEventListener('touchstart', () => {
+    const onTouchMoveMax = (e) => {
+        onMouseMove(e.touches[0], thumbMax_poch, "poch");
+    };
+    window.addEventListener('touchmove', onTouchMoveMax);
+    window.addEventListener('touchend', () => {
+        window.removeEventListener('touchmove', onTouchMoveMax);
     }, { once: true });
 });
 
@@ -551,11 +573,33 @@ thumbMin_lcr.addEventListener('mousedown', () => {
     }, { once: true });
 });
 
+// タッチイベント対応
+thumbMin_lcr.addEventListener('touchstart', () => {
+    const onTouchMoveMin = (e) => {
+        onMouseMove(e.touches[0], thumbMin_lcr, "lcr");
+    };
+    window.addEventListener('touchmove', onTouchMoveMin);
+    window.addEventListener('touchend', () => {
+        window.removeEventListener('touchmove', onTouchMoveMin);
+    }, { once: true });
+});
+
 thumbMax_lcr.addEventListener('mousedown', () => {
     const onMouseMoveMax = (e) => onMouseMove(e, thumbMax_lcr, "lcr");
     window.addEventListener('mousemove', onMouseMoveMax);
     window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', onMouseMoveMax);
+    }, { once: true });
+});
+
+// タッチイベント対応
+thumbMax_lcr.addEventListener('touchstart', () => {
+    const onTouchMoveMax = (e) => {
+        onMouseMove(e.touches[0], thumbMax_lcr, "lcr");
+    };
+    window.addEventListener('touchmove', onTouchMoveMax);
+    window.addEventListener('touchend', () => {
+        window.removeEventListener('touchmove', onTouchMoveMax);
     }, { once: true });
 });
 
