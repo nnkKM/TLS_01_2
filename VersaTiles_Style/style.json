@@ -14104,6 +14104,32 @@
 		},
 		{
 			"source": "versatiles-shortbread",
+			"id": "building",
+			"type": "fill-extrusion",
+			"source-layer": "buildings",
+			"paint": {
+				"fill-extrusion-color": "rgb(242,234,226)",
+                                "fill-extrusion-height": 10,
+				"fill-extrusion-opacity": {
+					"stops": [
+						[
+							14,
+							0
+						],
+						[
+							15,
+							1
+						]
+					]
+				},
+				"fill-extrusion-translate": [
+					-2,
+					-2
+				]
+			}
+		},
+		{
+			"source": "versatiles-shortbread",
 			"id": "poi-amenity",
 			"type": "symbol",
 			"source-layer": "pois",
@@ -15223,32 +15249,6 @@
 			"layout": {
 				"line-cap": "round",
 				"line-join": "round"
-			}
-		},
-		{
-			"source": "versatiles-shortbread",
-			"id": "building",
-			"type": "fill-extrusion",
-			"source-layer": "buildings",
-			"paint": {
-				"fill-extrusion-color": "rgb(242,234,226)",
-                                "fill-extrusion-height": 10,
-				"fill-extrusion-opacity": {
-					"stops": [
-						[
-							14,
-							0
-						],
-						[
-							15,
-							1
-						]
-					]
-				},
-				"fill-extrusion-translate": [
-					-2,
-					-2
-				]
 			}
 		},
 		{
