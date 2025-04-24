@@ -117,7 +117,7 @@
 				]
 			],
 			"paint": {
-				"fill-color": "rgba(234,230,225,0.2)",
+				"fill-color": "rgb(223, 225, 227)",
 				"fill-opacity": {
 					"stops": [
 						[
@@ -963,7 +963,7 @@
 				"parking"
 			],
 			"paint": {
-				"fill-color": "rgb(235,232,230)"
+				"fill-color": "rgb(179, 189, 200)"
 			}
 		},
 		{
