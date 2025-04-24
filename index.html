@@ -17,19 +17,19 @@
         <button id="toggle-layers-btn">Layer On/Off</button>
         <div id="layers-container" class="disp-layers" style="display: none;">
             <input type="radio" id="style1" name="mapstyle" value="versatiles" checked>
-            <label for="style1">VersaTiles color</label>
+            <label for="style1">OpenStreetMap</label>
             <br>
        <!-- <input type="radio" id="style2" name="mapstyle" value="tileservergl">
             <label for="style2">TileServer GL</label>
-            <br>
-            <input type="radio" name="mapstyle" value="osm" id="style3">
-            <label for="style3">OSM</label>
             <br>  -->
             <input type="radio" name="mapstyle" value="kkc" id="style5">
-            <label for="style5">KKC</label>
+            <label for="style5">OvertureMaps</label>
             <br>
             <input type="radio" name="mapstyle" value="none" id="style4">
             <label for="style4">地図無し</label>
+            <br>
+            <input type="radio" name="mapstyle" value="osm" id="style3">
+            <label for="style3">比較用OSM</label>
             <br>
            <label for="outline-layer-chk">
                  <input type="checkbox" id="outline-layer-chk" checked>
@@ -74,31 +74,31 @@
                 MicroletRoute
             </label>
         </div>
-        <br>
-        <label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="LCRPGR-fill-layer-chk">
-            SDG11.3.1
-        <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCR-PGR(<span id="year-value-lcrpgr">2000</span>～<span id="year-value-lcrpgrbase">2020</span>)
-        </label>
-        <div class="slider-wrapper" id="newslider-wrapper-lcr">
-            <label for="newslider">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <div id="newslider-lcr" class="slider-container">
-                <div class="slider-track"></div>
-                <div class="slider-range" id="slider-range-lcr" style="width: 100%;"></div>
-                <div class="slider-thumb" id="thumb-min-lcr"></div>
-                <div class="slider-thumb" id="thumb-max-lcr" style="left: 100%;"></div>
+            <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="LCRPGR-fill-layer-chk">
+                SDG11.3.1
+            <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCR-PGR(<span id="year-value-lcrpgr">2000</span>～<span id="year-value-lcrpgrbase">2020</span>)
+            </label>
+            <div class="slider-wrapper" id="newslider-wrapper-lcr">
+                <label for="newslider">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div id="newslider-lcr" class="slider-container">
+                    <div class="slider-track"></div>
+                    <div class="slider-range" id="slider-range-lcr" style="width: 100%;"></div>
+                    <div class="slider-thumb" id="thumb-min-lcr"></div>
+                    <div class="slider-thumb" id="thumb-max-lcr" style="left: 100%;"></div>
+                </div>
             </div>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PM25-all-fill-layer-chk">
+                SDG11.6.2
+            <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PM2.5
+            </label>
+            <br>
+
         </div>
-        <label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PM25-all-fill-layer-chk">
-            SDG11.6.2
-        <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PM2.5
-        </label>
-        <br>
-        </div>
-        
         <!-- メモ機能 -->
         <div id="note-form" style="display: none;">
             <label for="note-text">メモ:</label>
