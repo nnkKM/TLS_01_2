@@ -302,12 +302,12 @@ map.on('style.load', function() {   // style.jsonがロードされたとき(set
     if(tileType === 'versatiles'){
         setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
-//   }else if(tileType === 'tileservergl'){
-//		setLayoutThematicMap('migu2m-bold'');
-//       setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
-//   }else if(tileType === 'osm'){
-//	setLayoutThematicMap('noto_sans_bold');
-//       setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+//  }else if(tileType === 'tileservergl'){
+//		setLayoutThematicMap('migu2m-bold');
+//      setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+    }else if(tileType === 'osm'){
+	setLayoutThematicMap('noto_sans_bold');
+       setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'none'){
 	setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
@@ -337,10 +337,10 @@ radioButtons.forEach(radio => {
 //              map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json', { diff: false });
 //              tileType = 'tileservergl';
 //              break; //この後、上のmap.on('style.load'～が実行される
-//          case 'osm':
-//              map.setStyle('./VersaTiles_Style/OSM_style.json', { diff: false })
-//              tileType = 'osm';
-//              break;
+            case 'osm':
+                map.setStyle('./VersaTiles_Style/OSM_style.json', { diff: false })
+                tileType = 'osm';
+                break;
             case 'none': // 新しい「地図無し」の選択
                 map.setStyle('./VersaTiles_Style/empty-style.json', { diff: false })
                 tileType = 'none';
@@ -450,12 +450,10 @@ document.body.appendChild(propertiesDisplay);
  * *************************************************************** */
 
 // 同じ値
+const sliderContainer = document.querySelector('.slider-container');
 const minValInitial = 2000;
 const maxValInitial = 2020;
 const step = 1;
-
-const sliderContainer_poch = document.getElementById('newslider-poch');
-const sliderContainer_lcr = document.getElementById('newslider-lcr');
 
 const sliderRange_poch = document.getElementById('slider-range-poch');
 const thumbMin_poch = document.getElementById('thumb-min-poch');
@@ -478,7 +476,7 @@ let maxVal_lcr = maxValInitial;
 
 const updateSlider_poch = () => {
     // console.log(minVal_poch, maxVal_poch);
-    const containerWidth = sliderContainer_poch.offsetWidth;
+    const containerWidth = sliderContainer.offsetWidth;
     const minPos_poch = ((minVal_poch - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
     const maxPos_poch = ((maxVal_poch - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
 
@@ -494,7 +492,7 @@ const updateSlider_poch = () => {
 
 const updateSlider_lcr = () => {
     // console.log(minVal_lcr, maxVal_lcr);
-    const containerWidth = sliderContainer_lcr.offsetWidth;
+    const containerWidth = sliderContainer.offsetWidth;
     const minPos_lcr = ((minVal_lcr - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
     const maxPos_lcr = ((maxVal_lcr - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
 
@@ -508,32 +506,8 @@ const updateSlider_lcr = () => {
     updateMapStyle_LCChangeRate(minVal_lcr, maxVal_lcr); 
 };
 
-const onMouseMove_poch = (e, thumb) => {
-    const containerRect = sliderContainer_poch.getBoundingClientRect();
-    const containerWidth = containerRect.width;
-
-    // マウスかタッチかを判別し、クライアントX座標を取得
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-
-    // スライダーの左端からのオフセットを計算
-    const offsetX = clientX - containerRect.left;
-
-// 値を計算（スライダー範囲内に収める）
-    const value = Math.round(
-        minValInitial +
-        ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step
-    ) * step;
-
-    if (thumb === thumbMin_poch) {
-        minVal_poch = Math.min(Math.max(value, minValInitial), maxVal_poch - step);
-    } else if (thumb === thumbMax_poch) {
-        maxVal_poch = Math.max(Math.min(value, maxValInitial), minVal_poch + step);
-    }
-    updateSlider_poch();
-};
-
-const onMouseMove_lcr = (e, thumb) => {
-    const containerRect = sliderContainer_lcr.getBoundingClientRect();
+const onMouseMove = (e, thumb, slname) => {
+    const containerRect = sliderContainer.getBoundingClientRect();
     const containerWidth = containerRect.width;
 
     // マウスかタッチかを判別し、クライアントX座標を取得
@@ -548,17 +522,28 @@ const onMouseMove_lcr = (e, thumb) => {
         ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step
     ) * step;
 
-    if (thumb === thumbMin_lcr) {
-        minVal_lcr = Math.min(Math.max(value, minValInitial), maxVal_lcr - step);
-    } else if (thumb === thumbMax_lcr) {
-        maxVal_lcr = Math.max(Math.min(value, maxValInitial), minVal_lcr + step);
+    if (slname === "poch") {
+        if (thumb === thumbMin_poch) {
+            minVal_poch = Math.min(Math.max(value, minValInitial), maxVal_poch - step);
+        } else if (thumb === thumbMax_poch) {
+            maxVal_poch = Math.max(Math.min(value, maxValInitial), minVal_poch + step);
+        }
+        updateSlider_poch();
     }
-    updateSlider_lcr();
+
+    if (slname === "lcr") {
+        if (thumb === thumbMin_lcr) {
+            minVal_lcr = Math.min(Math.max(value, minValInitial), maxVal_lcr - step);
+        } else if (thumb === thumbMax_lcr) {
+            maxVal_lcr = Math.max(Math.min(value, maxValInitial), minVal_lcr + step);
+        }
+        updateSlider_lcr();
+    }
 };
 
 
 thumbMin_poch.addEventListener('mousedown', () => {
-    const onMouseMoveMin = (e) => onMouseMove_poch(e, thumbMin_poch);
+    const onMouseMoveMin = (e) => onMouseMove(e, thumbMin_poch, "poch");
     window.addEventListener('mousemove', onMouseMoveMin);
     window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', onMouseMoveMin);
@@ -568,7 +553,7 @@ thumbMin_poch.addEventListener('mousedown', () => {
 // タッチイベント対応
 thumbMin_poch.addEventListener('touchstart', () => {
     const onTouchMoveMin = (e) => {
-        onMouseMove_poch(e.touches[0], thumbMin_poch); // touches[0]で最初のタッチ情報を取得
+        onMouseMove(e.touches[0], thumbMin_poch, "poch"); // touches[0]で最初のタッチ情報を取得
     };
     window.addEventListener('touchmove', onTouchMoveMin);
     window.addEventListener('touchend', () => {
@@ -577,7 +562,7 @@ thumbMin_poch.addEventListener('touchstart', () => {
 });
 
 thumbMax_poch.addEventListener('mousedown', () => {
-    const onMouseMoveMax = (e) => onMouseMove_poch(e, thumbMax_poch);
+    const onMouseMoveMax = (e) => onMouseMove(e, thumbMax_poch, "poch");
     window.addEventListener('mousemove', onMouseMoveMax);
     window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', onMouseMoveMax);
@@ -587,7 +572,7 @@ thumbMax_poch.addEventListener('mousedown', () => {
 // タッチイベント対応
 thumbMax_poch.addEventListener('touchstart', () => {
     const onTouchMoveMax = (e) => {
-        onMouseMove_poch(e.touches[0], thumbMax_poch);
+        onMouseMove(e.touches[0], thumbMax_poch, "poch");
     };
     window.addEventListener('touchmove', onTouchMoveMax);
     window.addEventListener('touchend', () => {
@@ -596,7 +581,7 @@ thumbMax_poch.addEventListener('touchstart', () => {
 });
 
 thumbMin_lcr.addEventListener('mousedown', () => {
-    const onMouseMoveMin = (e) => onMouseMove_lcr(e, thumbMin_lcr);
+    const onMouseMoveMin = (e) => onMouseMove(e, thumbMin_lcr, "lcr");
     window.addEventListener('mousemove', onMouseMoveMin);
     window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', onMouseMoveMin);
@@ -606,7 +591,7 @@ thumbMin_lcr.addEventListener('mousedown', () => {
 // タッチイベント対応
 thumbMin_lcr.addEventListener('touchstart', () => {
     const onTouchMoveMin = (e) => {
-        onMouseMove_lcr(e.touches[0], thumbMin_lcr);
+        onMouseMove(e.touches[0], thumbMin_lcr, "lcr");
     };
     window.addEventListener('touchmove', onTouchMoveMin);
     window.addEventListener('touchend', () => {
@@ -615,7 +600,7 @@ thumbMin_lcr.addEventListener('touchstart', () => {
 });
 
 thumbMax_lcr.addEventListener('mousedown', () => {
-    const onMouseMoveMax = (e) => onMouseMove_lcr(e, thumbMax_lcr);
+    const onMouseMoveMax = (e) => onMouseMove(e, thumbMax_lcr, "lcr");
     window.addEventListener('mousemove', onMouseMoveMax);
     window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', onMouseMoveMax);
@@ -625,7 +610,7 @@ thumbMax_lcr.addEventListener('mousedown', () => {
 // タッチイベント対応
 thumbMax_lcr.addEventListener('touchstart', () => {
     const onTouchMoveMax = (e) => {
-        onMouseMove_lcr(e.touches[0], thumbMax_lcr);
+        onMouseMove(e.touches[0], thumbMax_lcr, "lcr");
     };
     window.addEventListener('touchmove', onTouchMoveMax);
     window.addEventListener('touchend', () => {
@@ -1100,7 +1085,7 @@ function addsourcelayers(firstSymbolId, font) {
             ['<=', ['coalesce', ['get', 'PM25'], ['get', 'Pm25PopWam']],  14.0], '#b38600',
             '#996633'
         ],
-        'fill-opacity': 0.6
+        'fill-opacity': 0.8
         }
     },firstSymbolId );
 
@@ -1125,7 +1110,7 @@ function addsourcelayers(firstSymbolId, font) {
         'source-layer': 'LCRPGR',
         'paint': {
         'fill-color': '#ffffff',
-        'fill-opacity': 0.5
+        'fill-opacity': 0.8
         }
     },firstSymbolId );
 
@@ -1136,7 +1121,7 @@ function addsourcelayers(firstSymbolId, font) {
         'source-layer': 'LCRPGR',
         'paint': {
         'fill-color': '#ffffff',
-        'fill-opacity': 0.5
+        'fill-opacity': 0.8
         }
     },firstSymbolId );
 
