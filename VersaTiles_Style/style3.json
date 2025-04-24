@@ -26,8 +26,7 @@
       "source-layer": "mod_buildup",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(179, 189, 200)",
-        "fill-opacity": 0.2
+        "fill-color": "rgb(223, 225, 227)"
       },
       "maxzoom": 11
     },
@@ -37,8 +36,7 @@
       "source-layer": "mod_treecover",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(102,170,68)",
-        "fill-opacity": 0.2
+        "fill-color": "rgb(192,222,178)"
       },
       "maxzoom": 11
     },
@@ -51,15 +49,6 @@
         "fill-color": "rgb(216,232,200)"
       },
       "maxzoom": 11
-    },
-    {
-      "id": "mangroves",
-      "source": "pmt",
-      "source-layer": "mangroves",
-      "type": "fill",
-      "paint": {
-        "fill-color": "rgb(180, 214, 211)"
-      }
     },
     {
       "id": "lzl_water",
@@ -80,6 +69,15 @@
         "fill-color": "rgb(180, 233, 205)"
       },
       "maxzoom": 11
+    },
+    {
+      "id": "mangroves",
+      "source": "pmt",
+      "source-layer": "mangroves",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(180, 214, 211)"
+      }
     },
     {
       "id": "shrubland",
@@ -105,13 +103,7 @@
       "source-layer": "cropland",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(240,231,209)",
-        "fill-opacity": {
-          "stops": [
-            [10, 0],
-            [11, 1]
-          ]
-        }
+        "fill-color": "rgb(240,231,209)"
       }
     },
     {
@@ -120,8 +112,7 @@
       "source-layer": "buildup",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(179, 189, 200)",
-        "fill-opacity": 0.2
+        "fill-color": "rgb(223, 225, 227)"
       }
     },
     {
@@ -130,13 +121,7 @@
       "source-layer": "treecover",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(102,170,68)",
-        "fill-opacity": {
-          "stops": [
-            [10, 0],
-            [11, 0.2]
-          ]
-        }
+        "fill-color": "rgb(192,222,178)"
       }
     },
     {
@@ -145,13 +130,7 @@
       "source-layer": "grassland",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(216,232,200)",
-        "fill-opacity": {
-          "stops": [
-            [10, 0],
-            [11, 1]
-          ]
-        }
+        "fill-color": "rgb(216,232,200)"
       }
     },
     {
@@ -160,13 +139,7 @@
       "source-layer": "bare",
       "type": "fill",
       "paint": {
-        "fill-color": "rgba(255,244,194,0.333)",
-        "fill-opacity": {
-          "stops": [
-            [10, 0],
-            [11, 1]
-          ]
-        }
+        "fill-color": "rgba(255,244,194,0.333)"
       }
     },
     {
@@ -175,8 +148,7 @@
       "source-layer": "transit",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(179, 189, 200)",
-        "fill-opacity": 1
+        "fill-color": "rgb(179, 189, 200)"
       }
     },
     {
