@@ -6,7 +6,7 @@ maplibregl.addProtocol('pmtiles', protocol.tile);
 
 const map = new maplibregl.Map({
     container: 'map',
-    style: 'https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json',
+    style: './VersaTiles_Style/style.json',
     center: [125.57, -8.56],
     zoom: 8
 });
@@ -17,7 +17,7 @@ map.addControl(new maplibregl.NavigationControl());
 map.on('load', () => {
     // 主題図を読み込んでいる
     firstSymbolId = getsymbolID();
-    addsourcelayers(firstSymbolId, 'migu2m-bold');
+    addsourcelayers(firstSymbolId, 'noto_sans_bold');
 
     // 人口データのスタイル調整
     updateMapStyle_pop("2020");
@@ -294,22 +294,24 @@ const setLayoutThematicMap = (font) => {
     // const currentStyle = map.getStyle();
     // console.log('Loaded Style:', currentStyle);
        
-
-
 }
 
-let tileType = ''; //ラジオボタンを切り替えたときにタイルのタイプを指定
+let tileType = ''; 
+
 map.on('style.load', function() {   // style.jsonがロードされたとき(setStyle)に発動するイベント
-    if(tileType === 'tileservergl'){
-        setLayoutThematicMap('migu2m-bold');
+    if(tileType === 'versatiles'){
+        setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
-    }else if(tileType === 'versatiles'){
-		setLayoutThematicMap('noto_sans_bold');
-        setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
-    }else if(tileType === 'osm'){
+//   }else if(tileType === 'tileservergl'){
+//		setLayoutThematicMap('migu2m-bold'');
+//       setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+//   }else if(tileType === 'osm'){
+//	setLayoutThematicMap('noto_sans_bold');
+//       setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+    }else if(tileType === 'none'){
 	setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
-    }else if(tileType === 'none'){
+    }else if(tileType === 'kkc'){
 	setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }
@@ -331,18 +333,21 @@ radioButtons.forEach(radio => {
 				map.setStyle('./VersaTiles_Style/style.json', { diff: false })
                 tileType = 'versatiles';
                 break; //この後、上のmap.on('style.load'～が実行される
-            case 'tileservergl':
-                // console.log("ラジオボタン押したあああああああああああああああああ");
-                map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json', { diff: false });
-                tileType = 'tileservergl';
-                break; //この後、上のmap.on('style.load'～が実行される
-            case 'osm':
-                map.setStyle('./VersaTiles_Style/OSM_style.json', { diff: false })
-                tileType = 'osm';
-                break;
+//          case 'tileservergl':
+//              map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json', { diff: false });
+//              tileType = 'tileservergl';
+//              break; //この後、上のmap.on('style.load'～が実行される
+//          case 'osm':
+//              map.setStyle('./VersaTiles_Style/OSM_style.json', { diff: false })
+//              tileType = 'osm';
+//              break;
             case 'none': // 新しい「地図無し」の選択
                 map.setStyle('./VersaTiles_Style/empty-style.json', { diff: false })
                 tileType = 'none';
+                break;
+            case 'kkc':
+                map.setStyle('./VersaTiles_Style/style3.json', { diff: false })
+                tileType = 'kkc';
                 break;
             // 他のstyle.jsonを追加するときはここに記述
 
@@ -1053,7 +1058,7 @@ function addsourcelayers(firstSymbolId, font) {
         ],
         'minzoom': 4,
         'maxzoom': 14,
-        'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a>'
+        'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a>,<a href="https://sites.wustl.edu/acag/datasets/surface-pm2-5//" target="_blank">Satellite-derived PM2.5 data V6.GL.02.02</a> '
     });
 
 
@@ -1153,7 +1158,7 @@ function addsourcelayers(firstSymbolId, font) {
             12, 4
         ]
         }
-    },firstSymbolId );
+    });
     
     // 内側の線（本体部分）
     map.addLayer({
@@ -1188,8 +1193,68 @@ function addsourcelayers(firstSymbolId, font) {
                 12, 2
             ]
         }
-    }, firstSymbolId);
-
+    });
+    
+    map.addLayer({
+        'id': 'MUNICIPIO-outline-layer',
+        'type': 'line',
+        'source': 'pm25-source',
+        'source-layer': 'boundaries',
+        'filter': ['in', 'admin_level', 4, '4'],
+        'paint': {
+            'line-color': '#9E9CAB',
+            'line-dasharray': [6, 2, 2, 2],
+            'line-width': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                4, 0.2,
+                8, 1.5,
+                12, 3
+            ]
+        }
+     });
+        
+    map.addLayer({
+        'id': 'PostuAdministrativo-outline-layer',
+        'type': 'line',
+        'source': 'pm25-source',
+        'source-layer': 'boundaries',
+        'filter': ['in', 'admin_level', 5, '5'],
+        'paint': {
+        'line-color': '#9E9CAB',
+        'line-dasharray': [3, 1, 1, 1],
+        'line-width': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            8, 1,
+            12, 2
+        ]
+        },
+       'minzoom': 8
+    });
+    
+    map.addLayer({
+        'id': 'Suco-outline-layer',
+        'type': 'line',
+        'source': 'pm25-source',
+        'source-layer': 'boundaries',
+        'filter': ['in', 'admin_level', 6, '6'],
+        'paint': {
+        'line-color': '#9E9CAB',
+        'line-dasharray': [3, 1, 1, 1],
+        'line-width': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            8, 0.5,
+            12, 1
+        ]
+        },
+       'minzoom': 10
+    });
+    
 
     map.addLayer({
         'id': 'PublicTransport-points-layer',
@@ -1221,70 +1286,7 @@ function addsourcelayers(firstSymbolId, font) {
         ],
         'circle-stroke-color': '#000000'
         }
-    },firstSymbolId );
-    
-
-
-    map.addLayer({
-        'id': 'MUNICIPIO-outline-layer',
-        'type': 'line',
-        'source': 'pm25-source',
-        'source-layer': 'boundaries',
-        'filter': ['in', 'admin_level', 4, '4'],
-        'paint': {
-            'line-color': '#9E9CAB',
-            'line-dasharray': [6, 2, 2, 2],
-            'line-width': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                4, 0.2,
-                8, 1.5,
-                12, 3
-            ]
-        }
-     },firstSymbolId );
-        
-    map.addLayer({
-        'id': 'PostuAdministrativo-outline-layer',
-        'type': 'line',
-        'source': 'pm25-source',
-        'source-layer': 'boundaries',
-        'filter': ['in', 'admin_level', 5, '5'],
-        'paint': {
-        'line-color': '#9E9CAB',
-        'line-dasharray': [3, 1, 1, 1],
-        'line-width': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            8, 1,
-            12, 2
-        ]
-        },
-       'minzoom': 8
-    },firstSymbolId );
-    
-    map.addLayer({
-        'id': 'Suco-outline-layer',
-        'type': 'line',
-        'source': 'pm25-source',
-        'source-layer': 'boundaries',
-        'filter': ['in', 'admin_level', 6, '6'],
-        'paint': {
-        'line-color': '#9E9CAB',
-        'line-dasharray': [3, 1, 1, 1],
-        'line-width': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            8, 0.5,
-            12, 1
-        ]
-        },
-       'minzoom': 10
-    },firstSymbolId );
-    
+    });
 
      map.addLayer({
        'id': 'Suco-label-layer',
@@ -1321,11 +1323,18 @@ function getsymbolID() {
     const layers = map.getStyle().layers;
     // Find the index of the first symbol layer in the map style
     let firstSymbolId;
-    for (let i = 0; i < layers.length; i++) {
-        if (layers[i].type === 'symbol') {
-            firstSymbolId = layers[i].id;
-            break;
+    if (tileType === 'kkc') {
+        firstSymbolId = "minor_roads:outline";   // 上にするレイヤ軍の一番初めのレイヤID
+    } else if (tileType === 'versatiles') {
+        firstSymbolId = "water-dam";    // 上にするレイヤ軍の一番初めのレイヤID
+    } else {
+        for (let i = 0; i < layers.length; i++) {
+            if (layers[i].type === 'symbol') {
+                firstSymbolId = layers[i].id;
+                break;
+            }
         }
+
     }
 
     return firstSymbolId;
