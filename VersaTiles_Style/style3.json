@@ -11,6 +11,46 @@
   },
   "layers": [
     {
+      "id": "mod_treecover",
+      "source": "pmt",
+      "source-layer": "mod_treecover",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(192,222,178)"
+      },
+      "maxzoom": 11
+    },
+    {
+      "id": "mod_shrubland",
+      "source": "pmt",
+      "source-layer": "mod_shrubland",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(197, 222, 178)"
+      },
+      "maxzoom": 11
+    },
+    {
+      "id": "mod_grassland",
+      "source": "pmt",
+      "source-layer": "mod_grassland",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(216,232,200)"
+      },
+      "maxzoom": 11
+    },
+    {
+      "id": "mod_wetland",
+      "source": "pmt",
+      "source-layer": "mod_wetland",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(180, 233, 205)"
+      },
+      "maxzoom": 11
+    },
+    {
       "id": "mod_cropland",
       "source": "pmt",
       "source-layer": "mod_cropland",
@@ -31,26 +71,6 @@
       "maxzoom": 11
     },
     {
-      "id": "mod_treecover",
-      "source": "pmt",
-      "source-layer": "mod_treecover",
-      "type": "fill",
-      "paint": {
-        "fill-color": "rgb(192,222,178)"
-      },
-      "maxzoom": 11
-    },
-    {
-      "id": "mod_grassland",
-      "source": "pmt",
-      "source-layer": "mod_grassland",
-      "type": "fill",
-      "paint": {
-        "fill-color": "rgb(216,232,200)"
-      },
-      "maxzoom": 11
-    },
-    {
       "id": "lzl_water",
       "source": "pmt",
       "source-layer": "lzl_water",
@@ -61,22 +81,12 @@
       "maxzoom": 11
     },
     {
-      "id": "mod_wetland",
+      "id": "treecover",
       "source": "pmt",
-      "source-layer": "mod_wetland",
+      "source-layer": "treecover",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(180, 233, 205)"
-      },
-      "maxzoom": 11
-    },
-    {
-      "id": "mangroves",
-      "source": "pmt",
-      "source-layer": "mangroves",
-      "type": "fill",
-      "paint": {
-        "fill-color": "rgb(180, 214, 211)"
+        "fill-color": "rgb(192,222,178)"
       }
     },
     {
@@ -89,12 +99,21 @@
       }
     },
     {
-      "id": "mod_shrubland",
+      "id": "grassland",
       "source": "pmt",
-      "source-layer": "mod_shrubland",
+      "source-layer": "grassland",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(197, 222, 178)"
+        "fill-color": "rgb(216,232,200)"
+      }
+    },
+    {
+      "id": "wetland",
+      "source": "pmt",
+      "source-layer": "wetland",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(180, 233, 205)"
       }
     },
     {
@@ -116,21 +135,21 @@
       }
     },
     {
-      "id": "treecover",
+      "id": "hzl_water",
       "source": "pmt",
-      "source-layer": "treecover",
+      "source-layer": "hzl_water",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(192,222,178)"
+        "fill-color": "rgb(190, 243, 225)"
       }
     },
     {
-      "id": "grassland",
+      "id": "mangroves",
       "source": "pmt",
-      "source-layer": "grassland",
+      "source-layer": "mangroves",
       "type": "fill",
       "paint": {
-        "fill-color": "rgb(216,232,200)"
+        "fill-color": "rgb(180, 214, 211)"
       }
     },
     {
@@ -196,15 +215,6 @@
       "minzoom": 13
     },
     {
-      "id": "park",
-      "source": "pmt",
-      "source-layer": "park",
-      "type": "fill",
-      "paint": {
-        "fill-color": "rgb(217,217,165)"
-      }
-    },
-    {
       "id": "others",
       "source": "pmt",
       "source-layer": "others",
@@ -223,24 +233,6 @@
         "line-color": "rgb(82, 1, 31)",
         "line-width": 2,
         "line-opacity": 0.2
-      }
-    },
-    {
-      "id": "hzl_water",
-      "source": "pmt",
-      "source-layer": "hzl_water",
-      "type": "fill",
-      "paint": {
-        "fill-color": "rgb(190, 243, 225)"
-      }
-    },
-    {
-      "id": "wetland",
-      "source": "pmt",
-      "source-layer": "wetland",
-      "type": "fill",
-      "paint": {
-        "fill-color": "rgb(180, 233, 205)"
       }
     },
     {
@@ -358,33 +350,6 @@
       }
     },
     {
-      "id": "water_way",
-      "source": "pmt",
-      "source-layer": "water_way",
-      "type": "line",
-      "paint": {
-        "line-color": "rgb(1, 65, 91)",
-        "line-width": 0.75,
-        "line-opacity": 0.2
-      },
-      "minzoom": 14
-    },
-    {
-      "id": "buildings:outline",
-      "source": "pmt",
-      "source-layer": "buildings",
-      "type": "fill",
-      "paint": {
-        "fill-color": "rgb(223,219,215)",
-        "fill-opacity": {
-          "stops": [
-            [15, 0],
-            [16, 1]
-          ]
-        }
-      }
-    },
-    {
       "id": "buildings",
       "source": "pmt",
       "source-layer": "buildings",
@@ -398,8 +363,28 @@
             [15, 0],
             [16, 1]
           ]
-        },
-        "fill-extrusion-translate": [-2, -2]
+        }
+      }
+    },
+    {
+      "id": "water_way",
+      "source": "pmt",
+      "source-layer": "water_way",
+      "type": "line",
+      "paint": {
+        "line-color": "rgb(1, 65, 91)",
+        "line-width": 0.75,
+        "line-opacity": 0.2
+      },
+      "minzoom": 14
+    },
+    {
+      "id": "park",
+      "source": "pmt",
+      "source-layer": "park",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(217,217,165)"
       }
     }
   ]
