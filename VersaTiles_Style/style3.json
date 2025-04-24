@@ -4,7 +4,7 @@
   "sources": {
     "pmt": {
       "type": "vector",
-      "url": "pmtiles://http://127.0.0.1:8080/tls_all_background.pmtiles",
+      "url": "pmtiles://https://nnkKM.github.io/TLS_01_2/data/tls_all_background.pmtiles",
       "minzoom": 5,
       "maxzoom": 13
     }
