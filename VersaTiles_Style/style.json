@@ -1263,31 +1263,6 @@
 		},
 		{
 			"source": "versatiles-shortbread",
-			"id": "building",
-			"type": "fill",
-			"source-layer": "buildings",
-			"paint": {
-				"fill-color": "rgb(242,234,226)",
-				"fill-opacity": {
-					"stops": [
-						[
-							14,
-							0
-						],
-						[
-							15,
-							1
-						]
-					]
-				},
-				"fill-translate": [
-					-2,
-					-2
-				]
-			}
-		},
-		{
-			"source": "versatiles-shortbread",
 			"id": "tunnel-street-pedestrian-zone",
 			"type": "fill",
 			"source-layer": "street_polygons",
@@ -15248,6 +15223,32 @@
 			"layout": {
 				"line-cap": "round",
 				"line-join": "round"
+			}
+		},
+		{
+			"source": "versatiles-shortbread",
+			"id": "building",
+			"type": "fill-extrusion",
+			"source-layer": "buildings",
+			"paint": {
+				"fill-extrusion-color": "rgb(242,234,226)",
+                                "fill-extrusion-height": 10,
+				"fill-extrusion-opacity": {
+					"stops": [
+						[
+							14,
+							0
+						],
+						[
+							15,
+							1
+						]
+					]
+				},
+				"fill-extrusion-translate": [
+					-2,
+					-2
+				]
 			}
 		},
 		{
