@@ -1242,27 +1242,6 @@
 		},
 		{
 			"source": "versatiles-shortbread",
-			"id": "building:outline",
-			"type": "fill",
-			"source-layer": "buildings",
-			"paint": {
-				"fill-color": "rgb(223,219,215)",
-				"fill-opacity": {
-					"stops": [
-						[
-							14,
-							0
-						],
-						[
-							15,
-							1
-						]
-					]
-				}
-			}
-		},
-		{
-			"source": "versatiles-shortbread",
 			"id": "tunnel-street-pedestrian-zone",
 			"type": "fill",
 			"source-layer": "street_polygons",
@@ -14121,11 +14100,7 @@
 							1
 						]
 					]
-				},
-				"fill-extrusion-translate": [
-					-2,
-					-2
-				]
+				}
 			}
 		},
 		{
