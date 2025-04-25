@@ -15,6 +15,7 @@ map.addControl(new maplibregl.NavigationControl());
 
 // 最初に地図が読み込まれた時の処理
 map.on('load', () => {
+    tileType = 'versatiles';
     // 主題図を読み込んでいる
     firstSymbolId = getsymbolID();
     addsourcelayers(firstSymbolId, 'noto_sans_bold');
