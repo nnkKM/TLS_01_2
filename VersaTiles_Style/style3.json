@@ -4,9 +4,7 @@
   "sources": {
     "pmt": {
       "type": "vector",
-      "url": "pmtiles://https://nnkKM.github.io/TLS_01_2/data/tls_all_background.pmtiles",
-      "minzoom": 5,
-      "maxzoom": 13
+      "url": "pmtiles://http://127.0.0.1:5500/data/timor_leste_v2.pmtiles"
     }
   },
   "layers": [
@@ -71,6 +69,94 @@
       "maxzoom": 11
     },
     {
+      "id": "agg_treecover",
+      "source": "pmt",
+      "source-layer": "agg_treecover",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(192,222,178)"
+      },
+      "minzoom": 11,
+      "maxzoom": 13
+    },
+    {
+      "id": "agg_shrubland",
+      "source": "pmt",
+      "source-layer": "agg_shrubland",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(197, 222, 178)"
+      },
+      "minzoom": 11,
+      "maxzoom": 13
+    },
+    {
+      "id": "agg_grassland",
+      "source": "pmt",
+      "source-layer": "agg_grassland",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(216,232,200)"
+      },
+      "minzoom": 11,
+      "maxzoom": 13
+    },
+    {
+      "id": "agg_wetland",
+      "source": "pmt",
+      "source-layer": "agg_wetland",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(180, 233, 205)"
+      },
+      "minzoom": 11,
+      "maxzoom": 13
+    },
+    {
+      "id": "agg_cropland",
+      "source": "pmt",
+      "source-layer": "agg_cropland",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(240,231,209)"
+      },
+      "minzoom": 11,
+      "maxzoom": 13
+    },
+    {
+      "id": "agg_buildup",
+      "source": "pmt",
+      "source-layer": "agg_buildup",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(223, 225, 227)"
+      },
+      "minzoom": 11,
+      "maxzoom": 13
+    },
+    {
+      "id": "agg_mangroves",
+      "source": "pmt",
+      "source-layer": "agg_mangroves",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgb(180, 214, 211)"
+      },
+      "minzoom": 11,
+      "maxzoom": 13
+    },
+    {
+      "id": "agg_bare",
+      "source": "pmt",
+      "source-layer": "agg_bare",
+      "type": "fill",
+      "paint": {
+        "fill-color": "rgba(255,244,194,0.333)"
+      }, 
+      "minzoom": 11,
+      "maxzoom": 13
+    },
+    {
       "id": "lzl_water",
       "source": "pmt",
       "source-layer": "lzl_water",
@@ -78,7 +164,7 @@
       "paint": {
         "fill-color": "rgb(190, 243, 225)"
       },
-      "maxzoom": 11
+      "maxzoom": 13
     },
     {
       "id": "treecover",
@@ -87,7 +173,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgb(192,222,178)"
-      }
+      },
+      "minzoom": 13
     },
     {
       "id": "shrubland",
@@ -96,7 +183,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgb(197, 222, 178)"
-      }
+      },
+      "minzoom": 13
     },
     {
       "id": "grassland",
@@ -105,7 +193,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgb(216,232,200)"
-      }
+      },
+      "minzoom": 13
     },
     {
       "id": "wetland",
@@ -114,7 +203,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgb(180, 233, 205)"
-      }
+      },
+      "minzoom": 13
     },
     {
       "id": "cropland",
@@ -123,7 +213,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgb(240,231,209)"
-      }
+      },
+      "minzoom": 13
     },
     {
       "id": "buildup",
@@ -132,7 +223,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgb(223, 225, 227)"
-      }
+      },
+      "minzoom": 13
     },
     {
       "id": "hzl_water",
@@ -141,7 +233,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgb(190, 243, 225)"
-      }
+      },
+      "minzoom": 10
     },
     {
       "id": "mangroves",
@@ -150,7 +243,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgb(180, 214, 211)"
-      }
+      },
+      "minzoom": 13
     },
     {
       "id": "bare",
@@ -159,7 +253,8 @@
       "type": "fill",
       "paint": {
         "fill-color": "rgba(255,244,194,0.333)"
-      }
+      },
+      "minzoom": 13
     },
     {
       "id": "transit",
