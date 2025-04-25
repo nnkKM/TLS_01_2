@@ -479,7 +479,7 @@ let maxVal_lcr = maxValInitial;
 
 const updateSlider_poch = () => {
     // console.log(minVal_poch, maxVal_poch);
-    const containerWidth = sliderContainer.offsetWidth;
+    const containerWidth = sliderContainer_poch.offsetWidth;
     const minPos_poch = ((minVal_poch - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
     const maxPos_poch = ((maxVal_poch - minValInitial) / (maxValInitial - minValInitial)) * containerWidth;
 
@@ -510,7 +510,7 @@ const updateSlider_lcr = () => {
 };
 
 const onMouseMove_poch = (e, thumb) => {
-     const containerRect = sliderContainer_poch.getBoundingClientRect();
+    const containerRect = sliderContainer_poch.getBoundingClientRect();
     const containerWidth = containerRect.width;
 
     // マウスかタッチかを判別し、クライアントX座標を取得
@@ -525,36 +525,36 @@ const onMouseMove_poch = (e, thumb) => {
         ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step
     ) * step;
 
-   if (thumb === thumbMin_poch) {
-         minVal_poch = Math.min(Math.max(value, minValInitial), maxVal_poch - step);
-     } else if (thumb === thumbMax_poch) {
-         maxVal_poch = Math.max(Math.min(value, maxValInitial), minVal_poch + step);
-     }
-      updateSlider_poch();
+    if (thumb === thumbMin_poch) {
+        minVal_poch = Math.min(Math.max(value, minValInitial), maxVal_poch - step);
+    } else if (thumb === thumbMax_poch) {
+        maxVal_poch = Math.max(Math.min(value, maxValInitial), minVal_poch + step);
+    }
+    updateSlider_poch();
   };
 
 const onMouseMove_lcr = (e, thumb) => {
-     const containerRect = sliderContainer_lcr.getBoundingClientRect();
-     const containerWidth = containerRect.width;
+    const containerRect = sliderContainer_lcr.getBoundingClientRect();
+    const containerWidth = containerRect.width;
  
-     // マウスかタッチかを判別し、クライアントX座標を取得
-     const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    // マウスかタッチかを判別し、クライアントX座標を取得
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
  
-     // スライダーの左端からのオフセットを計算
-     const offsetX = clientX - containerRect.left;
+    // スライダーの左端からのオフセットを計算
+    const offsetX = clientX - containerRect.left;
  
-     // 値を計算（スライダー範囲内に収める）
-     const value = Math.round(
-         minValInitial +
-         ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step
-     ) * step;
+    // 値を計算（スライダー範囲内に収める）
+    const value = Math.round(
+        minValInitial +
+        ((offsetX / containerWidth) * (maxValInitial - minValInitial)) / step
+    ) * step;
  
-     if (thumb === thumbMin_lcr) {
-         minVal_lcr = Math.min(Math.max(value, minValInitial), maxVal_lcr - step);
-     } else if (thumb === thumbMax_lcr) {
-         maxVal_lcr = Math.max(Math.min(value, maxValInitial), minVal_lcr + step);
-     }
-     updateSlider_lcr();
+    if (thumb === thumbMin_lcr) {
+        minVal_lcr = Math.min(Math.max(value, minValInitial), maxVal_lcr - step);
+    } else if (thumb === thumbMax_lcr) {
+        maxVal_lcr = Math.max(Math.min(value, maxValInitial), minVal_lcr + step);
+    }
+    updateSlider_lcr();
 };
 
 
