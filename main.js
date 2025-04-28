@@ -636,10 +636,11 @@ thumbMax_lcr.addEventListener('touchstart', () => {
 
 
 
-/////////////////   スライダーバーの設定　　//////////////////
+/////////////////   人口スライダーバーの設定　　//////////////////
 
 // スライドバーの要素を取得
 const yearSliderPop = document.getElementById('year-slider-pop');
+const yearValuePop = document.getElementById('year-value-pop');
 
 const yearValuepopchange = document.getElementById('year-value-popchange');
 const yearValueLCRPGR = document.getElementById('year-value-lcrpgr');
@@ -649,7 +650,7 @@ const yearValueLCRPGRBase = document.getElementById('year-value-lcrpgrbase');
 
 // // 人口バー (yearSliderPop) の値が変更された場合
 yearSliderPop.addEventListener('input', () => {
-    yearSliderPop.textContent = yearSliderPop.value; // 表示を更新
+    yearValuePop.textContent = yearSliderPop.value; // 表示を更新
     updateMapStyle_pop(yearSliderPop.value); // 関数を呼び出し
 });
 
