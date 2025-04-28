@@ -4,7 +4,7 @@
   "sources": {
     "pmt": {
       "type": "vector",
-      "url": "pmtiles://http://127.0.0.1:5500/data/timor_leste_v2.pmtiles"
+      "url": "pmtiles://https://nnkKM.github.io/TLS_01_2/data/timor_leste_v2.pmtiles"
     }
   },
   "layers": [
