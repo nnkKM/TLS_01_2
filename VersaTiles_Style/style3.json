@@ -4,7 +4,8 @@
   "sources": {
     "pmt": {
       "type": "vector",
-      "url": "pmtiles://https://nnkKM.github.io/TLS_01_2/data/timor_leste_v2.pmtiles"
+      "url": "pmtiles://https://nnkKM.github.io/TLS_01_2/data/timor_leste_v2.pmtiles",
+      "attribution": "© <a href=\"https://overturemaps.org/\" target=\"_blank\">Overture Maps Foundation</a> | <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | <a href=\"https://esa-worldcover.org/en\" target=\"_blank\">ESA WorldCover Project</a> | <a href=\"https://lpdaac.usgs.gov/products/mcd12q1v006/\" target=\"_blank\">Sulla-Menashe & Friedl</a> | <a href = \"https://www.geoboundaries.org/\" target = \"_blank\">geoBoundaries</a>"
     }
   },
   "layers": [
