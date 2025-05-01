@@ -1055,7 +1055,7 @@ function addsourcelayers(firstSymbolId, font) {
         ],
         'minzoom': 0,
         'maxzoom': 12,
-        'attribution': '<a href="https://opengeohub.org/about/" target="_blank">OpenGeoHub</a>'
+        'attribution': '<a href="https://opengeohub.org/about/" target="_blank">OpenGeoHub</a> | <a href="https://www.worldpop.org/" target="_blank">WorldPop</a>'
     });
 
     map.addSource('PublicTransport-source', {
@@ -1075,7 +1075,7 @@ function addsourcelayers(firstSymbolId, font) {
         ],
         'minzoom': 4,
         'maxzoom': 14,
-        'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a>,<a href="https://sites.wustl.edu/acag/datasets/surface-pm2-5//" target="_blank">Satellite-derived PM2.5 data V6.GL.02.02</a> '
+        'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a> | <a href="https://sites.wustl.edu/acag/datasets/surface-pm2-5//" target="_blank">Satellite-derived PM2.5 data V6.GL.02.02</a> '
     });
 
 
