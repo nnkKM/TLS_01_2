@@ -26,14 +26,14 @@
             <label for="style5">OvertureMaps</label>
             <br>
             <input type="radio" name="mapstyle" value="none" id="style4">
-            <label for="style4">地図無し</label>
+            <label for="style4">Blank map</label>
             <br>
             <input type="radio" name="mapstyle" value="osm" id="style3">
-            <label for="style3">比較用OSM</label>
+            <label for="style3">OSM for comparison</label>
             <br>
            <label for="outline-layer-chk">
                  <input type="checkbox" id="outline-layer-chk" checked>
-                行政界
+                 Administrative boundary
             </label>
             <br>
             <label>
@@ -44,7 +44,7 @@
             <div id="sdg1121-layers" class="sub-layers" style="display: none;">
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="population-all-fill-layer-chk" checked>
-                人口（Year: <span id="year-value-pop">2020</span>）
+                Population（Year: <span id="year-value-pop">2020</span>）
             </label>
             <!-- 年代ごとの表示スライダーバー -->
             <div id="slider-container-pop">
@@ -53,7 +53,7 @@
             </div>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="popchange-all-fill-layer-chk" >
-                人口増減(<span id="year-value-popchange">2000</span>～<span id="year-value-popbase">2020</span>)
+                Population change(<span id="year-value-popchange">2000</span>～<span id="year-value-popbase">2020</span>)
             </label>
             <div class="slider-wrapper" id="newslider-wrapper-poch">
                 <label for="newslider">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -66,7 +66,7 @@
             </div>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PublicTransport-points-layer-chk" checked>
-                バス停・フェリー乗り場
+                Bus stop & Ferry terminal
             </label>
             <br>
             <label>
@@ -101,9 +101,9 @@
         </div>
         <!-- メモ機能 -->
         <div id="note-form" style="display: none;">
-            <label for="note-text">メモ:</label>
+            <label for="note-text">Note:</label>
             <input type="text" id="note-text"/>
-            <button id="save-note-btn">保存</button>
+            <button id="save-note-btn">Save</button>
         </div>
     </div>
 
@@ -122,7 +122,7 @@
     <div id="legend" style="display: none;">
         <img src="legend.png" alt="Legend" />
     </div>
-    <div class="legend-toggle" id="legend-toggle">LCR-PGR凡例</div>
+    <div class="legend-toggle" id="legend-toggle">LCR-PGR Legend</div>
 
 
     <!-- 既存のライブラリは以下に記述 -->
