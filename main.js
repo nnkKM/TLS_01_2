@@ -424,7 +424,7 @@ function displayFeatureProperties(properties, point, layerName) {
 
     // 属性情報をHTMLに変換
     let propertiesHtml = '<table>';
-    propertiesHtml += '<caption><strong>' + layerName + '</strong></caption>';
+    propertiesHtml += `<caption><strong style="font-size: 11px;">${layerName}</strong></caption>`;
     for (const key in properties) {
         propertiesHtml += `<tr><td><strong>${key}</strong>:</td><td>${properties[key]}</td></tr>`;
     }
@@ -1058,7 +1058,7 @@ function addsourcelayers(firstSymbolId, font) {
         ],
         'minzoom': 0,
         'maxzoom': 12,
-        'attribution': '<a href="https://opengeohub.org/about/" target="_blank">OpenGeoHub</a> | <a href="https://www.worldpop.org/" target="_blank">WorldPop</a>'
+        'attribution': '<a href="https://opengeohub.org/about/" target="_blank">© Copyright OpenGeoHub Foundation</a> | <a href="https://www.worldpop.org/" target="_blank">© 2025 WorldPop</a>'
     });
 
     map.addSource('PublicTransport-source', {
@@ -1078,7 +1078,7 @@ function addsourcelayers(firstSymbolId, font) {
         ],
         'minzoom': 4,
         'maxzoom': 14,
-        'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank">Baliza data</a> | <a href="https://sites.wustl.edu/acag/datasets/surface-pm2-5//" target="_blank">Satellite-derived PM2.5 data V6.GL.02.02</a> '
+        'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank"> © 2025 INETL, I.P. </a> | <a href="https://sites.wustl.edu/acag/datasets/surface-pm2-5//" target="_blank">©2025 Washington University in St. Louis</a> '
     });
 
 

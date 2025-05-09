@@ -457,7 +457,7 @@
         "fill-extrusion-opacity": {
           "stops": [
             [15, 0],
-            [16, 1]
+            [16, 0.95]
           ]
         }
       }
