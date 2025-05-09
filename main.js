@@ -397,7 +397,7 @@ function handleTouchEnd(e) {
         if (features.length) {
             const properties = features[0].properties;
 	    const layerName = features[0].layer['source-layer'];
-            displayFeatureProperties(properties, point, layerName);
+            displayFeatureProperties(features, point, layerName);
         }
     }
 }
@@ -409,7 +409,7 @@ map.on('click', (e) => {
     if (features.length) {
         const properties = features[0].properties;
 	const layerName = features[0].layer['source-layer'];
-        displayFeatureProperties(properties, e.point, layerName);
+        displayFeatureProperties(features, e.point, layerName);
     }
 });
 
@@ -419,21 +419,64 @@ map.on('contextmenu', (e) => {
 });
 
 
-function displayFeatureProperties(properties, point, layerName) {
+function displayFeatureProperties(features, point, layerName) {
     const propertiesDisplay = document.getElementById('properties-display');
+    let propertiesHtml = "";
+    for(let i = 0; i < features.length; i++){
+        const feature = features[i];
+        const properties = feature.properties;
 
-    // 属性情報をHTMLに変換
-    let propertiesHtml = '<table>';
-    propertiesHtml += `<caption><strong style="font-size: 11px;">${layerName}</strong></caption>`;
-    for (const key in properties) {
-        propertiesHtml += `<tr><td><strong>${key}</strong>:</td><td>${properties[key]}</td></tr>`;
+        // 属性情報をHTMLに変換
+        propertiesHtml += '<table>';
+        if(layerName){
+            propertiesHtml += '<caption><strong>' + layerName + '</strong></caption>';
+        }
+        for (const key in properties) {
+            propertiesHtml += `<tr><td><strong>${key}</strong>:</td><td>${properties[key]}</td></tr>`;
+        }
+        propertiesHtml += '</table>';
+
+        if(properties.hasOwnProperty('meta')){
+            propertiesHtml += '<div style="position: relative; height: 20px;">';
+            propertiesHtml += '  <button class="export-button">EXPORT</button>';
+            propertiesHtml += '</div>';
+        }
+
+        if(i < features.length - 1){
+            propertiesHtml += '<div style="border-top: 1px solid #808080; height: 5px; margin-top: 3px;"></div>';
+        }
     }
-    propertiesHtml += '</table>';
 
     propertiesDisplay.innerHTML = propertiesHtml;
     propertiesDisplay.style.display = 'block';
     propertiesDisplay.style.left = `${point.x + 10}px`;
     propertiesDisplay.style.top = `${point.y + 10}px`;
+
+    const exportButtons = document.querySelectorAll('.export-button');
+    let buttonIndex = 0;
+    for(const feature of features){
+        const properties = feature.properties;
+        if(properties.hasOwnProperty('meta')){
+            const btn = exportButtons[buttonIndex];
+            btn.style.cssText = `
+                position: absolute;
+                right: 0;
+                font-size: 10px;
+                padding: 3px;
+            `;
+            btn.addEventListener('click', () => {
+                console.log(JSON.stringify(feature, null, 2))
+                const blob = new Blob([JSON.stringify(feature, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                const fileName = properties.hasOwnProperty('parent') ? properties.parent : properties.id;
+                a.download = `${fileName}.geojson`;
+                a.click();
+            });
+            buttonIndex++;
+        }
+    }
 }
 
 // 属性情報を非表示にする関数
