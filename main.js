@@ -453,7 +453,9 @@ function displayFeatureProperties(features, point) {
 
     const exportButtons = document.querySelectorAll('.export-button');
     let buttonIndex = 0;
-    for(const feature of features){
+    const notes = document.querySelectorAll('#note-content');
+    for(let i = 0; i < features.length; i++){
+        const feature = features[i];
         const properties = feature.properties;
         if(properties.hasOwnProperty('meta')){
             const btn = exportButtons[buttonIndex];
@@ -464,6 +466,7 @@ function displayFeatureProperties(features, point) {
                 padding: 3px;
             `;
             btn.addEventListener('click', () => {
+		properties.note = notes[i].textContent;
                 console.log(JSON.stringify(feature, null, 2))
                 const blob = new Blob([JSON.stringify(feature, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
