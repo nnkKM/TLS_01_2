@@ -396,8 +396,7 @@ function handleTouchEnd(e) {
 
         if (features.length) {
             const properties = features[0].properties;
-	    const layerName = features[0].layer['source-layer'];
-            displayFeatureProperties(features, point, layerName);
+            displayFeatureProperties(features, point);
         }
     }
 }
@@ -408,8 +407,7 @@ map.on('click', (e) => {
 
     if (features.length) {
         const properties = features[0].properties;
-	const layerName = features[0].layer['source-layer'];
-        displayFeatureProperties(features, e.point, layerName);
+        displayFeatureProperties(features, e.point);
     }
 });
 
@@ -419,11 +417,12 @@ map.on('contextmenu', (e) => {
 });
 
 
-function displayFeatureProperties(features, point, layerName) {
+function displayFeatureProperties(features, point) {
     const propertiesDisplay = document.getElementById('properties-display');
     let propertiesHtml = "";
     for(let i = 0; i < features.length; i++){
         const feature = features[i];
+	const layerName = feature.layer['source-layer'];
         const properties = feature.properties;
 
         // 属性情報をHTMLに変換
