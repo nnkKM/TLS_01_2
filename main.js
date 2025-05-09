@@ -966,7 +966,7 @@ document.getElementById('save-note-btn').addEventListener('click', () => {
         console.log(`Feature ID: ${selectedFeatureId}, Note: ${noteText}`);
 
         document.getElementById('note-form').style.display = 'none';
-        alert('メモが保存されました');
+        alert('The note has been saved.');
     }
 });
 
