@@ -11,6 +11,12 @@
 </head>
 <body>
     <div id="map"></div>
+
+    <!-- メモ地図上での表示 -->
+    <div id="note-display" style="display: none;">
+        <div id="note-content"></div>
+    </div>
+
     <div id="controls">
         <!-- レイヤコントロール -->
         <!-- レイヤ命名規則　　　最大：全角13文字　推奨：全角7文字　　　以内 -->
@@ -107,16 +113,11 @@
         </div>
     </div>
 
-    <div id="note-display" style="display: none;">
-        <div id="note-content"></div>
-    </div>
-
     <!-- 現在のズームレベル -->
     <div id="zoom-level"></div>
 
     <!-- 属性情報表示 -->
     <div id="properties-display" style="display: none;"></div>
-
 
     <!-- 凡例 -->
     <div id="legend" style="display: none;">

@@ -74,7 +74,7 @@ html, body {
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     white-space: nowrap; /* テキストの改行を防ぐ */
-    z-index: 1000;
+    z-index: 2;
 }
 
 /* 凡例（レジェンド）のスタイル */
@@ -112,7 +112,7 @@ html, body {
     padding: 5px;
     border: 1px solid black;
     display: none;
-    z-index: 1000;
+    z-index: 3;
     max-width: 200px;
     max-height: 200px;
     overflow-y: auto;
