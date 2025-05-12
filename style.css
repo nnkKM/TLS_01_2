@@ -177,13 +177,13 @@ html, body {
 /* スマホ向けのスタイル */
 @media (max-width: 767px) {
     #legend {
-        bottom: 45px;
+        bottom: 105px;
         right: 5px;
         padding: 0.5px;
         /* スマホで表示する際には他に適用したいスタイルをここに書きます */
     }
     .legend-toggle {
-        bottom: 30px;
+        bottom: 85px;
         right: 5px;
         padding: 0.5px;
         font-size: 0.8em;
