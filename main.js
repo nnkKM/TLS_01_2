@@ -1214,12 +1214,17 @@ function addsourcelayers(firstSymbolId, font) {
         'source': 'PublicTransport-source',
         'source-layer': 'MicroletRoute',
         'paint': {
-        'line-color': '#000000',
+          "line-color": [
+            "interpolate", ["linear"], ["zoom"],
+            14, "white",    // ズーム10で白 (#ffffff)
+            18, "black"     // ズーム14で黒 (#000000)
+        ],
         'line-width': [
             'interpolate',
             ['linear'],
             ['zoom'],
-            12, 0,
+            8, 0,
+            12, 6,
             18, 7
         ]
         }
