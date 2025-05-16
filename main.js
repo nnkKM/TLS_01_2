@@ -306,9 +306,9 @@ map.on('style.load', function() {   // style.jsonがロードされたとき(set
 //  }else if(tileType === 'tileservergl'){
 //		setLayoutThematicMap('migu2m-bold');
 //      setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
-    }else if(tileType === 'osm'){
-	setLayoutThematicMap('noto_sans_bold');
-       setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
+    // }else if(tileType === 'osm'){
+	// setLayoutThematicMap('noto_sans_bold');
+    //    setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
     }else if(tileType === 'none'){
 	setLayoutThematicMap('noto_sans_bold');
         setAllLayersAndValues(); //タイル切り替え前のレイヤの状態に戻すため
@@ -338,10 +338,10 @@ radioButtons.forEach(radio => {
 //              map.setStyle('https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json', { diff: false });
 //              tileType = 'tileservergl';
 //              break; //この後、上のmap.on('style.load'～が実行される
-            case 'osm':
-                map.setStyle('./VersaTiles_Style/OSM_style.json', { diff: false })
-                tileType = 'osm';
-                break;
+            // case 'osm':
+            //     map.setStyle('./VersaTiles_Style/OSM_style.json', { diff: false })
+            //     tileType = 'osm';
+            //     break;
             case 'none': // 新しい「地図無し」の選択
                 map.setStyle('./VersaTiles_Style/empty-style.json', { diff: false })
                 tileType = 'none';
