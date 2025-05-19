@@ -1218,14 +1218,14 @@ function addsourcelayers(firstSymbolId, font) {
         'paint': {
           "line-color": [
             "interpolate", ["linear"], ["zoom"],
-            14, "white",    // ズーム10で白 (#ffffff)
+            14, "black",    // ズーム10で白 (#ffffff)
             18, "black"     // ズーム14で黒 (#000000)
         ],
         'line-width': [
             'interpolate',
             ['linear'],
             ['zoom'],
-            8, 0,
+            8, 0.1,
             12, 6,
             18, 7
         ]
