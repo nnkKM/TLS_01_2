@@ -398,7 +398,7 @@ function handleTouchEnd(e) {
         );
 
         // バッファ範囲を指定（ここでヒットしやすくする）
-        const buffer = 10;
+        const buffer = 3;
         const minPoint = { x: point.x - buffer, y: point.y - buffer };
         const maxPoint = { x: point.x + buffer, y: point.y + buffer };
 
