@@ -391,11 +391,20 @@ function handleTouchEnd(e) {
     if (touchDuration >= longPressDuration) {
         hideFeatureProperties();
     } else {
-        const point = e.point || map.project([e.originalEvent.changedTouches[0].clientX, e.originalEvent.changedTouches[0].clientY]);
-        const features = map.queryRenderedFeatures(point);
+        const touch = e.originalEvent.changedTouches[0];
+        // 地図座標に変換
+        const point = map.project(
+            map.unproject([touch.clientX, touch.clientY])
+        );
+
+        // バッファ範囲を指定（ここでヒットしやすくする）
+        const buffer = 10;
+        const minPoint = { x: point.x - buffer, y: point.y - buffer };
+        const maxPoint = { x: point.x + buffer, y: point.y + buffer };
+
+        const features = map.queryRenderedFeatures([minPoint, maxPoint]);
 
         if (features.length) {
-            const properties = features[0].properties;
             displayFeatureProperties(features, point);
         }
     }
@@ -403,10 +412,17 @@ function handleTouchEnd(e) {
 
 //////////////  クリック操作  /////////////////
 map.on('click', (e) => {
-    const features = map.queryRenderedFeatures(e.point);
+    // バッファのピクセル数（例：20ピクセル）
+    const buffer = 3;  
+
+    // e.point（{x: , y: }）にバッファを加えて矩形範囲を作成
+    const minPoint = [e.point.x - buffer, e.point.y - buffer];
+    const maxPoint = [e.point.x + buffer, e.point.y + buffer];
+
+    // バッファ付きで範囲選択
+    const features = map.queryRenderedFeatures([minPoint, maxPoint]);
 
     if (features.length) {
-        const properties = features[0].properties;
         displayFeatureProperties(features, e.point);
     }
 });
