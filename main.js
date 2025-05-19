@@ -422,28 +422,30 @@ function displayFeatureProperties(features, point) {
     let propertiesHtml = "";
     for(let i = 0; i < features.length; i++){
         const feature = features[i];
-	const layerName = feature.layer['source-layer'];
-        const properties = feature.properties;
-
-        // 属性情報をHTMLに変換
-        propertiesHtml += '<table>';
-        if(layerName){
-            propertiesHtml += '<caption><strong>' + layerName + '</strong></caption>';
-        }
-        for (const key in properties) {
-            propertiesHtml += `<tr><td><strong>${key}</strong>:</td><td>${properties[key]}</td></tr>`;
-        }
-        propertiesHtml += '</table>';
-
-        if(properties.hasOwnProperty('meta')){
-            propertiesHtml += '<div style="position: relative; height: 20px;">';
-            propertiesHtml += '  <button class="export-button">EXPORT</button>';
-            propertiesHtml += '</div>';
-        }
-
-        if(i < features.length - 1){
-            propertiesHtml += '<div style="border-top: 1px solid #808080; height: 5px; margin-top: 3px;"></div>';
-        }
+	if(feature.layer.id !== 'population-outline-layer' && !feature.layer.id.includes('outline')){
+		const layerName = feature.layer['source-layer'];
+		const properties = feature.properties;
+	
+		// 属性情報をHTMLに変換
+		propertiesHtml += '<table>';
+		if(layerName){
+		    propertiesHtml += '<caption><strong>' + layerName + '</strong></caption>';
+		}
+		for (const key in properties) {
+		    propertiesHtml += `<tr><td><strong>${key}</strong>:</td><td>${properties[key]}</td></tr>`;
+		}
+		propertiesHtml += '</table>';
+	
+		if(properties.hasOwnProperty('meta')){
+		    propertiesHtml += '<div style="position: relative; height: 20px;">';
+		    propertiesHtml += '  <button class="export-button">EXPORT</button>';
+		    propertiesHtml += '</div>';
+		}
+	
+		if(i < features.length - 1){
+		    propertiesHtml += '<div style="border-top: 1px solid #808080; height: 5px; margin-top: 3px;"></div>';
+		}
+	}
     }
 
     propertiesDisplay.innerHTML = propertiesHtml;
