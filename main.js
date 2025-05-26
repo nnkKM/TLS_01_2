@@ -1427,8 +1427,8 @@ function addsourcelayers(firstSymbolId, font) {
             'Ospital Nasional', '#FF0000',                  //  #FF0000
             'Ospital Regional', '#CD5C5C',                  //  #CD5C5C
             'Ospital Referal', '#FFA07A',                   // #FFA07A
-            'Sentru Saude Internamentu','#F08080',          // 入院医療センター #F08080
-            'Sentru Saude Komunitariu','#FFA07A',           // 地域保健センター #FFA07A
+            'Sentru Saude Internamentu','#4682B4',          // 入院医療センター #4682B4
+            'Sentru Saude Komunitariu','#0000FF',           // 地域保健センター #0000FF
             'Sala Maternidade','#FF69B4',                   // 産科病室 #FF69B4
             'Postu Saude','#00CED1',                        // 保健所 #00CED1
             'Postu Tratamentu','#00BFFF',                   // 治療所 #00BFFF
