@@ -112,6 +112,9 @@ const toggleLCRPGRLayer = (isChecked) => {
     layerIds.forEach(id => {
         map.setLayoutProperty(id, 'visibility', isChecked ? 'visible' : 'none');
     });
+    const legend = document.getElementById('legend');
+    legend.style.display = isChecked ? 'block' : 'none';
+
     // population-outline-layer の状態を更新
     updatePopulationOutlineVisibility();
 };
