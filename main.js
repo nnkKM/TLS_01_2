@@ -129,6 +129,18 @@ const togglePM25Layer = (isChecked) => {
     });
 };
 
+// 医療施設の表示/非表示を切り替える関数
+const toggleHealthFacilitiesLayer = (isChecked) => {
+    const fillLayerIds = ['HealthFacilities-points-layer'];
+    fillLayerIds.forEach(id => {
+        if (isChecked) {
+            map.setLayoutProperty(id, 'visibility', 'visible');
+        } else {
+            map.setLayoutProperty(id, 'visibility', 'none');
+        }
+    });
+};
+
 // 凡例の表示/非表示を切り替える関数
 const toggleLegend = () => {
     const legend = document.getElementById('legend');
@@ -175,6 +187,12 @@ document.querySelector('#PM25-all-fill-layer-chk').addEventListener('change', ()
     togglePM25Layer(isChecked);
 });
 
+// 医療施設データのレイヤはここで切替
+document.querySelector('#HealthFacilities-points-layer-chk').addEventListener('change', () => {
+    const isChecked = document.getElementById('HealthFacilities-points-layer-chk').checked;
+    toggleHealthFacilitiesLayer(isChecked);
+});
+
 // レイヤのON/OFFイベントをここで一括管理
 const setAllLayersAndValues = () => {
     const elm = id => {
@@ -186,6 +204,7 @@ const setAllLayersAndValues = () => {
     toggleMicroletRouteLayer(elm('MicroletRoute-line-layer-chk').checked); // MicroletRoute の切り替えを追加
     toggleLCRPGRLayer(elm('LCRPGR-fill-layer-chk').checked);
     togglePM25Layer(elm('PM25-all-fill-layer-chk').checked);
+    toggleHealthFacilitiesLayer(elm('HealthFacilities-points-layer-chk').checked);
     layerIds.forEach(lyrId => {
         toggleLayer(lyrId);
     });
@@ -1144,6 +1163,15 @@ function addsourcelayers(firstSymbolId, font) {
         'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank"> © 2025 INETL, I.P. </a> | <a href="https://sites.wustl.edu/acag/datasets/surface-pm2-5//" target="_blank">©2025 Washington University in St. Louis</a> '
     });
 
+    map.addSource('HealthFacilities-source', {
+        'type': 'vector',
+        'tiles': [
+        'pmtiles://https://nnkKM.github.io/TLS_01_2/data/tls_hfs2023_4.pmtiles/{z}/{x}/{y}'
+        ],
+        'minzoom': 4,
+        'maxzoom': 14,
+        'attribution': '<a href="https://inetl-ip.gov.tl/" target="_blank"> © 2025 INETL, I.P. </a> '
+    });
 
     /////////////////      レイヤ      ////////////////////////////////
     map.addLayer({
@@ -1364,6 +1392,52 @@ function addsourcelayers(firstSymbolId, font) {
             'ferry_terminal', '#0000FF',
             'bus_stop','#00FF00',
             'bus_station','#00FF00',
+            '#ff8c00'
+        ],
+        'circle-stroke-width': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            4, 0.2,
+            14, 1
+        ],
+        'circle-stroke-color': '#000000'
+        }
+    });
+
+    map.addLayer({
+        'id': 'HealthFacilities-points-layer',
+        'type': 'circle',
+        'source': 'HealthFacilities-source',
+        'source-layer': 'tls_hfs2023_4',
+        'layout': {
+        'visibility': 'none'
+        },
+        'paint': {
+        'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            4, 1,
+            14, 6
+        ],
+        'circle-color': [
+            'match',
+            ['get', 'Tipu Fasil'],
+            'Ospital Nasional', '#FF0000',                  //  #FF0000
+            'Ospital Regional', '#CD5C5C',                  //  #CD5C5C
+            'Ospital Referal', '#FFA07A',                   // #FFA07A
+            'Sentru Saude Internamentu','#F08080',          // 入院医療センター #F08080
+            'Sentru Saude Komunitariu','#FFA07A',           // 地域保健センター #FFA07A
+            'Sala Maternidade','#FF69B4',                   // 産科病室 #FF69B4
+            'Postu Saude','#00CED1',                        // 保健所 #00CED1
+            'Postu Tratamentu','#00BFFF',                   // 治療所 #00BFFF
+            'Sentru Rehabilitasaun','#F4A460',              // リハビリテーションセンター #F4A460
+            'Klinika no Farmasia','#ADFF2F',                // クリニックと薬局 #ADFF2F
+            'Klinika','#FFFF00',                            // クリニック #FFFF00
+            'Farmasia','#32CD32',                           // 薬局 	#32CD32
+            'Futuro Sentru Saude Komunitariu','#9400D3',    // 未来の地域保健センター #9400D3
+            'Futuro Postu Saude','#800080',                 // 未来の保健所 #800080
             '#ff8c00'
         ],
         'circle-stroke-width': [
