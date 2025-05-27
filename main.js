@@ -460,30 +460,30 @@ function displayFeatureProperties(features, point) {
     let propertiesHtml = "";
     for(let i = 0; i < features.length; i++){
         const feature = features[i];
-	if(feature.layer.id !== 'population-outline-layer' && !feature.layer.id.includes('outline')){
-		const layerName = feature.layer['source-layer'];
-		const properties = feature.properties;
-	
-		// 属性情報をHTMLに変換
-		propertiesHtml += '<table>';
-		if(layerName){
-		    propertiesHtml += '<caption><strong>' + layerName + '</strong></caption>';
-		}
-		for (const key in properties) {
-		    propertiesHtml += `<tr><td><strong>${key}</strong>:</td><td>${properties[key]}</td></tr>`;
-		}
-		propertiesHtml += '</table>';
-	
-		if(properties.hasOwnProperty('meta')){
-		    propertiesHtml += '<div style="position: relative; height: 20px;">';
-		    propertiesHtml += '  <button class="export-button">EXPORT</button>';
-		    propertiesHtml += '</div>';
-		}
-	
-		if(i < features.length - 1){
-		    propertiesHtml += '<div style="border-top: 1px solid #808080; height: 5px; margin-top: 3px;"></div>';
-		}
-	}
+        if(feature.layer.id !== 'population-outline-layer' && !feature.layer.id.includes('outline')){
+            const layerName = feature.layer['source-layer'];
+            const properties = feature.properties;
+        
+            // 属性情報をHTMLに変換
+            propertiesHtml += '<table>';
+            if(layerName){
+                propertiesHtml += '<caption><strong>' + layerName + '</strong></caption>';
+            }
+            for (const key in properties) {
+                propertiesHtml += `<tr><td><strong>${key}</strong>:</td><td>${properties[key]}</td></tr>`;
+            }
+            propertiesHtml += '</table>';
+        
+            if(properties.hasOwnProperty('meta')){
+                propertiesHtml += '<div style="position: relative; height: 20px;">';
+                propertiesHtml += '  <button class="export-button">EXPORT</button>';
+                propertiesHtml += '</div>';
+            }
+        
+            if(i < features.length - 1){
+                propertiesHtml += '<div style="border-top: 1px solid #808080; height: 5px; margin-top: 3px;"></div>';
+            }
+        }
     }
 
     propertiesDisplay.innerHTML = propertiesHtml;
@@ -1169,7 +1169,7 @@ function addsourcelayers(firstSymbolId, font) {
     map.addSource('HealthFacilities-source', {
         'type': 'vector',
         'tiles': [
-        'pmtiles://https://nnkKM.github.io/TLS_01_2/data/tls_hfs2023_4.pmtiles/{z}/{x}/{y}'
+        'pmtiles://https://nnkKM.github.io/TLS_01_2/data/HealthFacilities.pmtiles/{z}/{x}/{y}'
         ],
         'minzoom': 4,
         'maxzoom': 14,
@@ -1412,7 +1412,7 @@ function addsourcelayers(firstSymbolId, font) {
         'id': 'HealthFacilities-points-layer',
         'type': 'circle',
         'source': 'HealthFacilities-source',
-        'source-layer': 'tls_hfs2023_4',
+        'source-layer': 'HealthFacilities',
         'layout': {
         'visibility': 'none'
         },
