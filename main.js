@@ -1421,8 +1421,8 @@ function addsourcelayers(firstSymbolId, font) {
             'interpolate',
             ['linear'],
             ['zoom'],
-            4, 1,
-            14, 6
+            4, 0.6,
+            14, 3.6
         ],
         'circle-color': [
             'match',
