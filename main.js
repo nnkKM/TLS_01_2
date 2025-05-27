@@ -464,7 +464,7 @@ function displayFeatureProperties(features, point) {
             const layerName = feature.layer['source-layer'];
             const properties = feature.properties;
 
-            const excludeKeys = ['Tipu Fasil', 'Naran FS', 'Nain ba pr', 'Kama Mater', 'Tot Kama'];    // 医療施設表示フィールド
+            const excludeKeys = ['Tipu Fasil', 'Naran FS', 'Nain ba pr', 'Kama Mater'];    // 医療施設表示フィールド
         
             // 属性情報をHTMLに変換
             propertiesHtml += '<table>';
