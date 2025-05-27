@@ -463,6 +463,8 @@ function displayFeatureProperties(features, point) {
         if(feature.layer.id !== 'population-outline-layer' && !feature.layer.id.includes('outline')){
             const layerName = feature.layer['source-layer'];
             const properties = feature.properties;
+
+            const excludeKeys = ['Tipu Fasil', 'Naran FS', 'Nain ba pr', 'Kama Mater', 'Tot Kama'];    // 医療施設表示フィールド
         
             // 属性情報をHTMLに変換
             propertiesHtml += '<table>';
@@ -470,6 +472,7 @@ function displayFeatureProperties(features, point) {
                 propertiesHtml += '<caption><strong>' + layerName + '</strong></caption>';
             }
             for (const key in properties) {
+                if (feature.layer.id === 'HealthFacilities-points-layer' && !(excludeKeys.includes(key))) continue;
                 propertiesHtml += `<tr><td><strong>${key}</strong>:</td><td>${properties[key]}</td></tr>`;
             }
             propertiesHtml += '</table>';
