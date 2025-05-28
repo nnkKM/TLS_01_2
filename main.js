@@ -134,7 +134,7 @@ const togglePM25Layer = (isChecked) => {
 
 // 医療施設の表示/非表示を切り替える関数
 const toggleHealthFacilitiesLayer = (isChecked) => {
-    const fillLayerIds = ['HealthFacilities-points-layer'];
+    const fillLayerIds = ['HealthFacilities-points-layer', 'HealthFacilities-outline-layer'];
     fillLayerIds.forEach(id => {
         if (isChecked) {
             map.setLayoutProperty(id, 'visibility', 'visible');
@@ -1411,6 +1411,28 @@ function addsourcelayers(firstSymbolId, font) {
         }
     });
 
+
+    map.addLayer({
+        'id': 'HealthFacilities-outline-layer',
+        'type': 'circle',
+        'source': 'HealthFacilities-source',
+        'source-layer': 'HealthFacilities',
+        'layout': {
+            'visibility': 'visible'
+        },
+        'paint': {
+            'circle-radius': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                13, 0,
+                14., 8
+            ],
+            'circle-color': '#FFFF00',
+            'circle-opacity': 0.6
+        }
+    });
+
     map.addLayer({
         'id': 'HealthFacilities-points-layer',
         'type': 'circle',
@@ -1432,13 +1454,13 @@ function addsourcelayers(firstSymbolId, font) {
             ['get', 'Tipu Fasil'],
             'Ospital Nasional', '#FF0000',                  //  #FF0000
             'Ospital Regional', '#CD5C5C',                  //  #CD5C5C
-            'Ospital Referal', '#FFA07A',                   // #FFA07A
+            'Ospital Referal', '#FFA07A',                   //rgb(252, 130, 109)
             'Sentru Saude Internamentu','#4682B4',          // 入院医療センター #4682B4
             'Sentru Saude Komunitariu','#0000FF',           // 地域保健センター #0000FF
             'Sala Maternidade','#FF69B4',                   // 産科病室 #FF69B4
             'Postu Saude','#00CED1',                        // 保健所 #00CED1
             'Postu Tratamentu','#00BFFF',                   // 治療所 #00BFFF
-            'Sentru Rehabilitasaun','#F4A460',              // リハビリテーションセンター #F4A460
+            'Sentru Rehabilitasaun','#F4A460',              // リハビリテーションセンターrgb(231, 171, 118)
             'Klinika no Farmasia','#ADFF2F',                // クリニックと薬局 #ADFF2F
             'Klinika','#FFFF00',                            // クリニック #FFFF00
             'Farmasia','#32CD32',                           // 薬局 	#32CD32
@@ -1451,7 +1473,7 @@ function addsourcelayers(firstSymbolId, font) {
             ['linear'],
             ['zoom'],
             4, 0.2,
-            14, 1
+            14, 1.1
         ],
         'circle-stroke-color': '#000000'
         }
