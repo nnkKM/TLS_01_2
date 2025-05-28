@@ -12,6 +12,7 @@ const map = new maplibregl.Map({
 });
 map.addControl(new maplibregl.NavigationControl());
 
+let tileType = ''; 
 
 // 最初に地図が読み込まれた時の処理
 map.on('load', () => {
@@ -319,7 +320,6 @@ const setLayoutThematicMap = (font) => {
        
 }
 
-let tileType = ''; 
 
 map.on('style.load', function() {   // style.jsonがロードされたとき(setStyle)に発動するイベント
     if(tileType === 'versatiles'){
@@ -950,7 +950,7 @@ function updateMapStyle_LCChangeRate(populationYear, baseYear) {
 
         map.setPaintProperty('LCRPGR-fill-layer', 'fill-color', [
             "case",
-            smallChangeCondition, "transparent", // 色なし
+            smallChangeCondition, "#ffffff", // 色なし
             ["all", [">=", lcChangeRate, -4],    ["<=", lcChangeRate, -0.25]], "#FF0000",
             ["all", [">=", lcChangeRate, -0.25], ["<=", lcChangeRate, 0.25]],  "#87CEEB",
             ["all", [">=", lcChangeRate, 0.25],  ["<=", lcChangeRate, 4]],     "#ADFF2F",
