@@ -1418,7 +1418,7 @@ function addsourcelayers(firstSymbolId, font) {
         'source': 'HealthFacilities-source',
         'source-layer': 'HealthFacilities',
         'layout': {
-            'visibility': 'visible'
+            'visibility': 'none'
         },
         'paint': {
             'circle-radius': [
