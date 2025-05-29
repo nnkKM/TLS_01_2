@@ -1,0 +1,394 @@
+{
+  "version": 8,
+  "name": "TLS Data Map Style",
+  "glyphs": "https://nnkKM.github.io/TLS_01_2/VersaTiles_Style/fonts/{fontstack}/{range}.pbf",
+  "sources": {
+    "mytile": {
+      "type": "vector",
+      "url": "pmtiles://http://127.0.0.1:8080/tls_data.pmtiles"
+    }
+  },
+  "layers": [
+    {
+      "id": "boundary",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "boundary",
+      "paint": {
+        "fill-color": "rgb(242, 225, 194)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "boundary_lin",
+      "type": "line",
+      "source": "mytile",
+      "source-layer": "boundary",
+      "paint": {
+        "line-color": "rgb(1, 32, 48)",
+        "line-width": 3
+      }
+    },
+    {
+      "id": "Tanah Kosong",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Tanah Kosong",
+      "paint": {
+        "fill-color": "rgb(15, 10, 2)",
+        "fill-opacity": 0.1
+      }
+    },
+    {
+      "id": "Hutan",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Hutan",
+      "paint": {
+        "fill-color": "rgb(75, 191, 92)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Bakau",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Bakau",
+      "paint": {
+        "fill-color": "rgb(45, 151, 92)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Ladang",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Ladang",
+      "paint": {
+        "fill-color": "rgb(222, 205, 20)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Belukar",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Belukar",
+      "paint": {
+        "fill-color": "rgb(242, 225, 194)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Kebun",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Kebun",
+      "paint": {
+        "fill-color": "rgb(111, 191, 116)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Laut",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Laut",
+      "paint": {
+        "fill-color": "rgb(139, 217, 217)",
+        "fill-opacity": 0.9
+      }
+    },
+    {
+      "id": "Sungai",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Sungai",
+      "paint": {
+        "fill-color": "rgb(139, 217, 217)",
+        "fill-opacity": 0.9
+      }
+    },
+    {
+      "id": "Danau",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Danau",
+      "paint": {
+        "fill-color": "rgb(139, 217, 217)",
+        "fill-opacity": 0.8
+      }
+    },
+    {
+      "id": "TPS",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "TPS",
+      "paint": {
+        "fill-color": "rgb(115, 110, 102)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "TPU",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "TPU",
+      "paint": {
+        "fill-color": "rgb(81, 161, 86)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Tambak",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Tambak",
+      "paint": {
+        "fill-color": "rgb(139, 217, 217)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Tambang",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Tambang",
+      "paint": {
+        "fill-color": "rgb(115, 110, 102)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Dermaga",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Dermaga",
+      "paint": {
+        "fill-color": "rgb(115, 110, 102)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Kolam",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Kolam",
+      "paint": {
+        "fill-color": "rgb(139, 217, 217)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Sawah",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Sawah",
+      "paint": {
+        "fill-color": "rgb(139, 255, 200)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Rawa",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Rawa",
+      "paint": {
+        "fill-color": "rgb(139, 217, 217)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Taman",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Taman",
+      "paint": {
+        "fill-color": "rgb(111, 191, 116)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Lapangan",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Taman",
+      "paint": {
+        "fill-color": "rgb(111, 191, 66)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Pasir",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Pasir",
+      "paint": {
+        "fill-color": "rgb(205, 208, 70)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Tower",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Tower",
+      "minzoom": 15,
+      "paint": {
+        "fill-color": "rgb(115, 110, 102)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Gardu Induk",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Gardu Induk",
+      "paint": {
+        "fill-color": "rgb(115, 110, 102)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "Bandara",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Bandara",
+      "paint": {
+        "fill-color": "rgb(145, 140, 132)",
+        "fill-opacity": 1.0
+      }
+    },
+    {
+      "id": "contour_50m",
+      "type": "line",
+      "source": "mytile",
+      "source-layer": "contour_50m",
+      "minzoom": 12,
+      "paint": {
+        "line-color": "rgb(112, 73, 116)",
+        "line-width": {
+           "stops": [
+            [12, 0.05],
+            [20, 1.5]
+          ]
+        }
+      }
+    },
+    {
+      "id": "contour_10m",
+      "type": "line",
+      "source": "mytile",
+      "source-layer": "contour_10m",
+      "minzoom": 14,
+      "paint": {
+        "line-color": "rgb(136, 80, 191)",
+        "line-width": {
+           "stops": [
+            [14, 0.05],
+            [20, 1]
+          ]
+        }
+      }
+    },
+    {
+      "id": "contour_all",
+      "type": "line",
+      "source": "mytile",
+      "source-layer": "contour_all",
+      "minzoom": 18,
+      "paint": {
+        "line-color": "rgb(191, 101, 176)",
+        "line-width": {
+           "stops": [
+            [18, 0.05],
+            [20, 0.75]
+          ]
+        }
+      }
+    },
+    {
+      "id": "Jalan",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Jalan",
+      "paint": {
+        "fill-color": "rgb(255, 238, 170)"
+      }
+    },
+    {
+      "id": "Jalan-outline",
+      "type": "line",
+      "source": "mytile",
+      "source-layer": "Jalan",
+      "paint": {
+        "line-color": "rgb(75, 68, 75)",
+        "line-width": {
+           "stops": [
+            [13, 0.1],
+            [20, 1.5]
+          ]
+        }
+      }
+    },
+    {
+      "id": "Jalan Tanah",
+      "type": "fill",
+      "source": "mytile",
+      "source-layer": "Jalan Tanah",
+      "paint": {
+        "fill-color": "rgb(225, 208, 140)"
+      }
+    },
+    {
+      "id": "Jalan Tanah-outline",
+      "type": "line",
+      "source": "mytile",
+      "source-layer": "Jalan Tanah",
+      "paint": {
+        "line-color": "rgb(75, 68, 75)",
+        "line-width": {
+           "stops": [
+            [13, 0.05],
+            [20, 0.75]
+          ]
+        }
+      }
+    },
+    {
+      "id": "Bangunan3D",
+      "type": "fill-extrusion",
+      "source": "mytile",
+      "source-layer": "Bangunan",
+      "paint": {
+        "fill-extrusion-color": "rgb(242, 234, 226)",
+        "fill-extrusion-height": 10,
+        "fill-extrusion-base": 0,
+        "fill-extrusion-opacity": {
+          "stops": [
+            [14, 0],
+            [15, 0.95]
+          ]
+        }
+      }
+    },
+    {
+      "id": "Kilang3D",
+      "type": "fill-extrusion",
+      "source": "mytile",
+      "source-layer": "Kilang",
+      "paint": {
+        "fill-extrusion-color": "rgb(222, 214, 206)",
+        "fill-extrusion-height": 10,
+        "fill-extrusion-base": 0,
+        "fill-extrusion-opacity": {
+          "stops": [
+            [14, 0],
+            [15, 0.95]
+          ]
+        }
+      }
+    }
+  ]
+}
